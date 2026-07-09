@@ -3,8 +3,10 @@
  *
  * Each .scene carries a data-scene id. An IntersectionObserver watches for
  * the scene whose content crosses the middle band of the viewport and
- * activates the matching .viz layer in the pinned stage; CSS handles the
- * opacity crossfade (or an instant swap under prefers-reduced-motion).
+ * activates the matching .viz layer inside ITS OWN pinned stage (the page
+ * has several stages now — left-pinned, right-pinned — each holding one or
+ * two crossfading layers). CSS handles the opacity dissolve, or an instant
+ * swap under prefers-reduced-motion.
  */
 (function () {
   "use strict";
@@ -13,6 +15,7 @@
   var scenes = document.querySelectorAll("[data-scene]");
   var dots = document.querySelectorAll(".dots a");
   var progressBar = document.getElementById("progress-bar");
+  var railFill = document.getElementById("rail-fill");
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   var vizById = {};
@@ -25,17 +28,18 @@
     dotById[dot.dataset.dot] = dot;
   });
 
-  var activeViz = null;
   var activeDot = null;
 
   function activate(sceneId) {
-    // Crossfade the stage: hero/closing have no viz layer, so the current
-    // chart simply stays put while those full-width scenes cover the stage.
+    /* Crossfade within the scene's own stage; scenes without a viz layer
+       (hero, full-width moments, the callout, closing) only move the dot. */
     var layer = vizById[sceneId];
-    if (layer && layer !== activeViz) {
-      if (activeViz) activeViz.classList.remove("is-active");
+    if (layer && !layer.classList.contains("is-active")) {
+      var stage = layer.closest(".stage");
+      stage.querySelectorAll(".viz.is-active").forEach(function (v) {
+        v.classList.remove("is-active");
+      });
       layer.classList.add("is-active");
-      activeViz = layer;
     }
 
     var dot = dotById[sceneId];
@@ -46,9 +50,8 @@
     }
   }
 
-  // A scene is "current" while it intersects the horizontal band around the
-  // viewport's vertical midpoint. Exactly one scene occupies that band at a
-  // time because every scene is at least ~60vh tall.
+  /* A scene is "current" while it intersects the band around the viewport's
+     vertical midpoint. */
   var observer = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (entry) {
@@ -64,15 +67,14 @@
     observer.observe(scene);
   });
 
-  // Show the first chart before any scene has crossed the midline, so the
-  // stage is never empty when the reader enters the story.
+  /* Every stage starts with its first layer visible so no stage is ever empty. */
   activate("hook");
-  if (vizLayers.length) {
-    vizLayers[0].classList.add("is-active");
-    activeViz = vizLayers[0];
-  }
+  document.querySelectorAll(".stage").forEach(function (stage) {
+    var first = stage.querySelector(".viz");
+    if (first) first.classList.add("is-active");
+  });
 
-  // Slim reading-progress bar, rAF-throttled, transform-only.
+  /* Reading progress: slim top bar + the vertical rail behind the dots. */
   var ticking = false;
 
   function updateProgress() {
@@ -81,6 +83,7 @@
     var max = doc.scrollHeight - window.innerHeight;
     var fraction = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     progressBar.style.transform = "scaleX(" + fraction + ")";
+    if (railFill) railFill.style.transform = "scaleY(" + fraction + ")";
   }
 
   window.addEventListener(
@@ -96,9 +99,7 @@
 
   updateProgress();
 
-  // Dot navigation: smooth scroll unless the reader prefers reduced motion
-  // (html { scroll-behavior } already handles this, but keyboard-triggered
-  // clicks on some browsers bypass it, so be explicit).
+  /* Dot navigation. */
   dots.forEach(function (dot) {
     dot.addEventListener("click", function (event) {
       var target = document.querySelector(dot.getAttribute("href"));

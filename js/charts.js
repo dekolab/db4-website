@@ -243,7 +243,12 @@ var Charts = (function () {
         var color = opts.byCluster ? clusterColor(d[0]) : seriesColor(opts.color);
         var w = Math.max(1, xs(d[1]) - m.left);
         var bar = el("path", { d: barRight(m.left, y, w, barH, 4), fill: color }, svg);
-        text(svg, opts.shorten ? (CLUSTER_SHORT[d[0]] || d[0]) : d[0], {
+        /* Truncate labels that would overflow the label gutter; the tooltip
+           always carries the full name. */
+        var label = opts.shorten ? (CLUSTER_SHORT[d[0]] || d[0]) : d[0];
+        var maxChars = Math.max(6, Math.floor((m.left - 12) / 6.4));
+        if (label.length > maxChars) label = label.slice(0, maxChars - 1) + "…";
+        text(svg, label, {
           x: m.left - 8, y: y + barH / 2 + 4, fill: th.ink, "font-size": 12, "text-anchor": "end"
         });
         text(svg, fmt(d[1]), {
@@ -533,7 +538,7 @@ var Charts = (function () {
     root.appendChild(stat);
     root.appendChild(barsBox);
 
-    barsH(barsBox, { items: notes.breakdown, color: "blue", labelWidth: 120 });
+    barsH(barsBox, { items: notes.breakdown, color: "blue", labelWidth: 140 });
   }
 
   /* ---------- build every chart on the page ---------- */
