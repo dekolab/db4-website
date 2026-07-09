@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Malaysia Banned — 75 Years of Gazetted Publications under the PPPA</title>
+<meta name="description" content="A visual narrative through 3,187 publications gazetted under Malaysia's Printing Presses and Publications Act, 1950–2025.">
+<script>
+/* Set the theme before first paint to avoid a flash. */
+(function () {
+  try {
+    var t = localStorage.getItem("theme");
+    if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.dataset.theme = t;
+  } catch (e) { document.documentElement.dataset.theme = "light"; }
+})();
+</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="story">
+
+<div class="progress" role="presentation" aria-hidden="true"><span id="progress-bar"></span></div>
+
+<header class="topbar">
+  <a class="brand" href="https://initiate.my/">
+    <span class="brand-logo"><img src="asset/logo/logo-header.png" alt="" width="350" height="77"></span>
+    <span class="brand-name">What Malaysia Banned</span>
+  </a>
+  <div class="topbar-right">
+    <nav class="tabs" aria-label="Site sections">
+      <a href="#/story" data-tab="story" aria-current="page">Story</a>
+      <a href="#/data" data-tab="data">Data</a>
+      <a href="#/contact" data-tab="contact">Contact</a>
+    </nav>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">☾</button>
+  </div>
+</header>
+
+<nav class="dots" aria-label="Story sections">
+  <a href="#hook"        data-dot="hook"        aria-label="Opening"><span></span></a>
+  <a href="#overview"    data-dot="overview"    aria-label="Dataset overview"><span></span></a>
+  <a href="#per-year"    data-dot="per-year"    aria-label="Publications per year"><span></span></a>
+  <a href="#by-decade"   data-dot="by-decade"   aria-label="Clusters by decade"><span></span></a>
+  <a href="#clusters"    data-dot="clusters"    aria-label="Cluster counts"><span></span></a>
+  <a href="#subclusters" data-dot="subclusters" aria-label="Top subclusters"><span></span></a>
+  <a href="#languages"   data-dot="languages"   aria-label="Languages"><span></span></a>
+  <a href="#origin-lang" data-dot="origin-lang" aria-label="Origin and language"><span></span></a>
+  <a href="#publishers"  data-dot="publishers"  aria-label="Publishers"><span></span></a>
+  <a href="#origin-cluster" data-dot="origin-cluster" aria-label="Origin and cluster"><span></span></a>
+  <a href="#decade-mix"  data-dot="decade-mix"  aria-label="Cluster mix by decade"><span></span></a>
+  <a href="#notes"       data-dot="notes"       aria-label="Researcher notes"><span></span></a>
+  <a href="#closing"     data-dot="closing"     aria-label="Closing"><span></span></a>
+</nav>
+
+<!-- ================= STORY VIEW ================= -->
+<div id="view-story">
+
+<header class="fullscene hero" id="hook" data-scene="hook">
+  <div class="hero-inner">
+    <span class="hero-logo"><img src="asset/logo/logo-header.png" alt="" width="350" height="77"></span>
+    <p class="kicker">A data story · Printing Presses and Publications Act, Malaysia</p>
+    <h1>What a country bans is a diary of what it fears.</h1>
+    <p class="standfirst">
+      Between 1950 and 2025, Malaysia gazetted 3,187 publications as prohibited under the
+      Printing Presses and Publications Act and the ordinances that preceded it — songbooks and
+      pamphlets, paperbacks and cassettes. Read together, the banned list becomes a record of the
+      state&rsquo;s anxieties, decade by decade. This is what it says.
+    </p>
+    <p class="scroll-cue" aria-hidden="true">Scroll to begin<span class="chevron">▾</span></p>
+  </div>
+</header>
+
+<main class="story" id="story">
+
+  <div class="stage">
+    <figure class="viz" data-viz="overview">
+      <div class="chart-card duo">
+        <div class="chart-panel">
+          <h3>Publications by type</h3>
+          <div class="chart ch-xs" id="c-type" role="img"
+               aria-label="Horizontal bar chart of publications by type. Printed Documents dominate at 3,123, with Audio/Recordings a distant second at 56 and Physical Goods, Visual Media and Digital/Electronic in single digits."></div>
+        </div>
+        <div class="chart-panel">
+          <h3>Publications by origin</h3>
+          <div class="chart ch-xs" id="c-origin" role="img"
+               aria-label="Horizontal bar chart of publications by origin: Foreign 1,303, Unclear 1,266, Local 618."></div>
+        </div>
+      </div>
+      <figcaption>Publications by type and by origin. Print dominates; origin is often unresolvable. Hover a bar for details.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="per-year">
+      <div class="chart-card">
+        <h3>Gazetted publications per year, 1950–2025</h3>
+        <div class="chart ch-md" id="c-peryear" role="img"
+             aria-label="Line chart of gazetted publications per year, 1950 to 2025. A sharp spike reaches 445 in 1951, then counts stay below 150 for the rest of the series, with smaller waves around 1975, the early and late 1990s, the mid-2000s and 2017."></div>
+      </div>
+      <figcaption>The 1951 spike towers over everything after it. Move along the line to read any year.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="by-decade">
+      <div class="chart-card">
+        <h3>Publications per decade, stacked by cluster</h3>
+        <div class="legend-slot"></div>
+        <div class="chart ch-md" id="c-decades" role="img"
+             aria-label="Stacked column chart of publications per decade, coloured by cluster. The 1950s column is the tallest at 787, dominated by subversive ideological and political content. The 1990s form a second peak at 717 with a more mixed composition. Religious doctrinal deviance appears from the 1980s onward."></div>
+      </div>
+      <figcaption>Volume and composition shift together. Hover a segment, or a legend entry to isolate a cluster.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="clusters">
+      <div class="chart-card">
+        <h3>Publications by cluster, all years</h3>
+        <div class="chart ch-sm" id="c-clusters" role="img"
+             aria-label="Horizontal bar chart of publications by cluster: subversive ideological and political content 978; general/unidentified 934; obscene or immoral publications 715; religious doctrinal deviance 545; race, religion and royalty (3R issues) 14; administrative/unclear ground 1."></div>
+      </div>
+      <figcaption>Each cluster keeps its colour everywhere in the story. Exact counts sit at each bar&rsquo;s tip.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="subclusters">
+      <div class="chart-card">
+        <h3>Top 15 subclusters</h3>
+        <div class="chart ch-lg" id="c-subclusters" role="img"
+             aria-label="Horizontal bar chart of the 15 most frequent subclusters. Administrative/unclear ground leads at 937, followed by communism/socialism at 888 and pornography at 489. Below them: other, erotic/immoral content, Al-Arqam, revolutionary politics, LGBT, Syiah, ethnic incitement, Ahmadiyyah, and smaller categories."></div>
+      </div>
+      <figcaption>A publication can carry more than one subcluster label.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="languages">
+      <div class="chart-card">
+        <h3>Top languages of gazetted publications</h3>
+        <div class="chart ch-md" id="c-languages" role="img"
+             aria-label="Column chart of the top languages of gazetted publications: Chinese 1,145, English 939, Malay 758, then a steep drop to Tamil at 86 and Indonesian at 48, with Arabic, Japanese, Russian and Jawi at 3 each."></div>
+      </div>
+      <figcaption>Language is recorded for most, not all, of the 3,187 titles.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="origin-lang">
+      <div class="chart-card">
+        <h3>Publication origin × language</h3>
+        <div class="chart ch-sm" id="c-originlang" role="img"
+             aria-label="Heatmap of publication origin against the top five languages. Foreign publications are most often English (641) then Chinese (323). Local publications are overwhelmingly Malay (456). Publications of unclear origin are most often Chinese (728)."></div>
+      </div>
+      <figcaption>Each cell counts publications; darker means more. Hover any cell for the pairing.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="publishers">
+      <div class="chart-card">
+        <h3>Top 15 publishers by gazetted titles</h3>
+        <div class="chart ch-lg" id="c-publishers" role="img"
+             aria-label="Horizontal bar chart of the 15 publishers with the most gazetted titles. Sam Luen Bookshop leads at 95, far ahead of Yayasan Perkhabaran Injil at 35 and Foreign Language Publishing House at 21. The list mixes Chinese-language bookshops, Indonesian religious publishers, and Californian paperback houses such as Greenleaf Classic and Brandon House."></div>
+      </div>
+      <figcaption>Counted where a publisher was recorded (1,757 distinct publishers overall).</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="origin-cluster">
+      <div class="chart-card">
+        <h3>Publication origin × cluster</h3>
+        <div class="chart ch-md" id="c-origincluster" role="img"
+             aria-label="Heatmap of cluster against publication origin. Foreign origin concentrates in subversive ideological and political content (513) and obscene or immoral publications (343). Local origin concentrates in religious doctrinal deviance (335). Unclear origin concentrates in general/unidentified (530) and subversive content (396)."></div>
+      </div>
+      <figcaption>Where a work came from, against why it was banned.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="decade-mix">
+      <div class="chart-card">
+        <h3>Cluster share within each decade</h3>
+        <div class="chart ch-md" id="c-decademix" role="img"
+             aria-label="Heatmap showing each cluster's share within each decade. Subversive content is 82% of the 1950s, falling to 1% by the 1990s. Obscene or immoral publications peak at 38% in the 1970s. Religious doctrinal deviance grows from 5% in the 1980s to 67% in the 2010s. In the small 2020s sample, subversive content returns at 56%."></div>
+      </div>
+      <figcaption>Each column sums to 100%. The 2020s column covers only 43 titles.</figcaption>
+    </figure>
+
+    <figure class="viz" data-viz="notes">
+      <div class="chart-card">
+        <h3>Researcher note quality flags</h3>
+        <div class="chart" id="c-notes" role="img"
+             aria-label="3.2% of records — 103 of 3,187 — carry a researcher note about classification quality. Breakdown: 98 free-form notes and 5 flagged as having insufficient information."></div>
+      </div>
+      <figcaption>103 of 3,187 records (3.2%) carry a classification-quality flag.</figcaption>
+    </figure>
+  </div>
+
+  <div class="scenes">
+
+    <section class="scene" id="overview" data-scene="overview" aria-labelledby="h-overview">
+      <div class="scene-text">
+        <p class="kicker">Part 1 · The dataset</p>
+        <h2 id="h-overview">Almost everything banned was ink on paper — but where it came from is often anyone&rsquo;s guess.</h2>
+        <p>Of the 3,187 gazetted publications, 3,123 — nearly 98% — are printed documents; audio recordings, physical goods and digital media are footnotes. The origin column is more revealing for what it can&rsquo;t say: 1,303 titles are foreign and 618 local, but for 1,266 — two of every five — the origin is simply <em>unclear</em>. That uncertainty will shadow every chart that follows.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="per-year" data-scene="per-year" aria-labelledby="h-per-year">
+      <div class="scene-text">
+        <p class="kicker">Part 2 · Time</p>
+        <h2 id="h-per-year">One year towers over the other seventy-four.</h2>
+        <p>In 1951, at the height of the Malayan Emergency, 445 publications were gazetted — three times more than any year since. After that first great purge, banning became a steady background hum punctuated by waves: the mid-1970s, twin surges in 1992 and 1994 of nearly 150 titles each, 1999, and the mid-2000s. The analysis cautions that quiet years may reflect gaps in the gazette record as much as genuine restraint.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="by-decade" data-scene="by-decade" aria-labelledby="h-by-decade">
+      <div class="scene-text">
+        <p class="kicker">Part 2 · Time</p>
+        <h2 id="h-by-decade">Each decade bans in its own key.</h2>
+        <p>Stack the same timeline by <em>cluster</em> — the analysis&rsquo;s classification of why a work was banned — and the waves acquire colours. The towering 1950s are almost monochrome with subversive political content; the second peak in the 1990s is a blend in which religious deviance and unidentified grounds take over. The volume of banning changed less than its target did.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="clusters" data-scene="clusters" aria-labelledby="h-clusters">
+      <div class="scene-text">
+        <p class="kicker">Part 3 · What was banned</p>
+        <h2 id="h-clusters">Politics leads the ledger — but &ldquo;unidentified&rdquo; runs a close second.</h2>
+        <p>Across all 75 years, subversive ideological and political content is the largest cluster at 978 titles, ahead of obscene or immoral publications (715) and religious doctrinal deviance (545). The second-largest bar, though, is <em>General/Unidentified</em> at 934: for nearly a third of the list, no clear ground for the ban could be pinned down. The classification is a work in progress, and the data says so out loud.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="subclusters" data-scene="subclusters" aria-labelledby="h-subclusters">
+      <div class="scene-text">
+        <p class="kicker">Part 3 · What was banned</p>
+        <h2 id="h-subclusters">Beneath the clusters, two great targets: communism and pornography.</h2>
+        <p>Zoom into subclusters and the two archetypal enemies of the censor emerge — communism/socialism with 888 titles and pornography with 489, plus 226 more filed under erotic or immoral content. Further down sit the specific campaigns: the Al-Arqam movement (91), revolutionary politics (64), LGBT material (37), and Syiah and Ahmadiyyah doctrinal works. Topping the chart, once again, is the honest bucket: administrative or unclear grounds, 937 entries.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="languages" data-scene="languages" aria-labelledby="h-languages">
+      <div class="scene-text">
+        <p class="kicker">Part 4 · Language & origin</p>
+        <h2 id="h-languages">Three languages carry the banned list.</h2>
+        <p>Chinese leads with 1,145 titles, followed by English (939) and Malay (758) — together the overwhelming majority of everything gazetted. Tamil (86) and Indonesian (48) trail far behind. The ranking mirrors the country&rsquo;s reading publics, but as the next chart shows, each language tells a different story about where the threat was seen to come from.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="origin-lang" data-scene="origin-lang" aria-labelledby="h-origin-lang">
+      <div class="scene-text">
+        <p class="kicker">Part 4 · Language & origin</p>
+        <h2 id="h-origin-lang">Language is a fingerprint of origin.</h2>
+        <p>Cross origin with language and the pattern sharpens. Foreign bans are most often English (641 titles). Local bans are overwhelmingly Malay (456 of the 618 local titles). And the great mass of Chinese-language bans — 728 titles — sits in the <em>unclear</em> column: imported pamphlets and bookshop stock whose provenance the record never resolved. Uncertainty in this dataset is not random; most often, it reads Chinese.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="publishers" data-scene="publishers" aria-labelledby="h-publishers">
+      <div class="scene-text">
+        <p class="kicker">Part 5 · Who published it</p>
+        <h2 id="h-publishers">From a Chinese bookshop to California paperback mills.</h2>
+        <p>Among the 1,757 distinct publishers on the list, Sam Luen Bookshop stands alone with 95 gazetted titles — nearly triple the runner-up. The rest of the top 15 sketches the whole dataset in miniature: publishing houses of the communist world, religious presses like Yayasan Perkhabaran Injil and Indonesian imprints, and the Californian erotica houses — Greenleaf Classic, Brandon House — of the paperback boom. An author or translator is recorded for only 61.9% of publications.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="origin-cluster" data-scene="origin-cluster" aria-labelledby="h-origin-cluster">
+      <div class="scene-text">
+        <p class="kicker">Part 6 · Cross-currents</p>
+        <h2 id="h-origin-cluster">Foreign threats were political. Local ones were doctrinal.</h2>
+        <p>Put origin against cluster and the censor&rsquo;s worldview appears in one grid. Foreign publications were banned above all as subversive politics (513) and obscenity (343). Local publications cluster somewhere else entirely: religious doctrinal deviance, with 335 of the 618 local titles — more than half. The enemy without carried ideology; the enemy within, heresy.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="decade-mix" data-scene="decade-mix" aria-labelledby="h-decade-mix">
+      <div class="scene-text">
+        <p class="kicker">Part 6 · Cross-currents</p>
+        <h2 id="h-decade-mix">The state&rsquo;s anxieties migrate across the grid.</h2>
+        <p>Normalise each decade to 100% and the migration is unmistakable. Subversive content is 82% of the 1950s and all but vanishes by the 1990s (1%). Obscenity crests in the 1970s at 38%. Religious deviance climbs from 5% in the 1980s to 28%, then 42%, then 67% of the 2010s. And in the 2020s the political category surges back to 56% — though that column rests on just 43 titles, so read it as a hint, not a verdict.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="notes" data-scene="notes" aria-labelledby="h-notes">
+      <div class="scene-text">
+        <p class="kicker">Part 7 · Reading the labels carefully</p>
+        <h2 id="h-notes">The labels come with a margin of error — and the researchers wrote it down.</h2>
+        <p>103 records — 3.2% of the dataset — carry a researcher&rsquo;s note about classification quality. Most are free-form judgement calls (98 records): an origin inferred from a place of printing, a cluster &ldquo;assumed as selected&rdquo;, a language that could not be determined; five records are flagged outright as having insufficient information. The notes exist to audit how well automated cluster assignments agree with human judgement — a reminder that every chart above rests on labels still under review.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="fullscene closing" id="closing" data-scene="closing">
+  <div class="hero-inner">
+    <p class="kicker">Coda</p>
+    <h2>The banned list is a mirror, held up decade by decade.</h2>
+    <p class="standfirst">
+      Across 3,187 publications and 75 years, the through-line is not the volume of censorship but its
+      moving target: communism in the Emergency years, imported obscenity in the 1970s and 80s,
+      religious deviance from the 1990s into the 2010s, and political content stirring again in the
+      small sample of the 2020s. The mirror has blind spots, and the analysis names them: two in five
+      titles have no clear origin, nearly a third sit in a general/unidentified cluster, quiet years
+      may be gaps in the gazette record rather than tolerance, and 3.2% of records carry explicit
+      researcher flags about classification quality. What the data says is striking; what it cannot
+      yet say is part of the story too.
+    </p>
+    <p class="colophon">
+      Source: exploratory analysis of publications gazetted under Malaysia&rsquo;s Printing Presses and
+      Publications Act, 1950–2025 (n&nbsp;=&nbsp;3,187). Explore every record in the
+      <a href="#/data">Data</a> tab.
+    </p>
+  </div>
+</footer>
+
+</div><!-- /view-story -->
+
+<!-- ================= DATA VIEW ================= -->
+<section id="view-data" class="view page" hidden aria-labelledby="h-data">
+  <div class="page-inner">
+    <p class="kicker">The dataset</p>
+    <h2 id="h-data">Every gazetted publication, 1950–2025</h2>
+    <p class="lede">All 3,187 records behind the story — search by title, publisher or author,
+      filter by cluster or origin, and click a column header to sort. A dash means the gazette
+      record left that field blank.</p>
+
+    <div class="table-controls">
+      <input type="search" id="table-search" placeholder="Search title, publisher, author…"
+             aria-label="Search records">
+      <select id="table-cluster" aria-label="Filter by cluster"></select>
+      <select id="table-origin" aria-label="Filter by origin"></select>
+      <span id="table-count" class="table-count" role="status"></span>
+    </div>
+
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Publications table">
+      <table id="data-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      <button type="button" id="table-prev">← Previous</button>
+      <span id="table-page" class="table-count"></span>
+      <button type="button" id="table-next">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT VIEW ================= -->
+<section id="view-contact" class="view page" hidden aria-labelledby="h-contact">
+  <div class="page-inner narrow">
+    <p class="kicker">Contact</p>
+    <h2 id="h-contact">Questions, corrections, and the underlying data</h2>
+    <p class="lede">This site presents an exploratory analysis of publications gazetted under
+      Malaysia&rsquo;s Printing Presses and Publications Act. The classification of clusters and
+      subclusters is a work in progress — corrections and additions are welcome.</p>
+
+    <div class="contact-card">
+      <p class="contact-label">Email</p>
+      <a class="contact-email" href="mailto:m.khairie11@gmail.com?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
+      <p class="contact-hint">If you are writing about a specific record, include the publication
+        title and year as they appear in the <a href="#/data">Data</a> tab.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div>
+        <h3>About the data</h3>
+        <p>The dataset covers 3,187 publications gazetted between 1950 and 2025, compiled from
+          federal gazette notices. Fields include title, gazette date and number, type, origin,
+          language, publisher, author/translator, and a researcher-assigned cluster and subcluster.</p>
+      </div>
+      <div>
+        <h3>Known limitations</h3>
+        <p>Origin is unclear for two in five records, nearly a third of titles sit in a
+          general/unidentified cluster, and 3.2% of records carry explicit researcher notes about
+          classification quality. Quiet years may reflect gaps in the gazette record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/data.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/story.js"></script>
+<script src="js/table.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
