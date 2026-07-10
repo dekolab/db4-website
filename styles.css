@@ -493,6 +493,12 @@ body[data-view="contact"] .progress { display: none; }
 
 .chapter { position: relative; }
 
+/* anchor/dot jumps and the auto-snap agree on where a beat starts */
+.chapter.full,
+.fullscene {
+  scroll-margin-top: var(--topbar);
+}
+
 /* Tonal bands ease in and out of the paper instead of cutting hard. */
 .tone-wash {
   background: linear-gradient(180deg,

@@ -111,7 +111,9 @@
       if (event.detail > 0) dot.blur();
       target.scrollIntoView({
         behavior: reducedMotion.matches ? "auto" : "smooth",
-        block: "start"
+        /* scenes read centred (matching the auto-snap anchors); chapters
+           and full scenes align to their top */
+        block: target.classList.contains("scene") ? "center" : "start"
       });
     });
   });
