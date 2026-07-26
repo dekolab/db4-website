@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Malaysia Banned — 75 Years of Gazetted Publications under the PPPA</title>
-<meta name="description" content="A visual narrative through 3,187 publications gazetted under Malaysia's Printing Presses and Publications Act, 1950–2025.">
+<title>What Malaysia Banned — Gazetted Publications under the PPPA, 1950–2026</title>
+<meta name="description" content="A visual narrative through 3,213 publications gazetted as prohibited under Malaysia's Printing Presses and Publications Act, 1950–2026.">
 <script>
 /* Set the theme before first paint to avoid a flash. */
 (function () {
@@ -39,35 +39,41 @@
 
 <nav class="dots" aria-label="Story sections">
   <span class="rail-track" aria-hidden="true"><span id="rail-fill"></span></span>
-  <a href="#hook"        data-dot="hook"        aria-label="Opening"><span></span></a>
-  <a href="#overview"    data-dot="overview"    aria-label="Dataset overview"><span></span></a>
-  <a href="#per-year"    data-dot="per-year"    aria-label="Publications per year"><span></span></a>
-  <a href="#by-decade"   data-dot="by-decade"   aria-label="Clusters by decade"><span></span></a>
-  <a href="#clusters"    data-dot="clusters"    aria-label="Cluster counts"><span></span></a>
-  <a href="#subclusters" data-dot="subclusters" aria-label="Top subclusters"><span></span></a>
-  <a href="#languages"   data-dot="languages"   aria-label="Languages"><span></span></a>
-  <a href="#origin-lang" data-dot="origin-lang" aria-label="Origin and language"><span></span></a>
-  <a href="#publishers"  data-dot="publishers"  aria-label="Publishers"><span></span></a>
-  <a href="#origin-cluster" data-dot="origin-cluster" aria-label="Origin and cluster"><span></span></a>
-  <a href="#decade-mix"  data-dot="decade-mix"  aria-label="Cluster mix by decade"><span></span></a>
-  <a href="#notes"       data-dot="notes"       aria-label="Researcher notes"><span></span></a>
-  <a href="#closing"     data-dot="closing"     aria-label="Closing"><span></span></a>
+  <a href="#hook"         data-dot="hook"         aria-label="Opening"><span></span></a>
+  <a href="#law"          data-dot="law"          aria-label="The law and the constitution"><span></span></a>
+  <a href="#origins"      data-dot="origins"      aria-label="Where the law came from"><span></span></a>
+  <a href="#powers"       data-dot="powers"       aria-label="What the PPPA can do"><span></span></a>
+  <a href="#balance"      data-dot="balance"      aria-label="Where is the balance?"><span></span></a>
+  <a href="#open-data"    data-dot="open-data"    aria-label="Why this database"><span></span></a>
+  <a href="#per-year"     data-dot="per-year"     aria-label="Bans over time"><span></span></a>
+  <a href="#languages"    data-dot="languages"    aria-label="Languages"><span></span></a>
+  <a href="#types-origin" data-dot="types-origin" aria-label="Types and origin"><span></span></a>
+  <a href="#people"       data-dot="people"       aria-label="Authors, printers, publishers"><span></span></a>
+  <a href="#clusters-time" data-dot="clusters-time" aria-label="What bans were for, over time"><span></span></a>
+  <a href="#kdn"          data-dot="kdn"          aria-label="The Ministry's stated reasons"><span></span></a>
+  <a href="#decade-mix"   data-dot="decade-mix"   aria-label="How the focus shifted"><span></span></a>
+  <a href="#subclusters"  data-dot="subclusters"  aria-label="The most common types"><span></span></a>
+  <a href="#crosswalk"    data-dot="crosswalk"    aria-label="Legal grounds vs content"><span></span></a>
+  <a href="#revocations"  data-dot="revocations"  aria-label="Bans lifted in 2026"><span></span></a>
+  <a href="#reform"       data-dot="reform"       aria-label="How to reform the law"><span></span></a>
+  <a href="#closing"      data-dot="closing"      aria-label="Closing"><span></span></a>
 </nav>
 
 <!-- ================= STORY VIEW ================= -->
 <div id="view-story">
 
-<!-- Scene 1 · full-bleed hero -->
+<!-- Beat 1 · full-bleed hero -->
 <header class="fullscene hero" id="hook" data-scene="hook">
   <div class="hero-inner">
     <span class="hero-logo reveal"><img src="asset/logo/logo-header.png" alt="" width="350" height="77"></span>
     <p class="kicker reveal">A data story · Printing Presses and Publications Act, Malaysia</p>
     <h1 class="reveal">What a country bans is a diary of what it fears.</h1>
     <p class="standfirst reveal">
-      Between 1950 and 2025, Malaysia gazetted 3,187 publications as prohibited under the
+      Between 1950 and 2026, Malaysia gazetted 3,213 publications as prohibited under the
       Printing Presses and Publications Act and the ordinances that preceded it — songbooks and
-      pamphlets, paperbacks and cassettes. Read together, the banned list becomes a record of the
-      state&rsquo;s anxieties, decade by decade. This is what it says.
+      pamphlets, paperbacks and cassettes. INITIATE.MY compiled, cleaned and classified every
+      record. Read together, they trace how the grounds for banning shifted, decade by decade.
+      This is what the record shows — and what it cannot yet say.
     </p>
     <p class="scroll-cue reveal" aria-hidden="true">Scroll to begin
       <span class="cue-ring"><i class="fa-solid fa-chevron-down"></i></span>
@@ -77,267 +83,698 @@
 
 <main id="story">
 
-  <!-- Scene 2 · pinned RIGHT (42/58) -->
-  <section class="chapter pinned pin-right" aria-labelledby="h-overview">
+  <!-- ============ ACT I · WHY THIS LAW, WHY THIS DATABASE ============ -->
+
+  <!-- Beat 2 · the law vs the constitution -->
+  <section class="chapter full" id="law" data-scene="law" aria-labelledby="h-law">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>Part 1 · The law</p>
+      <h2 id="h-law" class="reveal">What controls what Malaysians can read?</h2>
+      <p class="reveal">The Printing Presses and Publications Act 1984 (PPPA) [Act 301] regulates
+        printing presses, publications and the circulation of printed materials in Malaysia. The
+        law is intended to protect national security, public order and morality. At the same time,
+        Article 10(1)(a) of the Federal Constitution guarantees freedom of speech and expression —
+        although Parliament may restrict that right on grounds including security, public order
+        and morality.</p>
+    </div>
+    <figure class="wide-fig law-fig">
+      <div class="law-duel" role="img"
+           aria-label="Diagram of the tension between two texts: the Printing Presses and Publications Act 1984, which regulates presses and publications to protect national security, public order and morality, and Article 10(1)(a) of the Federal Constitution, which guarantees freedom of speech and expression, subject to restrictions Parliament may impose on similar grounds.">
+        <div class="law-side reveal">
+          <p class="law-side-kicker">Act 301 · 1984</p>
+          <h3>Printing Presses and Publications Act</h3>
+          <p>Regulates presses, publications and circulation to protect national security,
+            public order and morality.</p>
+        </div>
+        <div class="law-axis reveal" aria-hidden="true">
+          <span class="law-axis-line"></span>
+          <span class="law-axis-label">the tension</span>
+          <span class="law-axis-line"></span>
+        </div>
+        <div class="law-side reveal">
+          <p class="law-side-kicker">Federal Constitution · Article 10(1)(a)</p>
+          <h3>Freedom of speech and expression</h3>
+          <p>Guaranteed to every citizen — though Parliament may restrict it on grounds
+            including security, public order and morality.</p>
+        </div>
+      </div>
+      <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The same three words —
+        security, public order, morality — anchor both the power and its limit.</figcaption>
+    </figure>
+    <div class="full-foot">
+      <p class="reveal">This creates an important question: how should Malaysia protect public
+        safety without unnecessarily limiting freedom of expression?</p>
+    </div>
+  </section>
+
+  <!-- Beat 3 · a law shaped by an earlier security era -->
+  <section class="chapter pinned pin-right" aria-labelledby="h-origins">
     <div class="stage">
       <div class="stage-inner">
-        <figure class="viz" data-viz="overview">
-          <div class="chart-card duo">
-            <div class="chart-panel">
-              <h3>Publications by type</h3>
-              <div class="chart ch-xs" id="c-type" role="img"
-                   aria-label="Horizontal bar chart of publications by type. Printed Documents dominate at 3,123, with Audio/Recordings a distant second at 56 and Physical Goods, Visual Media and Digital/Electronic in single digits."></div>
-            </div>
-            <div class="chart-panel">
-              <h3>Publications by origin</h3>
-              <div class="chart ch-xs" id="c-origin" role="img"
-                   aria-label="Horizontal bar chart of publications by origin: Foreign 1,303, Unclear 1,266, Local 618."></div>
+        <figure class="viz" data-viz="origins">
+          <div class="chart-card">
+            <h3>Three laws, one lineage</h3>
+            <div class="lineage" role="img"
+                 aria-label="Timeline of three laws: the Printing Presses Act 1948, introduced during the Malayan Emergency; the Control of Imported Publications Act 1958; and the Printing Presses and Publications Act, in force from 1 September 1984, which replaced and absorbed both.">
+              <div class="lineage-item">
+                <span class="lineage-year num">1948</span>
+                <span class="lineage-name">Printing Presses Act</span>
+                <span class="lineage-note">introduced during the Malayan Emergency (1948–1960)</span>
+              </div>
+              <div class="lineage-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right-long"></i></div>
+              <div class="lineage-item">
+                <span class="lineage-year num">1958</span>
+                <span class="lineage-name">Control of Imported Publications Act</span>
+                <span class="lineage-note">extended control to publications entering the country</span>
+              </div>
+              <div class="lineage-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right-long"></i></div>
+              <div class="lineage-item is-current">
+                <span class="lineage-year num">1 Sept 1984</span>
+                <span class="lineage-name">Printing Presses and Publications Act</span>
+                <span class="lineage-note">replaced and absorbed both earlier laws</span>
+              </div>
             </div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Print dominates; origin is often unresolvable. Hover a bar for details.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Not strictly a colonial
+            law — but built from systems of publication control that began under one.</figcaption>
         </figure>
       </div>
     </div>
     <div class="flow">
-      <div class="scene" id="overview" data-scene="overview">
+      <div class="scene" id="origins" data-scene="origins">
         <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Part 1 · The dataset</p>
-          <h2 id="h-overview" class="reveal">Almost everything banned was ink on paper — but where it came from is often anyone&rsquo;s guess.</h2>
-          <p class="reveal">Of the 3,187 gazetted publications, 3,123 — nearly 98% — are printed documents; audio recordings, physical goods and digital media are footnotes. The origin column is more revealing for what it can&rsquo;t say: 1,303 titles are foreign and 618 local, but for 1,266 the origin is simply <em>unclear</em>. That uncertainty will shadow every chart that follows.</p>
-          <p class="mini-stat reveal"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><strong>2 in 5</strong> titles have no clear country of origin</p>
+          <p class="kicker reveal"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>Part 1 · The law</p>
+          <h2 id="h-origins" class="reveal">A law shaped by an earlier security era.</h2>
+          <p class="reveal">The PPPA was enacted during the first Mahathir administration and came
+            into force on 1 September 1984. It developed from earlier systems of publication
+            control: it replaced and absorbed the Printing Presses Act 1948, introduced during the
+            Malayan Emergency, and the Control of Imported Publications Act 1958.</p>
+          <p class="reveal">The Emergency, from 1948 to 1960, was a counterinsurgency conflict
+            involving the Malayan Communist Party. During this period, the state expanded controls
+            over political mobilisation, publications and materials considered subversive.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Scene 3 · full-width centered moment -->
-  <section class="chapter full" id="per-year" data-scene="per-year" aria-labelledby="h-per-year">
+  <!-- Beat 4 · what powers the PPPA provides -->
+  <section class="chapter pinned pin-left" aria-labelledby="h-powers">
+    <div class="stage">
+      <div class="stage-inner">
+        <figure class="viz" data-viz="powers">
+          <div class="chart-card">
+            <h3>&ldquo;Undesirable publications&rdquo; — the seven grounds</h3>
+            <div class="grounds" role="img"
+                 aria-label="The seven grounds in the official Publication Guidelines for classifying undesirable publications: contrary to law, morality, public interest, national interest, security, public order, and content that may cause public alarm.">
+              <span class="ground-chip"><i class="fa-solid fa-ban" aria-hidden="true"></i>Contrary to law</span>
+              <span class="ground-chip"><i class="fa-solid fa-heart-crack" aria-hidden="true"></i>Morality</span>
+              <span class="ground-chip"><i class="fa-solid fa-users" aria-hidden="true"></i>Public interest</span>
+              <span class="ground-chip"><i class="fa-solid fa-flag" aria-hidden="true"></i>National interest</span>
+              <span class="ground-chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Security</span>
+              <span class="ground-chip"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Public order</span>
+              <span class="ground-chip"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Public alarm</span>
+            </div>
+          </div>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Remember these seven —
+            they return later as the justifications the Ministry actually recorded.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="scene" id="powers" data-scene="powers">
+        <div class="scene-text">
+          <p class="kicker reveal"><i class="fa-solid fa-gavel" aria-hidden="true"></i>Part 1 · The law</p>
+          <h2 id="h-powers" class="reveal">What powers does the PPPA provide?</h2>
+          <p class="reveal">Under Section 7, the government may prohibit publications and control
+            their production, importation and circulation. Enforcement can involve licensing
+            requirements, permits, inspections, seizures and publication bans.</p>
+          <p class="reveal">The official Publication Guidelines classify &ldquo;undesirable
+            publications&rdquo; under seven grounds. These categories give the government
+            significant responsibility — and considerable discretion — in deciding what materials
+            may be circulated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beat 5 · where is the balance? -->
+  <section class="chapter callout tone-wash" id="balance" data-scene="balance" aria-labelledby="h-balance">
+    <div class="callout-card">
+      <p class="kicker reveal"><i class="fa-solid fa-scale-unbalanced" aria-hidden="true"></i>Part 1 · The law</p>
+      <h2 id="h-balance" class="reveal">Where is the balance?</h2>
+      <p class="reveal">For INITIATE.MY, the first concern is how the law balances security with
+        fundamental rights. Materials that directly incite violence or pose a demonstrable threat
+        to public safety may require intervention. However, restrictions should be lawful,
+        necessary and proportionate.</p>
+      <p class="reveal">Overly broad control can suppress political criticism, historical inquiry,
+        religious discussion and controversial ideas. It may also weaken academic freedom,
+        critical thinking and knowledge production while encouraging self-censorship.</p>
+    </div>
+  </section>
+
+  <!-- Beat 6 · why open data, why this database -->
+  <section class="chapter callout" id="open-data" data-scene="open-data" aria-labelledby="h-open-data">
+    <div class="callout-card">
+      <p class="kicker reveal"><i class="fa-solid fa-database" aria-hidden="true"></i>Part 1 · The law</p>
+      <h2 id="h-open-data" class="reveal">Why should this record be open — and why did INITIATE.MY build it?</h2>
+      <p class="reveal">When prohibition records are difficult to access, incomplete or
+        inconsistently recorded, it becomes harder for the public to understand how the law has
+        been used. Democratising the data means making it accessible, comprehensive and accurate —
+        so that researchers, civil society organisations, students, think tanks, journalists,
+        policymakers and Members of Parliament can take part in informed debate.</p>
+      <p class="reveal">INITIATE.MY developed this database to bring together, clean and
+        categorise prohibition data published by the Ministry of Home Affairs. It is designed as
+        an open-source resource to:</p>
+      <ul class="goal-list reveal">
+        <li><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>support research and public understanding;</li>
+        <li><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>identify trends in publication bans;</li>
+        <li><i class="fa-solid fa-comments" aria-hidden="true"></i>encourage evidence-based policy discussions; and</li>
+        <li><i class="fa-solid fa-file-pen" aria-hidden="true"></i>provide recommendations for the government, legal community and civil society.</li>
+      </ul>
+      <p class="reveal">The aim is not only to document what has been banned, but to support a
+        more open discussion about national security, public order, the rule of law and freedom of
+        expression in Malaysia.</p>
+    </div>
+  </section>
+
+  <!-- ============ ACT II · THE RECORD ============ -->
+
+  <!-- Beat 7 · bans over time: the book rain -->
+  <section class="chapter full tone-wash" id="per-year" data-scene="per-year" aria-labelledby="h-per-year">
     <div class="full-head">
       <p class="kicker reveal"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>Part 2 · Time</p>
-      <h2 id="h-per-year" class="reveal">One year towers over the other seventy-four.</h2>
-      <p class="reveal">After the great purge of the Emergency years, banning became a steady background hum punctuated by waves: the mid-1970s, twin surges in 1992 and 1994 of nearly 150 titles each, 1999, and the mid-2000s. The analysis cautions that quiet years may reflect gaps in the gazette record as much as genuine restraint.</p>
+      <h2 id="h-per-year" class="reveal">Bans came in waves, not at a steady rate.</h2>
+      <p class="reveal">The dataset records 3,213 publication bans. The largest concentration
+        appeared in the early 1950s — 787 bans, or 24.5% of the dataset — followed by another
+        sustained enforcement cycle in the early-to-mid-1990s, with 715, or 22.2%. Between and
+        after these peaks the pattern stayed uneven: 247 bans in the 1960s, 408 in the 1970s, 358
+        in the 1980s, 399 in the 2000s, and 229 in the 2010s.</p>
     </div>
     <figure class="wide-fig">
-      <div class="chart-card">
-        <h3>Gazetted publications per year, 1950–2025</h3>
-        <div class="chart ch-md" id="c-peryear" role="img"
-             aria-label="Line chart of gazetted publications per year, 1950 to 2025. A sharp spike reaches 445 in 1951, then counts stay below 150 for the rest of the series, with smaller waves around 1975, the early and late 1990s, the mid-2000s and 2017."></div>
+      <div class="chart-card rain-card">
+        <div class="rain-controls">
+          <div class="rain-views" role="group" aria-label="How to view bans over time">
+            <button type="button" data-view="rain" aria-pressed="true"><i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i> Book rain</button>
+            <button type="button" data-view="year" aria-pressed="false">Per year</button>
+            <button type="button" data-view="decade" aria-pressed="false">Per decade</button>
+            <button type="button" data-view="cume" aria-pressed="false">Cumulative</button>
+          </div>
+          <span id="rain-readout" class="rain-readout num" role="status"></span>
+        </div>
+        <div id="rain-view-rain">
+          <div id="rain-box" class="rain-box" role="img"
+               aria-label="Animated visual: books rain into a box and pile up, one book for roughly every twelve publications banned in the selected year range. The Per year, Per decade and Cumulative views carry the exact figures."></div>
+          <div class="rain-sliders">
+            <label class="rain-slider-label">From
+              <input type="range" id="rain-from" step="1" aria-label="Start year of the selected range">
+            </label>
+            <label class="rain-slider-label">To
+              <input type="range" id="rain-to" step="1" aria-label="End year of the selected range">
+            </label>
+          </div>
+        </div>
+        <div id="rain-view-year" hidden>
+          <div class="chart ch-md" id="c-rain-year" role="img"
+               aria-label="Line chart of gazetted publications per year, 1950 to 2026. A sharp spike reaches 445 in 1951, then counts stay below 150, with waves around 1975, twin surges of 148 and 149 in 1992 and 1994, 108 in 1999, the mid-2000s, 69 in 2017, and 27 recorded so far in 2026."></div>
+        </div>
+        <div id="rain-view-decade" hidden>
+          <div class="chart ch-md" id="c-rain-decade" role="img"
+               aria-label="Column chart of bans per decade: 1950s 787, 1960s 247, 1970s 408, 1980s 358, 1990s 715, 2000s 399, 2010s 229, and 70 so far in the incomplete 2020s, drawn as an outlined column."></div>
+        </div>
+        <div id="rain-view-cume" hidden>
+          <div class="chart ch-md" id="c-rain-cume" role="img"
+               aria-label="Area chart of cumulative bans, rising steeply from 136 in 1950 to over 700 by 1952, then climbing steadily to reach 3,213 by 2026."></div>
+        </div>
       </div>
-      <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Move along the line to read any year.</figcaption>
+      <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> One falling book stands
+        for roughly 12 gazetted publications. Drag the year handles to pile up any era, or switch
+        views for the exact numbers. The 2020s are incomplete and should not be compared directly
+        with full decades.</figcaption>
     </figure>
+    <div class="full-foot">
+      <p class="reveal">Lower numbers after 2000 do not necessarily mean that overall content
+        regulation declined: this dataset covers formal publication bans, not the wider regulation
+        of online content. And the current decade — 70 bans so far — is still being written.</p>
+    </div>
     <aside class="pull-quote">
       <span class="pq-rule" aria-hidden="true"></span>
       <span class="pq-number">445</span>
-      <span class="pq-label">publications gazetted in 1951, at the height of the Malayan Emergency — three times more than any year since</span>
+      <span class="pq-label">publications gazetted in 1951 alone, at the height of the Malayan
+        Emergency — the largest single year in the record</span>
     </aside>
   </section>
 
-  <!-- Scene 4 · pinned LEFT (58/42) -->
-  <section class="chapter pinned pin-left" aria-labelledby="h-by-decade">
-    <div class="stage">
-      <div class="stage-inner">
-        <figure class="viz" data-viz="by-decade">
-          <div class="chart-card">
-            <h3>Publications per decade, stacked by cluster</h3>
-            <div class="legend-slot"></div>
-            <div class="chart ch-md" id="c-decades" role="img"
-                 aria-label="Stacked column chart of publications per decade, coloured by cluster. The 1950s column is the tallest at 787, dominated by subversive ideological and political content. The 1990s form a second peak at 717 with a more mixed composition. Religious doctrinal deviance appears from the 1980s onward."></div>
-          </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hover a segment, or a legend entry to isolate a cluster.</figcaption>
-        </figure>
-      </div>
-    </div>
-    <div class="flow">
-      <div class="scene" id="by-decade" data-scene="by-decade">
-        <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i>Part 2 · Time</p>
-          <h2 id="h-by-decade" class="reveal">Each decade bans in its own key.</h2>
-          <p class="reveal">Stack the same timeline by <em>cluster</em> — the analysis&rsquo;s classification of why a work was banned — and the waves acquire colours. The towering 1950s are almost monochrome with subversive political content; the second peak in the 1990s is a blend in which religious deviance and unidentified grounds take over. The volume of banning changed less than its target did.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scene 5 · wide two-up -->
-  <section class="chapter full twoup tone-wash" id="clusters" data-scene="clusters" aria-labelledby="h-clusters">
-    <div class="full-head">
-      <p class="kicker reveal"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Part 3 · What was banned</p>
-      <h2 id="h-clusters" class="reveal">Politics leads the ledger — but &ldquo;unidentified&rdquo; runs a close second.</h2>
-      <p class="reveal">Across all 75 years, subversive ideological and political content is the largest cluster at 978 titles, ahead of obscene or immoral publications (715) and religious doctrinal deviance (545). Zoom into subclusters and the censor&rsquo;s two archetypal enemies emerge: communism/socialism with 888 titles, pornography with 489.</p>
-    </div>
-    <div class="duo-row">
-      <figure>
-        <div class="chart-card">
-          <h3>Publications by cluster, all years</h3>
-          <div class="chart ch-md" id="c-clusters" role="img"
-               aria-label="Horizontal bar chart of publications by cluster: subversive ideological and political content 978; general/unidentified 934; obscene or immoral publications 715; religious doctrinal deviance 545; race, religion and royalty (3R issues) 14; administrative/unclear ground 1."></div>
-        </div>
-        <figcaption>Each cluster keeps its colour everywhere in the story.</figcaption>
-      </figure>
-      <figure>
-        <div class="chart-card">
-          <h3>Top 15 subclusters</h3>
-          <div class="chart ch-lg" id="c-subclusters" role="img"
-               aria-label="Horizontal bar chart of the 15 most frequent subclusters. Administrative/unclear ground leads at 937, followed by communism/socialism at 888 and pornography at 489. Below them: other, erotic/immoral content, Al-Arqam, revolutionary politics, LGBT, Syiah, ethnic incitement, Ahmadiyyah, and smaller categories."></div>
-        </div>
-        <figcaption>A publication can carry more than one subcluster label.</figcaption>
-      </figure>
-    </div>
-    <div class="full-foot" id="subclusters" data-scene="subclusters">
-      <p class="reveal">Further down sit the specific campaigns — the Al-Arqam movement (91), revolutionary politics (64), LGBT material (37), Syiah and Ahmadiyyah doctrinal works. And topping the subcluster chart is the honest bucket: administrative or unclear grounds, 937 entries.</p>
-      <aside class="pull-quote reveal">
-        <span class="pq-rule" aria-hidden="true"></span>
-        <span class="pq-number">934</span>
-        <span class="pq-label">titles — nearly a third of the list — sit in the general/unidentified cluster, with no clear ground for the ban recorded</span>
-      </aside>
-    </div>
-  </section>
-
-  <!-- Scene 6 · pinned RIGHT, crossfading pair -->
+  <!-- Beat 8 · languages -->
   <section class="chapter pinned pin-right" aria-labelledby="h-languages">
     <div class="stage">
       <div class="stage-inner">
         <figure class="viz" data-viz="languages">
           <div class="chart-card">
-            <h3>Top languages of gazetted publications</h3>
+            <h3>Languages of banned publications</h3>
             <div class="chart ch-md" id="c-languages" role="img"
-                 aria-label="Column chart of the top languages of gazetted publications: Chinese 1,145, English 939, Malay 758, then a steep drop to Tamil at 86 and Indonesian at 48, with Arabic, Japanese, Russian and Jawi at 3 each."></div>
+                 aria-label="Column chart of publication languages: Chinese 1,158, English 947, Malay 765, unknown 263, and all other languages combined 150, shown in a muted colour. The grouping applies to this chart only — the full breakdown is in the Data tab."></div>
           </div>
-          <figcaption>Language is recorded for most, not all, of the 3,187 titles.</figcaption>
-        </figure>
-        <figure class="viz" data-viz="origin-lang">
-          <div class="chart-card">
-            <h3>Publication origin × language</h3>
-            <div class="chart ch-sm" id="c-originlang" role="img"
-                 aria-label="Heatmap of publication origin against the top five languages. Foreign publications are most often English (641) then Chinese (323). Local publications are overwhelmingly Malay (456). Publications of unclear origin are most often Chinese (728)."></div>
-          </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Darker means more. Hover any cell for the pairing.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Smaller languages are
+            grouped as &ldquo;Other&rdquo; in this chart only — the full breakdown stays in the
+            <a href="#/data">Data</a> tab. Language is not evidence of a particular ethnicity,
+            ideology or type of content.</figcaption>
         </figure>
       </div>
     </div>
     <div class="flow">
       <div class="scene" id="languages" data-scene="languages">
         <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-language" aria-hidden="true"></i>Part 4 · Language &amp; origin</p>
+          <p class="kicker reveal"><i class="fa-solid fa-language" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
           <h2 id="h-languages" class="reveal">Three languages carry the banned list.</h2>
-          <p class="reveal">Chinese leads with 1,145 titles, followed by English (939) and Malay (758) — together the overwhelming majority of everything gazetted. Tamil (86) and Indonesian (48) trail far behind. The ranking mirrors the country&rsquo;s reading publics, but as the next chart shows, each language tells a different story about where the threat was seen to come from.</p>
-        </div>
-      </div>
-      <div class="scene" id="origin-lang" data-scene="origin-lang">
-        <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-globe" aria-hidden="true"></i>Part 4 · Language &amp; origin</p>
-          <h2 id="h-origin-lang" class="reveal">Language is a fingerprint of origin.</h2>
-          <p class="reveal">Foreign bans are most often English (641 titles). Local bans are overwhelmingly Malay (456 of the 618 local titles). And the great mass of Chinese-language bans — 728 titles — sits in the <em>unclear</em> column: imported pamphlets and bookshop stock whose provenance the record never resolved. Uncertainty in this dataset is not random; most often, it reads Chinese.</p>
+          <p class="reveal">Chinese is the largest recorded language category, with 1,158 entries,
+            followed by English with 947 and Malay with 765 — together, 2,870 records. Another 263
+            records have no known language.</p>
+          <p class="reveal">These figures show the linguistic distribution of prohibited
+            publications, but they do not explain why the materials were banned. Language should
+            not be treated as evidence of a particular ethnicity, ideology or type of content —
+            and further verification, by decade, content category and official justification, is
+            needed before conclusions are drawn about how these patterns changed over time.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Scene 7 · pinned LEFT (55/45) -->
-  <section class="chapter pinned pin-left" aria-labelledby="h-publishers">
+  <!-- Beat 9 · types + origin (pictograph, then the map) -->
+  <section class="chapter pinned pin-left" aria-labelledby="h-types-origin">
     <div class="stage">
       <div class="stage-inner">
-        <figure class="viz" data-viz="publishers">
+        <figure class="viz" data-viz="types-origin">
           <div class="chart-card">
-            <h3>Top 15 publishers by gazetted titles</h3>
-            <div class="chart ch-lg" id="c-publishers" role="img"
-                 aria-label="Horizontal bar chart of the 15 publishers with the most gazetted titles. Sam Luen Bookshop leads at 95, far ahead of Yayasan Perkhabaran Injil at 35 and Foreign Language Publishing House at 21. The list mixes Chinese-language bookshops, Indonesian religious publishers, and Californian paperback houses such as Greenleaf Classic and Brandon House."></div>
+            <h3>What form did banned publications take?</h3>
+            <div class="chart pict-chart" id="c-types" role="img"
+                 aria-label="Pictograph of publication types: printed documents account for 3,148 of 3,213 records, or 98%; audio and recordings for 57; and physical goods, visual media and digital or electronic materials together for eight. One icon represents 50 records."></div>
           </div>
-          <figcaption>Counted where a publisher was recorded (1,757 distinct publishers overall).</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> One icon = 50 records.
+            The print focus reflects the scope of the PPPA dataset — it does not mean audiovisual
+            or digital content was otherwise unregulated.</figcaption>
+        </figure>
+        <figure class="viz" data-viz="origin-map">
+          <div class="chart-card">
+            <h3>Where did they come from?</h3>
+            <div class="chart ch-lg" id="c-map" role="img"
+                 aria-label="Schematic map of Malaysia showing publication origin: foreign publications 1,477, or 46%, arriving from outside; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
+          </div>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A schematic, not a
+            survey map. Because one-third of records lack a confirmed origin, comparisons between
+            foreign and local enforcement should remain cautious.</figcaption>
         </figure>
       </div>
     </div>
     <div class="flow">
-      <div class="scene" id="publishers" data-scene="publishers">
+      <div class="scene" id="types-origin" data-scene="types-origin">
         <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-user-pen" aria-hidden="true"></i>Part 5 · Who published it</p>
-          <h2 id="h-publishers" class="reveal">From a Chinese bookshop to California paperback mills.</h2>
-          <p class="reveal">The top 15 sketches the whole dataset in miniature: publishing houses of the communist world, religious presses like Yayasan Perkhabaran Injil and Indonesian imprints, and the Californian erotica houses — Greenleaf Classic, Brandon House — of the paperback boom. An author or translator is recorded for only 61.9% of publications.</p>
-          <aside class="pull-quote small reveal">
-            <span class="pq-rule" aria-hidden="true"></span>
-            <span class="pq-number">95</span>
-            <span class="pq-label">gazetted titles trace to a single publisher — Sam Luen Bookshop — nearly triple the runner-up</span>
-          </aside>
+          <p class="kicker reveal"><i class="fa-solid fa-book" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
+          <h2 id="h-types-origin" class="reveal">Almost everything banned was ink on paper.</h2>
+          <p class="reveal">The dataset is overwhelmingly focused on print. Printed documents
+            account for 3,148 of 3,213 records, or 98%. Audio and recordings account for 57, while
+            physical goods, visual media and digital or electronic materials together account for
+            only eight.</p>
+          <p class="reveal">This reflects the print-based scope of the PPPA dataset — it does not
+            mean that audiovisual or digital content was otherwise unregulated.</p>
+        </div>
+      </div>
+      <div class="scene" id="origin-map" data-scene="origin-map">
+        <div class="scene-text">
+          <p class="kicker reveal"><i class="fa-solid fa-globe" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
+          <h2 id="h-origin-map" class="reveal">Foreign titles lead — but a third belong on no map.</h2>
+          <p class="reveal">Foreign-origin publications form the largest category, with 1,477
+            records, or 46%. Local publications account for 669, or 20.8%. And for 1,067 records —
+            33.2% — the origin remains unclear.</p>
+          <p class="mini-stat reveal"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><strong>1 in 3</strong> records has no confirmed country of origin</p>
+          <p class="reveal">Because a third of the records lack a confirmed origin, comparisons
+            between foreign and local enforcement should remain cautious.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Scene 8 · pinned RIGHT crossfading pair, deep tonal band -->
-  <section class="chapter pinned pin-right tone-deep" aria-labelledby="h-origin-cluster">
+  <!-- Beat 10 · the people behind the publications -->
+  <section class="chapter full tone-wash" id="people" data-scene="people" aria-labelledby="h-people">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-user-pen" aria-hidden="true"></i>Part 4 · The people</p>
+      <h2 id="h-people" class="reveal">Who appears most often behind banned publications?</h2>
+      <p class="reveal">No single named author or translator dominates the dataset. Wei Wei
+        appears most frequently with 21 bans, followed by Ustaz Ashaari Muhammad with 18 and
+        Marcus Van Heller with 16 — the ten displayed names account for just 115 bans, a
+        relatively dispersed pattern. Publisher data concentrates harder: Sam Luen Bookshop
+        records 95 bans, nearly triple any other name.</p>
+    </div>
+    <div class="trio-row">
+      <figure class="reveal">
+        <div class="chart-card">
+          <h3><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> Authors &amp; translators</h3>
+          <div class="chart podium-chart" id="c-authors" role="img"
+               aria-label="Podium chart of the ten most frequent named authors and translators: Wei Wei 21, Ustaz Ashaari Muhammad 18, Marcus Van Heller 16, Lenin 10, Anonymous 9, Kazuo Koike 9, Kenneth E. Hagin 9, Kassim Ahmad 8, Hsia Fei 8 and Ustaz Haji Ashaari Muhammad 7 — 115 bans in total."></div>
+        </div>
+        <figcaption>The ten displayed names account for 115 bans.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="chart-card">
+          <h3><i class="fa-solid fa-print" aria-hidden="true"></i> Printers</h3>
+          <div class="chart podium-chart" id="c-printers" role="img"
+               aria-label="Podium chart of the ten most frequent named printers: Yayasan Perkhabaran Injil 35, then Yakin of Surabaya 17, United States of America 15, Vinlin Press 11, New Tide Printing Factory 10, and further entries of 9 or fewer. The field also contains locations and other values that are not printers."></div>
+        </div>
+        <figcaption>The printer field includes locations and other values that are not printers —
+          it needs cleaning before firm conclusions about production networks.</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="chart-card">
+          <h3><i class="fa-solid fa-building" aria-hidden="true"></i> Publishers</h3>
+          <div class="chart podium-chart" id="c-publishers" role="img"
+               aria-label="Podium chart of the ten most frequent publishers: Sam Luen Bookshop 95, Yayasan Perkhabaran Injil 35, Foreign Language Publishing House 21, Penerbitan Hikmah 20, The New China Bookshop 19, and further entries of 16 or fewer."></div>
+        </div>
+        <figcaption>Repeated prohibitions attach to certain names — but high counts may reflect
+          publication volume, repeated imports, multiple editions or inconsistent naming rather
+          than deliberate targeting.</figcaption>
+      </figure>
+    </div>
+    <aside class="pull-quote">
+      <span class="pq-rule" aria-hidden="true"></span>
+      <span class="pq-number">95</span>
+      <span class="pq-label">bans record Sam Luen Bookshop as publisher — which shows repetition,
+        not, by itself, that the publisher was deliberately targeted</span>
+    </aside>
+  </section>
+
+  <!-- Beat 11 · what bans were for, over time (stack → lines crossfade) -->
+  <section class="chapter pinned pin-right" aria-labelledby="h-clusters-time">
     <div class="stage">
       <div class="stage-inner">
-        <figure class="viz" data-viz="origin-cluster">
+        <figure class="viz" data-viz="clusters-time">
           <div class="chart-card">
-            <h3>Publication origin × cluster</h3>
-            <div class="chart ch-md" id="c-origincluster" role="img"
-                 aria-label="Heatmap of cluster against publication origin. Foreign origin concentrates in subversive ideological and political content (513) and obscene or immoral publications (343). Local origin concentrates in religious doctrinal deviance (335). Unclear origin concentrates in general/unidentified (530) and subversive content (396)."></div>
+            <h3>Bans per decade, stacked by cluster</h3>
+            <div class="legend-slot"></div>
+            <div class="chart ch-md" id="c-decades" role="img"
+                 aria-label="Stacked column chart of bans per decade, coloured by research cluster. The 1950s column reaches 787, dominated by subversive ideological and political content at 660. The 1990s reach 715, led by obscene or immoral publications at 411 and religious doctrinal deviance at 275. The 2020s column stands at 70 so far."></div>
           </div>
-          <figcaption>Where a work came from, against why it was banned.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hover a segment, or a
+            legend entry to isolate a cluster. Each cluster keeps its colour everywhere in the story.</figcaption>
+        </figure>
+        <figure class="viz" data-viz="clusters-lines">
+          <div class="chart-card">
+            <h3>The same decades, as trajectories</h3>
+            <div class="legend-slot"></div>
+            <div class="chart ch-md" id="c-clusterlines" role="img"
+                 aria-label="Line chart of bans per decade by cluster. Subversive ideological and political content starts at 660 in the 1950s and falls away. Obscene or immoral publications rise through the 1970s and 1980s to peak at 411 in the 1990s. Religious doctrinal deviance appears in the 1980s, peaks at 275 in the 1990s, and leads the 2010s with 153. The final segment, the incomplete 2020s, is dashed."></div>
+          </div>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The dashed final
+            segment is the incomplete 2020s. Classifications are INITIATE.MY&rsquo;s research
+            taxonomies — they do not, by themselves, prove government policy intent.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="scene" id="clusters-time" data-scene="clusters-time">
+        <div class="scene-text">
+          <p class="kicker reveal"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Part 5 · What was banned</p>
+          <h2 id="h-clusters-time" class="reveal">What were publications banned for?</h2>
+          <p class="reveal">The composition of publication bans changed substantially over time.
+            In the 1950s, subversive ideological and political content accounted for 660 of 787
+            bans — 83.9% of the decade&rsquo;s total.</p>
+          <p class="reveal">By the 1990s, obscene or immoral publications had become the largest
+            category, with 411 bans, while religious doctrinal deviance recorded 275. Religious
+            doctrinal classifications remained substantial in the 2000s, with 194 bans, and the
+            2010s, with 153.</p>
+        </div>
+      </div>
+      <div class="scene" id="clusters-lines" data-scene="clusters-lines">
+        <div class="scene-text">
+          <p class="kicker reveal"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Part 5 · What was banned</p>
+          <h2 id="h-clusters-lines" class="reveal">Two themes tower over everything else.</h2>
+          <p class="reveal">Across the full dataset, erotic or immoral content is the largest
+            subcluster, with 1,097 bans, or 34.1%. Communism or socialism follows with 850, or
+            26.5%. Together, these two categories account for 60.6% of all records — making moral
+            regulation and ideological security the two largest classified themes.</p>
+          <p class="reveal">Other recorded subclusters include pornography with 155 bans, Al-Arqam
+            with 95, revolutionary politics with 78, LGBT-related content with 41 and ethnic
+            incitement with 15. Smaller numbers should not be read as lower policy significance —
+            their relevance depends on the period, legal basis and nature of the alleged harm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beats 12 & 13 · KDN justifications, then the decade-mix heatmap -->
+  <section class="chapter pinned pin-left tone-deep" aria-labelledby="h-kdn">
+    <div class="stage">
+      <div class="stage-inner">
+        <figure class="viz" data-viz="kdn">
+          <div class="chart-card">
+            <h3>Stated KDN justifications per decade, 1980s onward</h3>
+            <div class="legend-slot"></div>
+            <div class="chart ch-md" id="c-kdnlines" role="img"
+                 aria-label="Line chart of stated KDN justifications per decade from the 1980s onward. Morality peaks at 383 in the 1990s and public order at 282; both fall thereafter, with public order leading the 2010s at 123. All five other grounds stay near zero throughout. Justifications are recorded for 1,590 of 3,213 publications, only nine of them before 1984."></div>
+          </div>
+          <figcaption><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Coverage
+            caveat: official justifications exist for only 1,590 of 3,213 records — about half the
+            dataset, and only nine pre-date 1984. These findings apply to records with a stated
+            justification.</figcaption>
         </figure>
         <figure class="viz" data-viz="decade-mix">
           <div class="chart-card">
             <h3>Cluster share within each decade</h3>
             <div class="chart ch-md" id="c-decademix" role="img"
-                 aria-label="Heatmap showing each cluster's share within each decade. Subversive content is 82% of the 1950s, falling to 1% by the 1990s. Obscene or immoral publications peak at 38% in the 1970s. Religious doctrinal deviance grows from 5% in the 1980s to 67% in the 2010s. In the small 2020s sample, subversive content returns at 56%."></div>
+                 aria-label="Heatmap showing each cluster's share within each decade. Subversive content is 84% of the 1950s and fades to 1% by the 1990s. Obscene or immoral publications peak at 65% of the 1980s and 58% of the 1990s. Religious doctrinal deviance grows from 13% in the 1980s to 67% of the 2010s. In the incomplete 2020s, subversive content returns at 56%."></div>
           </div>
-          <figcaption>Each column sums to 100%. The 2020s column covers only 43 titles.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Each column sums to
+            100%. The 2020s column covers only 70 titles from an unfinished decade.</figcaption>
         </figure>
       </div>
     </div>
     <div class="flow">
-      <div class="scene" id="origin-cluster" data-scene="origin-cluster">
+      <div class="scene" id="kdn" data-scene="kdn">
         <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-table-cells" aria-hidden="true"></i>Part 6 · Cross-currents</p>
-          <h2 id="h-origin-cluster" class="reveal">Foreign threats were political. Local ones were doctrinal.</h2>
-          <p class="reveal">Put origin against cluster and the censor&rsquo;s worldview appears in one grid. Foreign publications were banned above all as subversive politics (513) and obscenity (343). Local publications cluster somewhere else entirely: religious doctrinal deviance, with 335 of the 618 local titles — more than half. The enemy without carried ideology; the enemy within, heresy.</p>
+          <p class="kicker reveal"><i class="fa-solid fa-stamp" aria-hidden="true"></i>Part 5 · What was banned</p>
+          <h2 id="h-kdn" class="reveal">What reasons did the Ministry itself give?</h2>
+          <p class="reveal">Official KDN justifications are available for 1,590 of the 3,213
+            publications, of which only nine pre-date 1984. Two reasons dominate: morality
+            accounts for 895 bans and public order for 654 — together, 97.4% of all recorded
+            justifications.</p>
+          <p class="reveal">Every other ground appears only rarely: causing public alarm 23,
+            public interest nine, security five, national interest three, contrary to law one.
+            Formal <em>security</em> grounds were recorded in only five cases — even though the
+            research classifies many publications as ideological or politically subversive.</p>
+          <div class="grounds grounds-mini reveal" aria-hidden="true">
+            <span class="ground-chip is-hot">Morality · 895</span>
+            <span class="ground-chip is-hot">Public order · 654</span>
+            <span class="ground-chip">Public alarm · 23</span>
+            <span class="ground-chip">Public interest · 9</span>
+            <span class="ground-chip">Security · 5</span>
+            <span class="ground-chip">National interest · 3</span>
+            <span class="ground-chip">Contrary to law · 1</span>
+          </div>
         </div>
       </div>
       <div class="scene" id="decade-mix" data-scene="decade-mix">
         <div class="scene-text">
-          <p class="kicker reveal"><i class="fa-solid fa-table-cells" aria-hidden="true"></i>Part 6 · Cross-currents</p>
-          <h2 id="h-decade-mix" class="reveal">The state&rsquo;s anxieties migrate across the grid.</h2>
-          <p class="reveal">Normalise each decade to 100% and the migration is unmistakable. Subversive content is 82% of the 1950s and all but vanishes by the 1990s (1%). Obscenity crests in the 1970s at 38%. Religious deviance climbs from 5% in the 1980s to 28%, then 42%, then 67% of the 2010s. And in the 2020s the political category surges back to 56% — though that column rests on just 43 titles, so read it as a hint, not a verdict.</p>
+          <p class="kicker reveal"><i class="fa-solid fa-table-cells" aria-hidden="true"></i>Part 5 · What was banned</p>
+          <h2 id="h-decade-mix" class="reveal">The focus of enforcement migrated across the grid.</h2>
+          <p class="reveal">Normalise each decade to 100% and the shift is unmistakable. The 1950s
+            were dominated by subversive ideological and political content — 660 of 787 bans. By
+            the 1980s the focus had moved to moral and religious content: 232 obscene or immoral
+            bans against 33 subversive and 47 religious doctrinal cases. In the 1990s, obscene or
+            immoral publications (411) and religious doctrinal deviance (275) together accounted
+            for 95.9% of the decade&rsquo;s 715 bans.</p>
+          <p class="reveal">In the 2000s the two classifications ran almost equal, at 192 and 194;
+            religious doctrinal deviance then led the 2010s with 153 of 229 bans. The 2020s so far
+            record 39 subversive, 27 obscene or immoral, three religious doctrinal and one
+            3R-related ban — an incomplete decade. These patterns reflect INITIATE.MY&rsquo;s
+            research taxonomies and do not, by themselves, prove government policy intent.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Scene 9 · centered callout band -->
-  <section class="chapter callout tone-wash" id="notes" data-scene="notes" aria-labelledby="h-notes">
-    <div class="callout-card">
-      <p class="kicker reveal"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Part 7 · Reading the labels carefully</p>
-      <h2 id="h-notes" class="reveal">The labels come with a margin of error — and the researchers wrote it down.</h2>
-      <p class="reveal">103 records — 3.2% of the dataset — carry a researcher&rsquo;s note about classification quality. Most are free-form judgement calls (98 records): an origin inferred from a place of printing, a cluster &ldquo;assumed as selected&rdquo;, a language that could not be determined; five records are flagged outright as having insufficient information. Every chart above rests on labels still under review.</p>
-      <div class="chart-card reveal card">
-        <h3>Researcher note quality flags</h3>
-        <div class="chart" id="c-notes" role="img"
-             aria-label="3.2% of records — 103 of 3,187 — carry a researcher note about classification quality. Breakdown: 98 free-form notes and 5 flagged as having insufficient information."></div>
+  <!-- Beat 14 · most common types of banned publication -->
+  <section class="chapter full" id="subclusters" data-scene="subclusters" aria-labelledby="h-subclusters">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-tags" aria-hidden="true"></i>Part 5 · What was banned</p>
+      <h2 id="h-subclusters" class="reveal">The most common types of banned publication.</h2>
+      <p class="reveal">Two themes dominate INITIATE.MY&rsquo;s taxonomies: erotic or immoral
+        content, with 1,097 bans (34.1%), and communism or socialism, with 850 (26.5%) — together
+        1,947 bans, or 60.6% of the dataset. Pornography is classified separately, with 155 bans;
+        combined with erotic or immoral content, the broader obscene or immoral cluster holds
+        1,252 records, although the two categories remain distinct in the research.</p>
+    </div>
+    <figure class="wide-fig">
+      <div class="chart-card">
+        <h3>Every subcluster, by ban frequency</h3>
+        <div class="chart ch-lg" id="c-suball" role="img"
+             aria-label="Horizontal bar chart of all fourteen subclusters: erotic/immoral content 1,097, communism/socialism 850, other 573, administrative/unclear ground 281, pornography 155, Al-Arqam 95, revolutionary politics 78, LGBT 41, ethnic incitement 15, Syiah 10, Ahmadiyyah 6, terrorism/militancy 5, insults to religion 4, and royalty 3."></div>
+      </div>
+      <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A publication can carry
+        more than one subcluster label. Smaller counts do not mean lower policy significance —
+        their importance depends on historical context, official legal ground and alleged harm,
+        not frequency alone.</figcaption>
+    </figure>
+    <div class="full-foot">
+      <p class="reveal">A further 854 publications — 26.6% — fall under &ldquo;Other&rdquo; or
+        administrative and unclear grounds, limiting more specific interpretation. Below the big
+        two sit the named campaigns: Al-Arqam (95), revolutionary politics (78), LGBT-related
+        content (41), ethnic incitement (15), Syiah (10), Ahmadiyyah (6), terrorism or militancy
+        (5), insults to religion (4) and royalty (3).</p>
+    </div>
+  </section>
+
+  <!-- Beat 15 · crosswalk: legal ground × content -->
+  <section class="chapter pinned pin-right" aria-labelledby="h-crosswalk">
+    <div class="stage">
+      <div class="stage-inner">
+        <figure class="viz" data-viz="crosswalk">
+          <div class="chart-card">
+            <h3>KDN&rsquo;s legal ground × INITIATE.MY&rsquo;s content cluster</h3>
+            <div class="chart ch-md" id="c-crosswalk" role="img"
+                 aria-label="Heatmap of KDN justification against INITIATE.MY content cluster, for the 1,590 records with a stated justification. Morality concentrates in obscene or immoral publications: 820 of 895 cases. Public order concentrates in religious doctrinal deviance: 565 of 654. Communism or socialism was formally justified on security grounds in only one case, against twelve under public order."></div>
+          </div>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Rows are the legal
+            ground the Ministry recorded; columns are what the publication was about. Related — but
+            not the same thing.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="scene" id="crosswalk" data-scene="crosswalk">
+        <div class="scene-text">
+          <p class="kicker reveal"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>Part 5 · What was banned</p>
+          <h2 id="h-crosswalk" class="reveal">The legal ground is not the content.</h2>
+          <p class="reveal">KDN&rsquo;s justifications show the formal legal ground used to
+            prohibit a publication; INITIATE.MY&rsquo;s clusters describe what the publication was
+            about. They are related but should not be treated the same.</p>
+          <p class="reveal">Most publications prohibited on morality grounds were classified as
+            obscene or immoral — 820 of 895 cases, including 701 erotic or immoral publications,
+            119 pornography cases and 37 LGBT-related publications. Public order was used mainly
+            for religious doctrinal content: 565 of 654 public-order bans, including 90 Al-Arqam,
+            seven Syiah and six Ahmadiyyah cases.</p>
+          <p class="reveal">Ideological publications look different. In the post-1984 records,
+            communism or socialism appears in only <em>one</em> case formally justified on
+            security grounds, against 12 under public order. That likely understates the
+            historical use of security justifications: most communist, socialist and revolutionary
+            publications were banned before 1984, outside the available justification data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACT III · NOW, AND NEXT ============ -->
+
+  <!-- Beat 16 · the July 2026 revocations -->
+  <section class="chapter full tone-wash" id="revocations" data-scene="revocations" aria-labelledby="h-revocations">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Part 6 · Now, and next</p>
+      <h2 id="h-revocations" class="reveal">Update: five bans were lifted in July 2026.</h2>
+      <p class="reveal">In July 2026, the Ministry of Home Affairs gazetted five revocation orders.
+        The affected publications may now be legally printed, published, distributed, sold and
+        possessed.</p>
+    </div>
+    <div class="revoke-list" role="list">
+      <div class="revoke-card reveal" role="listitem">
+        <span class="revoke-title">Islam Without Extremes: A Muslim Case for Liberty</span>
+        <span class="revoke-meta"><span class="num">Banned 2017</span> · Religious doctrinal deviance</span>
+        <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
+      </div>
+      <div class="revoke-card reveal" role="listitem">
+        <span class="revoke-title">Komrad Asi (Rejimen 10) Dalam Denyut Nihilisme Sejarah</span>
+        <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
+        <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
+      </div>
+      <div class="revoke-card reveal" role="listitem">
+        <span class="revoke-title">Sigandi</span>
+        <span class="revoke-meta"><span class="num">Banned 2026</span> · Revolutionary politics</span>
+        <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
+      </div>
+      <div class="revoke-card reveal" role="listitem">
+        <span class="revoke-title">Memoir Shamsiah Fakeh Dari Awas Ke Rejimen Ke-10</span>
+        <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
+        <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
+      </div>
+      <div class="revoke-card reveal" role="listitem">
+        <span class="revoke-title">Mao Zedong: China Dalam Dunia Abad ke-20</span>
+        <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
+        <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
+      </div>
+    </div>
+    <div class="full-foot">
+      <p class="reveal">The database still includes these five publications because their bans
+        remained in force during the research period. Their inclusion reflects the historical
+        prohibition record rather than their current legal status — so they are marked as
+        <em>revoked after the study period</em> in the <a href="#/data">Data</a> tab, not removed.</p>
+    </div>
+  </section>
+
+  <!-- Beat 17 · reform recommendations -->
+  <section class="chapter full" id="reform" data-scene="reform" aria-labelledby="h-reform">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-file-signature" aria-hidden="true"></i>Part 6 · Now, and next</p>
+      <h2 id="h-reform" class="reveal">How should Malaysia reform publication regulation?</h2>
+      <p class="reveal">Malaysia has a legitimate duty to protect national security, public order
+        and social harmony. But publication restrictions should address clearly demonstrated harm
+        and remain lawful, necessary, proportionate and open to review. INITIATE.MY&rsquo;s four
+        recommendations:</p>
+    </div>
+    <div class="reform-grid">
+      <div class="reform-card reveal">
+        <span class="reform-num num" aria-hidden="true">1</span>
+        <h3><i class="fa-solid fa-scroll" aria-hidden="true"></i> Commit to repeal — with immediate safeguards</h3>
+        <p>Commit to repealing the PPPA. Until repeal, every prohibition should state its legal
+          basis, supporting evidence, duration and appeal process. Controversy, offence or
+          disagreement with dominant political, moral or religious views should not be enough to
+          justify a ban.</p>
+      </div>
+      <div class="reform-card reveal">
+        <span class="reform-num num" aria-hidden="true">2</span>
+        <h3><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Review legacy bans; add sunset clauses</h3>
+        <p>The 1950s recorded 787 bans and the 1990s 715 — prohibitions that arose under different
+          political and security conditions and should not remain in force indefinitely. Each ban
+          should expire unless KDN can show it remains necessary and proportionate.</p>
+      </div>
+      <div class="reform-card reveal">
+        <span class="reform-num num" aria-hidden="true">3</span>
+        <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Use targeted measures before blanket bans</h3>
+        <p>Depending on the harm, age classifications, content advisories, restricted access,
+          limited redactions or action against direct incitement may be more appropriate.
+          Political criticism, historical inquiry, religious disagreement and minority beliefs
+          should not automatically be treated as security threats.</p>
+      </div>
+      <div class="reform-card reveal">
+        <span class="reform-num num" aria-hidden="true">4</span>
+        <h3><i class="fa-solid fa-database" aria-hidden="true"></i> Improve data quality and public access</h3>
+        <p>KDN should maintain a standardised, searchable, regularly updated database recording
+          each publication&rsquo;s title, author, publisher, language, origin, legal ground,
+          gazette reference, review status and revocation status — with missing information,
+          duplicates and misplaced entries clearly identified and corrected.</p>
       </div>
     </div>
   </section>
 
 </main>
 
-<!-- Scene 10 · inverted full-bleed closing -->
+<!-- Beat 18 · inverted full-bleed closing -->
 <footer class="fullscene closing" id="closing" data-scene="closing">
   <div class="hero-inner">
     <p class="kicker reveal"><i class="fa-solid fa-quote-left" aria-hidden="true"></i>Coda</p>
-    <h2 class="reveal">The banned list is a mirror, held up decade by decade.</h2>
+    <h2 class="reveal">The record shows the grounds shifting — not the impulse fading.</h2>
     <p class="standfirst reveal">
-      Across 3,187 publications and 75 years, the through-line is not the volume of censorship but its
-      moving target: communism in the Emergency years, imported obscenity in the 1970s and 80s,
-      religious deviance from the 1990s into the 2010s, and political content stirring again in the
-      small sample of the 2020s. The mirror has blind spots, and the analysis names them: two in five
-      titles have no clear origin, nearly a third sit in a general/unidentified cluster, quiet years
-      may be gaps in the gazette record rather than tolerance, and 3.2% of records carry explicit
-      researcher flags about classification quality. What the data says is striking; what it cannot
-      yet say is part of the story too.
+      Across 3,213 publications and 76 years, the through-line is a moving target: ideological
+      security in the Emergency era, then — from the 1980s onward — moral and religious content,
+      until the two largest classified themes, moral regulation and ideological security, account
+      for six in ten of everything ever gazetted. The Ministry&rsquo;s own stated grounds are
+      narrower still: morality and public order cover 97.4% of recorded justifications, and formal
+      security grounds appear in just five cases. The record has blind spots, and the analysis
+      names them: a third of origins are unconfirmed, official justifications exist for only about
+      half the dataset, and the current decade is unfinished. These classifications reflect
+      research taxonomies, not proof of policy intent. And the record still moves: in July 2026,
+      five bans were lifted. What the data shows is striking; what it cannot yet say — and what
+      could yet change — is part of the story too.
     </p>
     <p class="colophon reveal">
-      Source: exploratory analysis of publications gazetted under Malaysia&rsquo;s Printing Presses and
-      Publications Act, 1950–2025 (n&nbsp;=&nbsp;3,187). Explore every record in the
-      <a href="#/data">Data</a> tab.
+      Source: INITIATE.MY&rsquo;s database of publications gazetted as prohibited under
+      Malaysia&rsquo;s Printing Presses and Publications Act and predecessor laws, 1950–2026
+      (n&nbsp;=&nbsp;3,213). Explore every record in the <a href="#/data">Data</a> tab.
     </p>
   </div>
 </footer>
@@ -348,16 +785,18 @@
 <section id="view-data" class="view page" hidden aria-labelledby="h-data">
   <div class="page-inner">
     <p class="kicker">The dataset</p>
-    <h2 id="h-data">Every gazetted publication, 1950–2025</h2>
-    <p class="lede">All 3,187 records behind the story — search by title, publisher or author,
-      filter by cluster or origin, and click a column header to sort. A dash means the gazette
-      record left that field blank.</p>
+    <h2 id="h-data">Every gazetted publication, 1950–2026</h2>
+    <p class="lede">All 3,213 records behind the story — search by title, publisher, printer or
+      author, filter by cluster, origin or revocation status, and click a column header to sort.
+      A dash means the gazette record left that field blank; KDN justifications exist for about
+      half the records. The five bans revoked in July 2026 stay in the table, marked with a badge.</p>
 
     <div class="table-controls">
-      <input type="search" id="table-search" placeholder="Search title, publisher, author…"
+      <input type="search" id="table-search" placeholder="Search title, publisher, printer, author…"
              aria-label="Search records">
       <select id="table-cluster" aria-label="Filter by cluster"></select>
       <select id="table-origin" aria-label="Filter by origin"></select>
+      <label class="table-check"><input type="checkbox" id="table-revoked"> Revoked only</label>
       <span id="table-count" class="table-count" role="status"></span>
     </div>
 
@@ -381,9 +820,9 @@
   <div class="page-inner narrow">
     <p class="kicker">Contact</p>
     <h2 id="h-contact">Questions, corrections, and the underlying data</h2>
-    <p class="lede">This site presents an exploratory analysis of publications gazetted under
-      Malaysia&rsquo;s Printing Presses and Publications Act. The classification of clusters and
-      subclusters is a work in progress — corrections and additions are welcome.</p>
+    <p class="lede">This site presents INITIATE.MY&rsquo;s analysis of publications gazetted as
+      prohibited under Malaysia&rsquo;s Printing Presses and Publications Act. The classification
+      of clusters and subclusters is a work in progress — corrections and additions are welcome.</p>
 
     <div class="contact-card">
       <p class="contact-label">Email</p>
@@ -395,15 +834,21 @@
     <div class="contact-grid">
       <div>
         <h3>About the data</h3>
-        <p>The dataset covers 3,187 publications gazetted between 1950 and 2025, compiled from
-          federal gazette notices. Fields include title, gazette date and number, type, origin,
-          language, publisher, author/translator, and a researcher-assigned cluster and subcluster.</p>
+        <p>The dataset covers 3,213 publications gazetted between 1950 and 2026, compiled from
+          federal gazette notices published by the Ministry of Home Affairs. Fields include title,
+          gazette date and number, type, origin, language, publisher, printer, author/translator,
+          the Ministry&rsquo;s stated justification, and a researcher-assigned cluster and
+          subcluster. Five bans revoked in July 2026 are retained and flagged, since they were in
+          force during the research period.</p>
       </div>
       <div>
         <h3>Known limitations</h3>
-        <p>Origin is unclear for two in five records, nearly a third of titles sit in a
-          general/unidentified cluster, and 3.2% of records carry explicit researcher notes about
-          classification quality. Quiet years may reflect gaps in the gazette record.</p>
+        <p>The origin of one-third of records (1,067 of 3,213) is unconfirmed, so foreign-versus-
+          local comparisons should stay cautious. Official KDN justifications exist for only about
+          half the dataset — 1,590 of 3,213 records, just nine of them pre-dating 1984 — so
+          justification findings apply only to records that carry one. The printer field is
+          contaminated with locations and other non-printer values and needs cleaning. And the
+          2020s are an incomplete decade that should not be compared directly with full ones.</p>
       </div>
     </div>
   </div>

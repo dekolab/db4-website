@@ -1,6 +1,7 @@
 /*
  * Data tab: searchable, sortable, paginated table over all PPPA.rows.
- * Row shape: [title, year, type, origin, languages, cluster, subcluster, publisher, author]
+ * Row shape: [title, year, type, origin, languages, cluster, subcluster,
+ *             publisher, author, kdnJustification, printer, revokedDate]
  */
 var DataTable = (function () {
   "use strict";
@@ -14,11 +15,14 @@ var DataTable = (function () {
     { name: "Cluster", idx: 5 },
     { name: "Subcluster", idx: 6 },
     { name: "Publisher", idx: 7 },
-    { name: "Author/Translator", idx: 8 }
+    { name: "Author/Translator", idx: 8 },
+    { name: "KDN justification", idx: 9 },
+    { name: "Printer", idx: 10 },
+    { name: "Revoked", idx: 11, badge: true }
   ];
   var PAGE = 25;
 
-  var state = { q: "", cluster: "", origin: "", sort: 1, dir: 1, page: 0 };
+  var state = { q: "", cluster: "", origin: "", revoked: false, sort: 1, dir: 1, page: 0 };
   var filtered = [];
   var els = {};
 
@@ -31,11 +35,13 @@ var DataTable = (function () {
     filtered = PPPA.rows.filter(function (r) {
       if (state.cluster && r[5] !== state.cluster) return false;
       if (state.origin && r[3] !== state.origin) return false;
+      if (state.revoked && !r[11]) return false;
       if (!q) return true;
       return norm(r[0]).indexOf(q) !== -1 ||
              norm(r[7]).indexOf(q) !== -1 ||
              norm(r[8]).indexOf(q) !== -1 ||
-             norm(r[6]).indexOf(q) !== -1;
+             norm(r[6]).indexOf(q) !== -1 ||
+             norm(r[10]).indexOf(q) !== -1;
     });
 
     var col = COLS[state.sort], dir = state.dir;
@@ -89,8 +95,16 @@ var DataTable = (function () {
       COLS.forEach(function (col) {
         var td = document.createElement("td");
         var v = r[col.idx];
-        td.textContent = v == null || v === "" ? "—" : v;
-        if (v == null || v === "") td.className = "blank";
+        if (col.badge && v) {
+          /* revokedDate "2026-07" renders as a small badge */
+          var badge = document.createElement("span");
+          badge.className = "td-revoked";
+          badge.textContent = "Revoked Jul 2026";
+          td.appendChild(badge);
+        } else {
+          td.textContent = v == null || v === "" ? "—" : v;
+          if (v == null || v === "") td.className = "blank";
+        }
         if (col.num) td.classList.add("num");
         tr.appendChild(td);
       });
@@ -140,6 +154,7 @@ var DataTable = (function () {
     var search = document.getElementById("table-search");
     var clusterSel = document.getElementById("table-cluster");
     var originSel = document.getElementById("table-origin");
+    var revokedChk = document.getElementById("table-revoked");
 
     fillSelect(clusterSel, PPPA.clusterCounts.map(function (d) { return d[0]; }), "All clusters");
     fillSelect(originSel, PPPA.originCounts.map(function (d) { return d[0]; }), "All origins");
@@ -156,6 +171,11 @@ var DataTable = (function () {
     });
     originSel.addEventListener("change", function () {
       state.origin = originSel.value;
+      state.page = 0;
+      update();
+    });
+    revokedChk.addEventListener("change", function () {
+      state.revoked = revokedChk.checked;
       state.page = 0;
       update();
     });

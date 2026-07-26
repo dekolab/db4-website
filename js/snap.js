@@ -49,11 +49,9 @@ var Snap = (function () {
       anchors.push(docTop(section) - TOPBAR);
     });
 
-    var foot = document.getElementById("subclusters");
-    if (foot) anchors.push(centreIn(foot, 0));
-
-    var callout = document.querySelector(".callout-card");
-    if (callout) anchors.push(centreIn(callout, 0));
+    document.querySelectorAll(".callout-card").forEach(function (card) {
+      anchors.push(centreIn(card, 0));
+    });
 
     anchors.push(document.documentElement.scrollHeight - vh); /* closing */
 
