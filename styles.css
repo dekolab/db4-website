@@ -1426,13 +1426,16 @@ body[data-view="contact"] .progress { display: none; }
   margin-bottom: 0.7rem;
 }
 
-.rain-views {
+.rain-views,
+.rain-proj,
+.rain-3d-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
 }
 
-.rain-views button {
+.rain-views button,
+.rain-3d-bar button {
   font-family: var(--sans);
   font-size: 0.76rem;
   font-weight: 600;
@@ -1444,20 +1447,46 @@ body[data-view="contact"] .progress { display: none; }
   cursor: pointer;
 }
 
-.rain-views button i { margin-right: 0.3rem; font-size: 0.9em; }
+.rain-views button i,
+.rain-3d-bar button i { margin-right: 0.3rem; font-size: 0.9em; }
 
-.rain-views button:hover { color: var(--accent); border-color: var(--accent); }
+.rain-views button:hover,
+.rain-3d-bar button:hover { color: var(--accent); border-color: var(--accent); }
 
-.rain-views button[aria-pressed="true"] {
+.rain-views button[aria-pressed="true"],
+.rain-3d-bar button[aria-pressed="true"] {
   color: var(--card);
   background: var(--accent);
   border-color: var(--accent);
 }
 
-.rain-views button:focus-visible {
+.rain-views button:focus-visible,
+.rain-3d-bar button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.rain-3d-bar button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.rain-3d-bar button:disabled:hover {
+  color: var(--ink-soft);
+  border-color: var(--rule);
+}
+
+/* 3D-only controls: projection, scale labels, reset */
+.rain-3d-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.rain-3d-bar button { font-size: 0.72rem; padding: 0.32rem 0.7rem; }
 
 .rain-readout {
   font-family: var(--sans);
@@ -1467,16 +1496,92 @@ body[data-view="contact"] .progress { display: none; }
   font-variant-numeric: tabular-nums;
 }
 
+/* Drag the bottom-right grip to resize; the scene re-fits on every change. */
 .rain-box {
   position: relative;
-  height: clamp(230px, 38vh, 360px);
+  height: clamp(260px, 46vh, 460px);
+  min-height: 180px;
+  max-height: 85vh;
+  resize: vertical;
   border: 1px solid var(--rule);
   border-radius: 10px;
   background: var(--paper);
   overflow: hidden;
+  cursor: grab;
+}
+
+.rain-box:active { cursor: grabbing; }
+
+/* orthographic is a fixed reading view — nothing to grab */
+.rain-box.is-locked,
+.rain-box.is-locked:active { cursor: default; }
+
+.rain-box:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .rain-canvas { display: block; }
+
+/* CSS2D scale labels drawn over the scene */
+.rain-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rain-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.14rem 0.3rem;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.rain-label.is-total {
+  color: var(--card);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* year marks along the base read as axis ticks, not as callouts */
+.rain-label.is-year {
+  color: var(--muted);
+  background: none;
+  border: 0;
+  padding: 0.1rem 0.2rem;
+  font-weight: 600;
+}
+
+/* legend: sits beside the book swatch the renderer draws in the corner */
+.rain-key {
+  position: absolute;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.25;
+  max-width: 9rem;
+  color: var(--ink-soft);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.rain-hint {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.rain-hint i { margin-right: 0.3rem; }
 
 .rain-sliders {
   display: flex;
@@ -1785,7 +1890,9 @@ body[data-view="contact"] .progress { display: none; }
 
   .goal-list { grid-template-columns: 1fr; }
 
-  .rain-box { height: clamp(180px, 30vh, 260px); }
+  .rain-box { height: clamp(200px, 34vh, 300px); }
+
+  .rain-3d-bar { justify-content: flex-start; }
 
   .rain-sliders { flex-direction: column; gap: 0.5rem; }
 
