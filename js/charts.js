@@ -676,6 +676,131 @@ var Charts = (function () {
     });
   }
 
+  /* ---------- the seven grounds, as a mind map ---------- */
+
+  /* The grounds in the official Publication Guidelines, in their source order.
+     Drawn as a mind map rather than a chip list because the branching is the
+     point: one label — "undesirable" — fans out into seven separately
+     arguable grounds.
+
+     The leaves stay HTML .ground-chip elements rather than SVG text. The kit
+     renders Font Awesome in svg-with-js mode, so there is no icon webfont to
+     set on an SVG <text>; keeping the chips as HTML also keeps them identical
+     to the grounds-mini chips that pay this beat off later. They are absolutely
+     positioned in the same pixel space as the branches drawn behind them. */
+  var GROUNDS = [
+    { icon: "fa-ban", label: "Contrary to law" },
+    { icon: "fa-heart-crack", label: "Morality" },
+    { icon: "fa-users", label: "Public interest" },
+    { icon: "fa-flag", label: "National interest" },
+    { icon: "fa-shield-halved", label: "Security" },
+    { icon: "fa-people-group", label: "Public order" },
+    { icon: "fa-bullhorn", label: "Public alarm" }
+  ];
+
+  function groundsMindmap(root) {
+    mount(root, function (node, W, H) {
+      var th = T();
+      var accent = seriesColor("blue");
+      var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
+
+      /* two-sided fan needs room for a chip column on each flank; below that
+         the map folds down into a single spine */
+      var COL = 168;
+      var narrow = W < 580;
+      root.classList.toggle("is-narrow", narrow);
+
+      function leaf(g, x, y, toLeft) {
+        var chip = document.createElement("span");
+        chip.className = "ground-chip" + (toLeft ? " is-left" : "");
+        var icon = document.createElement("i");
+        icon.className = "fa-solid " + g.icon;
+        icon.setAttribute("aria-hidden", "true");
+        chip.appendChild(icon);
+        chip.appendChild(document.createTextNode(g.label));
+        chip.style.left = Math.round(x) + "px";
+        chip.style.top = Math.round(y) + "px";
+        node.appendChild(chip);
+        el("circle", { cx: x, cy: y, r: 3, fill: accent }, svg);
+      }
+
+      function branch(x0, y0, x1, y1) {
+        var k = Math.abs(x1 - x0) * 0.55;
+        var dir = x1 > x0 ? 1 : -1;
+        el("path", {
+          d: "M" + x0 + "," + y0 +
+             " C" + (x0 + dir * k) + "," + y0 +
+             " " + (x1 - dir * k) + "," + y1 +
+             " " + x1 + "," + y1,
+          fill: "none", stroke: accent, "stroke-width": 1.4,
+          "stroke-linecap": "round", opacity: 0.5
+        }, svg);
+      }
+
+      function hub(x, y, w, h, align) {
+        el("rect", {
+          x: x, y: y, width: w, height: h, rx: 10,
+          fill: th.surface, stroke: accent, "stroke-width": 1.5
+        }, svg);
+        var tx = align === "start" ? x + 14 : x + w / 2;
+        text(svg, "Undesirable", {
+          x: tx, y: y + h / 2 - 3, fill: th.ink, "font-size": 13.5,
+          "font-weight": 700, "text-anchor": align || "middle"
+        });
+        text(svg, "publications", {
+          x: tx, y: y + h / 2 + 14, fill: th.ink, "font-size": 13.5,
+          "font-weight": 700, "text-anchor": align || "middle"
+        });
+      }
+
+      if (!narrow) {
+        var cx = W / 2, cy = H / 2;
+        var hubW = 150, hubH = 56;
+        hub(cx - hubW / 2, cy - hubH / 2, hubW, hubH);
+
+        /* leaf columns, pulled in on wide cards so the fan stays compact */
+        var rightX = Math.min(W - COL, cx + hubW / 2 + 150);
+        var leftX = Math.max(COL, cx - hubW / 2 - 150);
+        var pad = 10, avail = H - pad * 2;
+
+        /* clockwise from the top right: 1-4 down the right flank, 5-7 up the
+           left, so the source order still reads in sequence */
+        GROUNDS.slice(0, 4).forEach(function (g, i) {
+          var y = pad + avail * (i + 0.5) / 4;
+          branch(cx + hubW / 2, cy - 16 + i * (32 / 3), rightX, y);
+          leaf(g, rightX, y, false);
+        });
+        GROUNDS.slice(4).reverse().forEach(function (g, j) {
+          var y = pad + avail * (j + 0.5) / 3;
+          branch(cx - hubW / 2, cy - 12 + j * 12, leftX, y);
+          leaf(g, leftX, y, true);
+        });
+        return;
+      }
+
+      /* narrow: hub at the top, one spine, seven ticks */
+      var hx = 8, hy = 6, hh = 46;
+      hub(hx, hy, Math.min(190, W - 16), hh, "start");
+
+      var spineX = 26, leafX = 44;
+      var top0 = hy + hh + 16;
+      var pitch = (H - top0 - 16) / (GROUNDS.length - 1);
+      var lastY = top0 + pitch * (GROUNDS.length - 1);
+
+      el("path", {
+        d: "M" + spineX + "," + (hy + hh) + " L" + spineX + "," + lastY,
+        fill: "none", stroke: accent, "stroke-width": 1.4,
+        "stroke-linecap": "round", opacity: 0.5
+      }, svg);
+
+      GROUNDS.forEach(function (g, i) {
+        var y = top0 + pitch * i;
+        branch(spineX, y - Math.min(14, pitch / 2), leafX, y);
+        leaf(g, leafX, y, false);
+      });
+    });
+  }
+
   /* ---------- pictograph (Font Awesome icons, HTML flow) ---------- */
 
   /* One icon = opts.per records; the last icon of a row is clipped to the
@@ -721,42 +846,61 @@ var Charts = (function () {
     });
   }
 
-  /* ---------- Malaysia origin map (stylised inline SVG) ---------- */
+  /* ---------- Malaysia origin map (real coastlines, inline SVG) ---------- */
 
-  /* A schematic silhouette — Peninsular Malaysia + Sabah/Sarawak — not a
-     geographic projection. Local sits on the land, Foreign in the sea
-     around it, and Unclear in its own clearly-labelled box so the
-     unresolved third of the dataset is never hidden. */
+  /* Geometry comes pre-projected from GEO_MY (js/geo.js) — Natural Earth
+     coastlines in this SVG's user space, so the plot box and viewBox here must
+     match the frame documented in that file.
+
+     Malaysia is highlighted; the neighbouring land behind it is context only.
+     Local sits on the land, Foreign arrives from beyond the frame, and Unclear
+     keeps its own labelled box so the unresolved third is never hidden. */
+  var mapUid = 0;
+
   function mapOrigin(root, opts) {
     mount(root, function (node, W, H) {
       var th = T();
       var svg = el("svg", { width: W, height: H, viewBox: "0 0 640 360", preserveAspectRatio: "xMidYMid meet" }, node);
+      var box = { x: 8, y: 8, w: 624, h: 260, r: 12 };
 
-      /* sea backdrop */
-      el("rect", { x: 8, y: 8, width: 624, height: 260, rx: 12, fill: th.grid, opacity: 0.35 }, svg);
+      /* the coastlines run to the frame edge, so clip them to the sea panel */
+      var clipId = "mapclip-" + (++mapUid);
+      var clip = el("clipPath", { id: clipId }, el("defs", {}, svg));
+      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r }, clip);
 
-      var land = { fill: seriesColor("green"), "fill-opacity": 0.28, stroke: seriesColor("green"), "stroke-width": 1.6, "stroke-linejoin": "round" };
+      var sea = el("g", { "clip-path": "url(#" + clipId + ")" }, svg);
+      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, fill: th.grid, opacity: 0.35 }, sea);
 
-      /* Peninsular Malaysia */
-      var pen = el("path", {
-        d: "M155,52 C168,62 172,84 168,104 C178,124 184,146 178,168 " +
-           "C186,186 184,206 172,222 C162,236 146,244 134,238 " +
-           "C124,228 120,210 118,192 C110,168 112,140 120,116 " +
-           "C124,92 132,66 146,52 C149,49 152,50 155,52 Z"
+      /* neighbouring land — southern Thailand, Sumatra, Kalimantan, the rest */
+      el("path", { d: GEO_MY.ctx, fill: th.axis, "fill-opacity": 0.75 }, sea);
+
+      /* Malaysia */
+      var land = {
+        fill: seriesColor("green"), "fill-opacity": 0.33,
+        stroke: seriesColor("green"), "stroke-width": 1.6,
+        "stroke-linejoin": "round"
+      };
+      [GEO_MY.pen, GEO_MY.bor].forEach(function (d) {
+        var p = el("path", { d: d }, sea);
+        for (var a in land) p.setAttribute(a, land[a]);
+      });
+
+      el("rect", {
+        x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r,
+        fill: "none", stroke: th.axis, "stroke-width": 1
       }, svg);
-      for (var a in land) pen.setAttribute(a, land[a]);
 
-      /* Sabah & Sarawak (northern Borneo) */
-      var bor = el("path", {
-        d: "M330,206 C348,184 380,172 410,168 C438,150 470,134 502,132 " +
-           "C526,130 548,140 560,158 C552,174 534,180 516,182 " +
-           "C500,196 480,204 460,208 C430,222 396,232 366,228 " +
-           "C348,224 334,218 330,206 Z"
-      }, svg);
-      for (a in land) bor.setAttribute(a, land[a]);
+      /* place names sit over land, so give them a halo to read against it */
+      function label(str, x, y, size, anchor) {
+        return text(svg, str, {
+          x: x, y: y, fill: th.muted, "font-size": size || 11, "text-anchor": anchor || "middle",
+          stroke: th.surface, "stroke-width": 3.5, "stroke-linejoin": "round",
+          "paint-order": "stroke"
+        });
+      }
 
-      text(svg, "Peninsular Malaysia", { x: 148, y: 260, fill: th.muted, "font-size": 11, "text-anchor": "middle" });
-      text(svg, "Sabah & Sarawak", { x: 452, y: 250, fill: th.muted, "font-size": 11, "text-anchor": "middle" });
+      label("Peninsular Malaysia", 128, 240);
+      label("Sabah & Sarawak", 432, 204);
 
       function chip(x, y, w, title, value, color, dashed) {
         var g = el("g", {}, svg);
@@ -770,16 +914,16 @@ var Charts = (function () {
         return g;
       }
 
-      /* Local — on the land */
-      var localChip = chip(196, 120, 128, "Local", fmt(opts.local) + " · " + opts.localPct, seriesColor("green"));
-      el("line", { x1: 196, y1: 143, x2: 168, y2: 150, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
-      el("line", { x1: 324, y1: 143, x2: 396, y2: 178, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
+      /* Local — leaders out to both halves of the country */
+      var localChip = chip(200, 92, 132, "Local", fmt(opts.local) + " · " + opts.localPct, seriesColor("green"));
+      el("line", { x1: 200, y1: 115, x2: 186, y2: 128, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
+      el("line", { x1: 332, y1: 115, x2: 362, y2: 168, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
       hoverable(localChip, [{ value: fmt(opts.local), label: "publications of local origin (" + opts.localPct + ")", swatch: seriesColor("green") }]);
 
-      /* Foreign — the sea around the land, arrows pressing inward */
-      var foreignChip = chip(440, 40, 168, "Foreign", fmt(opts.foreign) + " · " + opts.foreignPct, seriesColor("blue"));
+      /* Foreign — arrows entering from beyond the frame */
+      var foreignChip = chip(436, 18, 168, "Foreign", fmt(opts.foreign) + " · " + opts.foreignPct, seriesColor("blue"));
       hoverable(foreignChip, [{ value: fmt(opts.foreign), label: "publications of foreign origin (" + opts.foreignPct + ")", swatch: seriesColor("blue") }]);
-      [[430, 78, 388, 118], [420, 60, 250, 76], [500, 96, 486, 126]].forEach(function (ar) {
+      [[262, 2, 214, 58], [638, 126, 578, 140], [332, 276, 300, 224]].forEach(function (ar) {
         var g = el("g", { stroke: seriesColor("blue"), "stroke-width": 1.6, fill: "none", opacity: 0.85 }, svg);
         el("line", { x1: ar[0], y1: ar[1], x2: ar[2], y2: ar[3] }, g);
         var ang = Math.atan2(ar[3] - ar[1], ar[2] - ar[0]);
@@ -790,7 +934,7 @@ var Charts = (function () {
              "L" + (hx - 7 * Math.cos(ang + 0.4)) + "," + (hy - 7 * Math.sin(ang + 0.4))
         }, g);
       });
-      text(svg, "arrives from outside", { x: 524, y: 100, fill: th.muted, "font-size": 10.5, "text-anchor": "middle" }, svg);
+      label("arrives from outside", 428, 46, 10.5, "end");
 
       /* Unclear — its own box, outside the map */
       var uy = 288;
@@ -881,6 +1025,9 @@ var Charts = (function () {
         return d[0] === "Unknown" || d[0] === "Other" ? th.muted : th.series.blue;
       }
     });
+
+    /* --- the seven grounds --- */
+    groundsMindmap(document.getElementById("c-grounds"));
 
     /* --- types pictograph + origin map --- */
     pictograph(document.getElementById("c-types"), {

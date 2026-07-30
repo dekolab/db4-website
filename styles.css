@@ -20,6 +20,8 @@
   --band: #f0efe9;          /* tonal section wash */
   --band-deep: #e7eaf1;     /* navy-tinted band for the cross-currents act */
   --topbar-bg: rgba(250, 246, 240, 0.92);
+  --hero-scrim: rgba(250, 246, 240, 0.88);      /* wash behind the hero copy */
+  --hero-scrim-edge: rgba(250, 246, 240, 0.50); /* … thinning towards the frame */
   --closing-soft: #cfc6bc;
   --closing-muted: #8d8378;
   --closing-accent: #7ea6dd; /* lifted navy for the dark closing panel */
@@ -48,6 +50,8 @@
   --band: #1b1712;
   --band-deep: #151923;
   --topbar-bg: rgba(23, 19, 16, 0.9);
+  --hero-scrim: rgba(23, 19, 16, 0.88);
+  --hero-scrim-edge: rgba(23, 19, 16, 0.52);
   --closing-soft: #4a443e;
   --closing-muted: #6e675f;
   --closing-accent: #1d4f96; /* deep navy on the light closing panel */
@@ -424,11 +428,16 @@ body[data-view="contact"] .progress { display: none; }
   max-width: 42rem;
 }
 
+/* Beat 1 only: the banned-covers collage, held back by a paper/ink scrim so the
+   headline keeps its contrast, then faded into --paper at the fold. */
 .hero {
-  background:
-    linear-gradient(180deg, transparent 78%, var(--paper) 100%),
-    radial-gradient(90% 70% at 85% 10%, var(--band-deep) 0%, transparent 55%),
-    radial-gradient(120% 90% at 50% 0%, var(--paper) 55%, var(--paper-deep) 100%);
+  background-image:
+    linear-gradient(180deg, transparent 74%, var(--paper) 100%),
+    radial-gradient(80% 58% at 50% 42%, var(--hero-scrim) 0%, var(--hero-scrim) 32%, var(--hero-scrim-edge) 100%),
+    url("asset/img/hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero .kicker::after {
@@ -1378,6 +1387,27 @@ body[data-view="contact"] .progress { display: none; }
 }
 
 .ground-chip i { color: var(--accent); font-size: 0.85em; }
+
+/* The mind map places its leaf chips in the same pixel space as the branches
+   charts.js draws behind them, so every coordinate comes from JS — the only
+   job here is to take the chips out of flow and anchor them on their leaf
+   point rather than their top-left corner. */
+.mindmap svg { position: absolute; inset: 0; }
+
+.mindmap .ground-chip {
+  position: absolute;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(34, 30, 28, 0.07);
+}
+
+/* leaves on the left flank grow away from the hub */
+.mindmap .ground-chip.is-left { transform: translate(-100%, -50%); }
+
+.mindmap.is-narrow .ground-chip {
+  font-size: 0.72rem;
+  padding: 0.28rem 0.62rem;
+}
 
 .grounds-mini { margin-top: 1.2rem; }
 

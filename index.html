@@ -192,19 +192,12 @@
         <figure class="viz" data-viz="powers">
           <div class="chart-card">
             <h3>&ldquo;Undesirable publications&rdquo; — the seven grounds</h3>
-            <div class="grounds" role="img"
-                 aria-label="The seven grounds in the official Publication Guidelines for classifying undesirable publications: contrary to law, morality, public interest, national interest, security, public order, and content that may cause public alarm.">
-              <span class="ground-chip"><i class="fa-solid fa-ban" aria-hidden="true"></i>Contrary to law</span>
-              <span class="ground-chip"><i class="fa-solid fa-heart-crack" aria-hidden="true"></i>Morality</span>
-              <span class="ground-chip"><i class="fa-solid fa-users" aria-hidden="true"></i>Public interest</span>
-              <span class="ground-chip"><i class="fa-solid fa-flag" aria-hidden="true"></i>National interest</span>
-              <span class="ground-chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Security</span>
-              <span class="ground-chip"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Public order</span>
-              <span class="ground-chip"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Public alarm</span>
-            </div>
+            <div class="chart ch-lg mindmap" id="c-grounds" role="img"
+                 aria-label="A mind map branching from the term “undesirable publications” to the seven grounds in the official Publication Guidelines for classifying them: contrary to law, morality, public interest, national interest, security, public order, and content that may cause public alarm."></div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Remember these seven —
-            they return later as the justifications the Ministry actually recorded.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The seven grounds set
+            out in the official Publication Guidelines. Remember them — they return later as the
+            justifications the Ministry actually recorded.</figcaption>
         </figure>
       </div>
     </div>
@@ -397,10 +390,12 @@
           <div class="chart-card">
             <h3>Where did they come from?</h3>
             <div class="chart ch-lg" id="c-map" role="img"
-                 aria-label="Schematic map of Malaysia showing publication origin: foreign publications 1,477, or 46%, arriving from outside; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
+                 aria-label="Map of Malaysia — Peninsular Malaysia and Sabah and Sarawak on Borneo — showing publication origin: foreign publications 1,477, or 46%, arriving from outside the region; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A schematic, not a
-            survey map. Because one-third of records lack a confirmed origin, comparisons between
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Coastlines from
+            Natural Earth; neighbouring land is drawn for context and carries no data. The dataset
+            records only whether a publication was local, foreign or unclear — not which country it
+            came from. Because one-third of records lack a confirmed origin, comparisons between
             foreign and local enforcement should remain cautious.</figcaption>
         </figure>
       </div>
@@ -875,6 +870,7 @@
 </section>
 
 <script src="js/data.js"></script>
+<script src="js/geo.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/story.js"></script>
