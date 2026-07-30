@@ -1,0 +1,103 @@
+name: Directory change request
+description: Add, correct, or remove an entry in the directory of gazetted publications
+title: "[Directory]: "
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose a change to the underlying directory of
+        publications gazetted under the PPPA (1950–2026).
+
+        Every change must be traceable to a source — ideally the *Warta Kerajaan*
+        (Federal Gazette) notification itself. Requests without a source take much
+        longer to verify.
+
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: Type of change
+      options:
+        - Correct an existing entry
+        - Add a missing entry
+        - Remove a duplicate or invalid entry
+        - Record a revocation / lifted ban
+        - Reclassify (cluster, type, origin, or language)
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Publication title
+      description: Exactly as it appears in the directory, or as gazetted for a new entry.
+      placeholder: Picture Books 3 Getting Into A Sedan Chair
+    validations:
+      required: true
+
+  - type: input
+    id: gazette
+    attributes:
+      label: Gazette number and date
+      description: e.g. `P.U. (A) 123` or `L.N. 331`, plus the gazette date if known.
+      placeholder: L.N. 331 — 1950-07-29
+    validations:
+      required: false
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current values in the directory
+      description: >
+        Which fields are wrong today? Leave blank if you're adding a new entry.
+        Fields: Publication Title, Gazette Date, Year, Gazette Number, Publication
+        Type, Author/Translator, Publisher, Publication Origin, Printer, Language,
+        Cluster, Subcluster, Act, Justification, Notes.
+      placeholder: |
+        Publisher: Hua Hsia Bookshop
+        Origin: Foreign
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed values
+      description: The corrected or new values, field by field.
+      placeholder: |
+        Publisher: Hua Hsia Book Shop
+        Origin: Local
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Source / evidence
+      description: >
+        Link or cite the gazette notification, archive scan, library catalogue
+        record, or other primary source. Attach images if you have them.
+      placeholder: |
+        Warta Kerajaan Persekutuan, L.N. 331 of 29 July 1950, p. 4 — scan attached.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why this change is correct
+      description: Brief explanation, especially for reclassification requests where the source is a judgement call.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the current directory entry on the site to confirm the change is still needed.
+          required: true
+        - label: I have cited a source, or clearly stated that this is an unsourced observation.
+          required: true
