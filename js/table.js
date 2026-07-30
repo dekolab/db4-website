@@ -25,6 +25,10 @@ var DataTable = (function () {
   var state = { q: "", cluster: "", origin: "", revoked: false, sort: 1, dir: 1, page: 0 };
   var filtered = [];
   var els = {};
+  /* rows ticked for the suggest-an-edit form, in the order they were picked.
+   * Selection survives sorting, filtering and paging — it holds row references,
+   * not indices, so a record stays selected while it scrolls out of view. */
+  var selected = [];
 
   function norm(v) {
     return v == null ? "" : String(v).toLowerCase();
@@ -82,8 +86,59 @@ var DataTable = (function () {
       th.appendChild(btn);
       tr.appendChild(th);
     });
+
+    /* trailing selection column — not sortable */
+    if (window.Suggest) {
+      var thAction = document.createElement("th");
+      thAction.scope = "col";
+      thAction.className = "th-action";
+      var all = document.createElement("input");
+      all.type = "checkbox";
+      all.className = "row-select";
+      all.setAttribute("aria-label", "Select every record on this page");
+      all.addEventListener("change", function () {
+        var wasEmpty = selected.length === 0;
+        pageRows().forEach(function (r) { setSelected(r, all.checked); });
+        renderBody();
+        pushSelection(wasEmpty && selected.length > 0);
+      });
+      els.selectAll = all;
+      var lab = document.createElement("span");
+      lab.className = "th-action-label";
+      lab.textContent = "Select";
+      thAction.appendChild(all);
+      thAction.appendChild(lab);
+      tr.appendChild(thAction);
+    }
+
     els.thead.textContent = "";
     els.thead.appendChild(tr);
+  }
+
+  function pageRows() {
+    var start = state.page * PAGE;
+    return filtered.slice(start, start + PAGE);
+  }
+
+  function setSelected(r, on) {
+    var i = selected.indexOf(r);
+    if (on && i === -1) selected.push(r);
+    else if (!on && i !== -1) selected.splice(i, 1);
+  }
+
+  /* hand the current selection to the form; `reveal` scrolls it into view */
+  function pushSelection(reveal) {
+    if (window.Suggest) Suggest.setSelection(selected.slice(), reveal);
+  }
+
+  /* the header box reflects this page: all / some / none */
+  function syncSelectAll() {
+    if (!els.selectAll) return;
+    var rows = pageRows();
+    var n = 0;
+    rows.forEach(function (r) { if (selected.indexOf(r) !== -1) n++; });
+    els.selectAll.checked = n > 0 && n === rows.length;
+    els.selectAll.indeterminate = n > 0 && n < rows.length;
   }
 
   function renderBody() {
@@ -108,8 +163,37 @@ var DataTable = (function () {
         if (col.num) td.classList.add("num");
         tr.appendChild(td);
       });
+
+      if (window.Suggest) {
+        var on = selected.indexOf(r) !== -1;
+        if (on) tr.classList.add("is-picked");
+
+        var tdAction = document.createElement("td");
+        tdAction.className = "td-action";
+        var box = document.createElement("input");
+        box.type = "checkbox";
+        box.className = "row-select";
+        box.checked = on;
+        box.setAttribute("aria-label", "Select “" + r[0] + "” for a suggested edit");
+        box.addEventListener("change", function () { apply(r, tr, box.checked); });
+        tdAction.appendChild(box);
+        tr.appendChild(tdAction);
+
+        /* clicking anywhere else on the row toggles it too */
+        tr.addEventListener("click", function (e) {
+          if (e.target.closest(".td-action")) return; /* the box handles itself */
+          /* don't hijack a click that was the end of a text selection */
+          var sel = window.getSelection();
+          if (sel && String(sel).trim()) return;
+          box.checked = !box.checked;
+          apply(r, tr, box.checked);
+        });
+      }
+
       els.tbody.appendChild(tr);
     });
+
+    syncSelectAll();
 
     var total = filtered.length;
     var pages = Math.max(1, Math.ceil(total / PAGE));
@@ -120,6 +204,15 @@ var DataTable = (function () {
     els.pageInfo.textContent = "Page " + (state.page + 1) + " of " + pages;
     els.prev.disabled = state.page === 0;
     els.next.disabled = state.page >= pages - 1;
+  }
+
+  /* one row toggled: keep the highlight, the header box and the form in step */
+  function apply(r, tr, on) {
+    var wasEmpty = selected.length === 0;
+    setSelected(r, on);
+    tr.classList.toggle("is-picked", on);
+    syncSelectAll();
+    pushSelection(wasEmpty && selected.length > 0);
   }
 
   function update() {
@@ -186,5 +279,18 @@ var DataTable = (function () {
   }
 
   document.addEventListener("DOMContentLoaded", init);
-  return {};
+
+  /* called from the suggest form when a chip is dismissed or the list cleared */
+  return {
+    deselect: function (r) {
+      setSelected(r, false);
+      renderBody();
+      pushSelection(false);
+    },
+    clearSelection: function () {
+      selected.length = 0;
+      renderBody();
+      pushSelection(false);
+    }
+  };
 })();
