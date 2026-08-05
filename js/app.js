@@ -1,11 +1,13 @@
 /*
- * Tab routing between the three views: #/story (default), #/data, #/contact.
- * In-page anchors (e.g. #overview) are left alone so the story dots keep working.
+ * Tab routing between the four views: #/story (default), #/data, #/codebook,
+ * #/contact.
+ * In-page anchors (e.g. #overview, or the codebook's table of contents) are
+ * left alone so the story dots keep working.
  */
 var App = (function () {
   "use strict";
 
-  var VIEWS = ["story", "data", "contact"];
+  var VIEWS = ["story", "data", "codebook", "contact"];
   var storyScroll = 0;
   var current = null;
 
