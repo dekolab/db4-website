@@ -39,6 +39,7 @@
     <nav class="tabs" aria-label="Site sections">
       <a href="#/story" data-tab="story" aria-current="page">Story</a>
       <a href="#/data" data-tab="data">Data</a>
+      <a href="#/codebook" data-tab="codebook">Codebook</a>
       <a href="#/contact" data-tab="contact">Contact</a>
     </nav>
     <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">☾</button>
@@ -903,6 +904,317 @@
   </div>
 </section>
 
+<!-- ================= CODEBOOK VIEW ================= -->
+<!-- Static conversion of Analysis-Reference/Codebook DB4 Draft 6.2.26.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-codebook" class="view page" hidden aria-labelledby="h-codebook">
+  <div class="page-inner">
+    <p class="kicker">Codebook</p>
+    <h2 id="h-codebook">Research methods</h2>
+    <p class="lede">How the 3,213 records were collected from the Ministry of Home Affairs,
+      reviewed by hand, and sorted into clusters — including the anchor-based classifier, the
+      keyword rules that replaced it, and every keyword the rules match on.</p>
+    <p class="cb-draft"><strong>Draft</strong> · <time datetime="2026-06-02">2 June 2026</time>
+      — the taxonomy and the keyword rules are still being revised, so treat the classification
+      as provisional.</p>
+
+    <div class="cb-layout">
+      <nav class="cb-toc" aria-labelledby="cb-toc-label">
+        <p class="contact-label" id="cb-toc-label">On this page</p>
+        <ul>
+          <li><a href="#cb-method-1">Method I: Data collection</a></li>
+          <li class="cb-toc-sub"><a href="#cb-import">Importation of data from KDN</a></li>
+          <li><a href="#cb-method-2">Method II: Human and AI-powered review</a></li>
+          <li class="cb-toc-sub"><a href="#cb-classification">Classifying the taxonomies</a></li>
+          <li class="cb-toc-sub"><a href="#cb-keyword-classifier">Rule-based keyword classifier</a></li>
+          <li class="cb-toc-sub"><a href="#cb-keyword-map">Keyword-to-cluster mapping</a></li>
+        </ul>
+      </nav>
+
+      <div class="cb-body">
+        <h3 id="cb-method-1">Method I: Data collection</h3>
+
+        <h4 id="cb-import">Importation of data from the Ministry of Home Affairs</h4>
+        <p>To import the metadata from the KDN dataset, we first copy the source code from their
+          website which contains the database
+          (<a href="https://epq.kdn.gov.my/e-pq/index.php?mod=public" target="_blank" rel="noopener">Senarai
+          Perintah Larangan</a>) and an additional justification list officially inquired from
+          Kementerian Dalam Negeri, Bahagian Penguatkuasaan &amp; Kawalan, that contains the
+          justifications of each prohibition. Thanks to KDN for responding to our request. The
+          metadata include:</p>
+
+        <ol class="cb-list">
+          <li>Publication Title / Tajuk Penerbitan</li>
+          <li>Author / Translator / Pengarang / Penterjemah</li>
+          <li>Publisher / Penerbit</li>
+          <li>Printer / Pencetak</li>
+          <li>Gazette Date / Tarikh Warta</li>
+          <li>Language / Bahasa</li>
+          <li>Categories of Undesirable Publications / Kategori Penerbitan Tidak Diingini — according
+            to the Publication Guidelines under the PPPA, the guidelines explain the definitions of
+            the categories of banning below:
+            <ol class="cb-list cb-defs">
+              <li><strong>Contrary to Law / Berlawanan dengan Undang-Undang</strong> — publications
+                that conflict with the Federal Constitution, federal or state laws, regulations,
+                official rules, or official fatwas issued by competent authorities.</li>
+              <li><strong>Morality / Kemoralan</strong> — publications that contain obscene, sexually
+                suggestive, indecent, or immoral content that conflicts with public decency, social
+                values, moral conduct, or religious beliefs.</li>
+              <li><strong>Public Interest / Kepentingan Awam</strong> — publications containing
+                reports, articles, images, illustrations, or statements that go against public
+                interest, community interests, or religious beliefs.</li>
+              <li><strong>National Interest / Kepentingan Negara</strong> — publications that may
+                harm the country&rsquo;s political, economic, or social interests.</li>
+              <li><strong>Security / Keselamatan</strong> — publications that may threaten national
+                security by raising sensitive constitutional matters, undermining the monarchy or
+                Rukun Negara, spreading ideologies contrary to Malaysia&rsquo;s democratic system, or
+                distorting facts in a way that could endanger national security.</li>
+              <li><strong>Public Order / Ketenteraman Awam</strong> — publications that may threaten
+                public order by encouraging violence, disturbing peace, promoting hostility between
+                communities, spreading deviant or misleading religious teachings, or challenging core
+                sources of Islamic law.</li>
+              <li><strong>Causing Public Alarm / Menggemparkan Fikiran Orang Ramai</strong> —
+                publications that may cause public alarm by exaggerating, sensationalising,
+                misleading, or spreading false or baseless information that creates confusion, doubt,
+                anxiety, or fear among the public.</li>
+            </ol>
+          </li>
+        </ol>
+
+        <p>From there we used Claude to generate a script that extracts all the data contained inside
+          the source code and returns comma-separated value (.csv) files for the raw data. The
+          decision to use Claude here is to prevent any hallucination by directly using a script
+          instead. Any future update to the database is done by monitoring the data on the website or
+          through news, and manually inserting the new entries.</p>
+
+        <h3 id="cb-method-2">Method II: Human and AI-powered review</h3>
+        <p>This research employed both human and AI-powered data collection and review processes. The
+          researchers then reviewed the dataset in a few phases:</p>
+
+        <ul class="cb-list">
+          <li>Identified whether the metadata itself is correct and accurate. Some metadata was
+            inaccurate and mislabeled, so it is being corrected. As noted in the research limitations,
+            there are still many details that are unknown — especially for the earlier decades — due
+            to untraceability.</li>
+          <li>Formulated taxonomies based on the needs of the research, such as publication types and
+            origin:
+            <ul class="cb-list">
+              <li>Publication Types / Jenis Penerbitan (Section 7 of the PPPA)
+                <ol class="cb-list">
+                  <li><strong>Printed documents</strong> — books, pamphlets, magazines, journals, and
+                    newspapers.</li>
+                  <li><strong>Visual media</strong> — photographs, caricatures, drawings, maps,
+                    charts, and posters.</li>
+                  <li><strong>Audio / recordings</strong> — sound recordings, music, tapes, and
+                    discs.</li>
+                  <li><strong>Digital / electronic</strong> — computer databases, internet
+                    publications, and microfilm.</li>
+                  <li><strong>Physical goods</strong> — items with symbolic content, such as clothing
+                    and watches.</li>
+                </ol>
+              </li>
+              <li>Publication Origin / Asal Penerbitan
+                <ul class="cb-list">
+                  <li>Local</li>
+                  <li>Foreign</li>
+                  <li>Both</li>
+                  <li>Unclear</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>And dominant themes of prohibited items, to identify clusters and sub-clusters:
+            <ul class="cb-list cb-taxonomy">
+              <li>Subversive ideological and political content
+                <ul>
+                  <li>Communism / socialism</li>
+                  <li>Revolutionary politics</li>
+                  <li>Terrorism / militancy</li>
+                  <li>LGBT</li>
+                </ul>
+              </li>
+              <li>Race, religion &amp; royalty (3R issues)
+                <ul>
+                  <li>Ethnic incitement</li>
+                  <li>Insults to religion</li>
+                  <li>Insults to royalty</li>
+                </ul>
+              </li>
+              <li>Religious doctrinal deviance
+                <ul>
+                  <li>Al-Arqam</li>
+                  <li>Syiah</li>
+                  <li>Ahmadiyyah</li>
+                  <li>Others</li>
+                </ul>
+              </li>
+              <li>Obscene / immoral publications
+                <ul>
+                  <li>Erotic / immoral content</li>
+                  <li>Pornography</li>
+                </ul>
+              </li>
+              <li>General / unidentified
+                <ul>
+                  <li>Multiple grounds</li>
+                  <li>Administrative / unclear rationale</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4 id="cb-classification">How was the classification of the taxonomies made and reviewed?</h4>
+        <p>For the classification of clusters and sub-clusters, the data scientist used a combination
+          of embedding-based classification and keyword-based rules, the latter used mostly for
+          verification. The data scientist combined the publication&rsquo;s metadata into a single
+          text string, then encoded it into a dense vector using a multilingual sentence transformer
+          model.</p>
+
+        <p>Three models were evaluated during this process:</p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Sentence transformer models evaluated">
+          <table class="cb-table cb-table-models">
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">paraphrase-multilingual-mpnet-base-v2</th><td>Baseline model. It was used in preliminary analysis. Provides weaker multilingual clustering output.</td></tr>
+              <tr><th scope="row">intfloat/multilingual-e5-large</th><td>Strong multilingual performance across 100+ languages.</td></tr>
+              <tr><th scope="row">BAAI/bge-m3</th><td>State-of-the-art multilingual, handles short text well.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The classification uses a semi-supervised approach called anchor-based nearest-centroid
+          classification:</p>
+
+        <ol class="cb-list cb-steps">
+          <li><strong>Step 1: Anchor selection.</strong> A set of anchor publications is manually
+            identified for each sub-cluster. These are publications with unambiguous cluster
+            assignments based on known publishers, authors, or title content. A total of 265 anchors
+            were defined across 13 sub-clusters, with the number per sub-cluster ranging from 2
+            (ethnic incitement) to 68 (Al-Arqam).</li>
+          <li><strong>Step 2: Centroid computation.</strong> For each sub-cluster, the centroid is
+            computed as the mean of its anchor embeddings, then L2-normalised. This centroid
+            represents the &ldquo;typical&rdquo; position in embedding space for that
+            sub-cluster.</li>
+          <li><strong>Step 3: Assignment.</strong> Every publication is assigned to the sub-cluster
+            whose centroid has the highest cosine similarity to its embedding. The similarity score
+            serves as a confidence measure.</li>
+          <li><strong>Step 4: Confidence thresholding.</strong> Publications with similarity scores
+            below a threshold are flagged as low-confidence and routed to manual review, or to
+            Cluster 5 (general / unidentified).</li>
+        </ol>
+
+        <h4 id="cb-keyword-classifier">Revised method: rule-based keyword classifier</h4>
+
+        <figure class="cb-figure">
+          <img src="asset/codebook/keyword-pipeline.png" width="482" height="522"
+               alt="Flowchart of the keyword pipeline. The raw dataset passes through four keyword filters in turn — subversive ideological and political content, religious deviance, 3R issues, then immoral/obscene. Each filter pulls matching publications into its cluster and passes the remainder down; whatever survives all four falls to the unidentified cluster.">
+          <figcaption>Figure 1: the publications data is put through a keywords pipeline based on the
+            cluster and sub-cluster.</figcaption>
+        </figure>
+
+        <p>The initial screening stage is done using a script that filters publications by keyword.
+          These keywords are generated mostly through the use of various LLMs, to try to cover as many
+          grounds as possible. The LLMs used to generate the keywords are OpenAI&rsquo;s ChatGPT 5.4,
+          Anthropic&rsquo;s Claude Opus 4.6 and DeepSeek. This method allowed us to have more control
+          over the classification while still utilising AI technology.</p>
+
+        <h4 id="cb-keyword-map">Keyword-to-cluster mapping</h4>
+        <p>This table maps every keyword, publisher name, and author name used in the rule-based
+          classifier to its corresponding cluster and sub-cluster. Priority order: publisher keywords
+          are checked first, then author, then title (combined last). Earlier rules win — which is why
+          some clusters appear more than once below.</p>
+
+        <ul class="cb-legend">
+          <li><span class="cb-swatch c1" aria-hidden="true"></span>Religious deviance</li>
+          <li><span class="cb-swatch c2" aria-hidden="true"></span>Subversive / political</li>
+          <li><span class="cb-swatch c3" aria-hidden="true"></span>3R issues</li>
+          <li><span class="cb-swatch c4" aria-hidden="true"></span>Obscene / immoral</li>
+          <li><span class="cb-swatch c5" aria-hidden="true"></span>Fallback</li>
+        </ul>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Keyword to cluster mapping">
+          <table class="cb-table cb-table-keywords">
+            <thead>
+              <tr>
+                <th scope="col">Keyword / phrase</th>
+                <th scope="col">Field checked</th>
+                <th scope="col">Cluster</th>
+                <th scope="col">Sub-cluster</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cb-cluster c1"><th scope="colgroup" colspan="4">Cluster 1 — Religious Doctrinal Deviance</th></tr>
+              <tr><td>al-arqam / al arqam / shoutul arqam / minda abuya / syeikhul arqam …</td><td>Publisher</td><td>Religious doctrinal deviance</td><td>Al-Arqam</td></tr>
+              <tr><td>ashaari muhammad / ashaari / abuya syeikh / khadijah aam / zulkifli bin ashaari</td><td>Author/Translator</td><td>Religious doctrinal deviance</td><td>Al-Arqam</td></tr>
+              <tr><td>darul arqam / al-arqam / al arqam / aurad muhammadiah / arqam militan / kahwin cara arqam</td><td>Publication Title</td><td>Religious doctrinal deviance</td><td>Al-Arqam</td></tr>
+              <tr><td>al-muntazar / zahra publishing / darul hadith</td><td>Publisher</td><td>Religious doctrinal deviance</td><td>Syiah</td></tr>
+              <tr><td>syiah / shi'a / shia islam / imam mahdi / bani tamim / imam khomeini</td><td>Publication Title</td><td>Religious doctrinal deviance</td><td>Syiah</td></tr>
+              <tr><td>ahmadi / anjuman / qadian</td><td>Title + Publisher + Author (combined)</td><td>Religious doctrinal deviance</td><td>Ahmadiyyah</td></tr>
+              <tr><td>perkhabaran injil / lembaga alkitab / watch tower bible / kalam hidup / baker book / bibles international / the gideon … (and others)</td><td>Publisher</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr><td>perjanjian baru / injil yohanes / alkitab / al-kitab / kristus / kristian / yesus / roh kudus / juru selamat</td><td>Publication Title</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr><td>ismaili</td><td>Title + Publisher + Author (combined)</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr><td>tujuh likur enterprise / pustaka jiwa / penerbit al-huda / jahabersa / thinker's library / forum iqra / pustaka dini / pustaka zahra … (and many others)</td><td>Publisher</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr><td>north africa mission / red sea mission / fellowship of faith for muslim / ywam publishing / ministries to muslim … (mission publishers targeting Muslims)</td><td>Publisher</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr><td>ajaran sesat / ilmu hakikat / tarekat / nadi insan / baha'i / bahai</td><td>Publication Title</td><td>Religious doctrinal deviance</td><td>Others</td></tr>
+              <tr class="cb-cluster c2"><th scope="colgroup" colspan="4">Cluster 2 — Subversive Ideological &amp; Political Content</th></tr>
+              <tr><td>lesbian / bisexual / transgender / lgbtq / lgbt / homosexual / queer / same-sex / heartstopper / non-binary / nonbinary</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>LGBT</td></tr>
+              <tr><td>gay (excluding gayong / gaya / gayo)</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>LGBT</td></tr>
+              <tr><td>i am jazz / julian is a mermaid / grandad's camper / call me by your name / my shadow is purple / gakuen heaven / what if it's us … (known LGBT titles)</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>LGBT</td></tr>
+              <tr><td>swatch + lgbtq / koleksi</td><td>Title + Publisher + Author (combined)</td><td>Subversive ideological and political content</td><td>LGBT</td></tr>
+              <tr><td>teenage + guide to + almost</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>LGBT</td></tr>
+              <tr><td>people's publishing house / foreign languages press / liberation press / new china bookshop / communist party / china pictorial / sam luen bookshop … (and many others)</td><td>Publisher</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>barisan sosialis / partai rakyat / parti buroh / pustaka tanah merah / wah tung bookshop / the seventies publishing … (Southeast Asian communist publishers)</td><td>Publisher</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>m.c.p / m.r.l.a</td><td>Publisher</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>Lenin / Stalin / Mao Tse / Mao Tze / Engels / Marx</td><td>Author/Translator</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>communist / communism / marxis / leninis / proletari / bolshevik / soviet union / socialism / komunis / partai komunis</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>red square / tentera pembebasan / gerilawati / dialectic materialism / kim il sung / people's republic / red flag / malayan monitor / daily worker / moscow news</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>dialectical materialism / historical materialism / class struggle / means of production / planned economy / workers revolution / dictatorship of the proletariat / cultural revolution … (and extensive list of communist ideology terms)</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>Soviet Union / USSR / People's Republic of China / Republic of Cuba / North Korea / Vietnam / Laos / Khmer Rouge Cambodia / East Germany / Yugoslavia / Albania … (communist states)</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Communism/socialism</td></tr>
+              <tr><td>fascis / british union quarterly</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Terrorism/Militancy</td></tr>
+              <tr><td>fascis</td><td>Title + Publisher + Author (combined)</td><td>Subversive ideological and political content</td><td>Terrorism/Militancy</td></tr>
+              <tr class="cb-cluster c3"><th scope="colgroup" colspan="4">Cluster 3 — Race, Religion &amp; Royalty (3R Issues)</th></tr>
+              <tr><td>satanic verses</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Insults to religion</td></tr>
+              <tr><td>anti islam / anti-islam / anti dakwah</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Ethnic Incitement</td></tr>
+              <tr><td>nazi goreng / when i was a kid 3</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Racial/cultural insensitivity</td></tr>
+              <tr><td>belt and road / jalur dan jalan / win-winism / negara rakyat china / 3r and the dilemma / mic anti islam / racial discrimination</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Ethnic Incitement</td></tr>
+              <tr><td>sultan ismail petra / dethroning</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Royalty</td></tr>
+              <tr class="cb-cluster c2"><th scope="colgroup" colspan="4">Cluster 2 — Subversive Ideological &amp; Political Content</th></tr>
+              <tr><td>suara demokrasi / seruan keadilan / bersih 4 / reformasi / march to putrajaya / funny malaysia / perak darul kartun / amnesty international / torture in malaysia / mahathir / trojan donkeys / hancurkan komplot / masturbasi / surat-surat dari langit</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Revolutionary politics</td></tr>
+              <tr class="cb-cluster c3"><th scope="colgroup" colspan="4">Cluster 3 — Race, Religion &amp; Royalty (3R Issues)</th></tr>
+              <tr><td>risalah bertajuk / suratan bertajuk / suratan yang (+ islam / ugama / agama)</td><td>Publication Title</td><td>Race, religion &amp; royalty (3R issues)</td><td>Insults to religion</td></tr>
+              <tr class="cb-cluster c2"><th scope="colgroup" colspan="4">Cluster 2 — Subversive Ideological &amp; Political Content</th></tr>
+              <tr><td>risalah bertajuk / suratan bertajuk / suratan yang (no religion keywords)</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Revolutionary politics</td></tr>
+              <tr><td>partai rakyat</td><td>Title + Publisher + Author (combined)</td><td>Subversive ideological and political content</td><td>Revolutionary politics</td></tr>
+              <tr><td>teroris / al-fatihin / daulah islamiyyah / al-yahud / perjuangan kemerdekaan rakyat pattani / bargaining for israel</td><td>Publication Title</td><td>Subversive ideological and political content</td><td>Revolutionary politics</td></tr>
+              <tr class="cb-cluster c4"><th scope="colgroup" colspan="4">Cluster 4 — Obscene / Immoral Publications</th></tr>
+              <tr><td>olympia press / ophelia press / bee-line books / midwood publications / essex house / paul raymond / catalan communications / house of milan / panther books / alyson publications / cleis press … (Western pulp/porn publishers)</td><td>Publisher</td><td>Obscene / immoral publications</td><td>Pornography</td></tr>
+              <tr><td>jin tian press / tong li publishing / hong kong giant publishing / yuk long books / quan long press … (Chinese/HK publishers)</td><td>Publisher</td><td>Obscene / immoral publications</td><td>Pornography</td></tr>
+              <tr><td>amusement publishing / king kong publishing / majaya enterprise / penerbitan metrozone / lejen press / evil dead production / penerbitan kaki novel … (Malay/Indonesian publishers)</td><td>Publisher</td><td>Obscene / immoral publications</td><td>Pornography</td></tr>
+              <tr><td>eros publishing / brandon books / roafield / sin jin kang / pustaka suryabana / american art enterprises / vortex comics / rip off press / last gasp … (additional publishers)</td><td>Publisher</td><td>Obscene / immoral publications</td><td>Pornography</td></tr>
+              <tr><td>pornograph / bondage / orgy / bogel / gambar lucah / penthouse / playboy / hustler / playgirl / mayfair / blue film / striptease</td><td>Publication Title</td><td>Obscene / immoral publications</td><td>Pornography</td></tr>
+              <tr><td>seks / nafsu / ghairah / berahi / gasang / gersang / miang / genit / lucah / pelacur / rogol / erotic / seduction / kamasutra / lascivious / sexy / sensual / hubungan seks / erotica / xxx / nude / naked / telanjang / wanita malam / zina / skandal seks</td><td>Publication Title</td><td>Obscene / immoral publications</td><td>Erotic/immoral content</td></tr>
+              <tr><td>traveller's companion / grove press / book of the month club / vintage books / dorling kindersley (with erotic title signals)</td><td>Publisher</td><td>Obscene / immoral publications</td><td>Erotic/immoral content</td></tr>
+              <tr class="cb-cluster c5"><th scope="colgroup" colspan="4">Cluster 5 — Fallback / Unmatched</th></tr>
+              <tr><td>(no keyword matched)</td><td>—</td><td>General/Unidentified</td><td>Administrative/Unclear Ground</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="cb-foot">Records that carry a researcher-assigned cluster from this codebook are
+          browsable in the <a href="#/data">Data</a> tab; known gaps are listed under
+          <a href="#/contact">Contact</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= CONTACT VIEW ================= -->
 <section id="view-contact" class="view page" hidden aria-labelledby="h-contact">
   <div class="page-inner narrow">
@@ -928,8 +1240,10 @@
           federal gazette notices published by the Ministry of Home Affairs. Fields include title,
           gazette date and number, type, origin, language, publisher, printer, author/translator,
           the Ministry&rsquo;s stated justification, and a researcher-assigned cluster and
-          subcluster. Five bans revoked in July 2026 are retained and flagged, since they were in
-          force during the research period.</p>
+          subcluster. How those clusters were defined and assigned — including every keyword the
+          classifier matches on — is set out in the <a href="#/codebook">Codebook</a>. Five bans
+          revoked in July 2026 are retained and flagged, since they were in force during the
+          research period.</p>
       </div>
       <div>
         <h3>Known limitations</h3>
