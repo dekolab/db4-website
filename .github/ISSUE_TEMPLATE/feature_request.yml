@@ -1,0 +1,90 @@
+name: Feature request
+description: Suggest a new feature or improvement for the website
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve **What Malaysia Banned**.
+
+        This template is for the *website* — the story, the charts, the data
+        explorer, accessibility, performance, and so on. To correct or add a
+        record in the database of gazetted publications, use the
+        **Directory change request** template instead.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the gap or frustration you ran into, not the solution yet.
+      placeholder: |
+        When I browse the data table on my phone, I can't tell which column I'm
+        sorting by, so I keep losing my place.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed feature
+      description: What should the site do? Sketches, links, or examples from other sites are welcome.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the site?
+      multiple: true
+      options:
+        - Story / scrollytelling narrative
+        - Charts and visualisations
+        - Map
+        - Data table / explorer
+        - Search and filtering
+        - Data export or API
+        - Accessibility
+        - Performance
+        - Theming (light/dark)
+        - Contact page
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Any workarounds you're using today, or other approaches you weighed.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: importance
+    attributes:
+      label: How important is this to you?
+      options:
+        - Nice to have
+        - Would meaningfully improve my use of the site
+        - Blocking — I can't do what I came here to do
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Screenshots, browser and device, links to prior discussion.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this feature hasn't already been requested.
+          required: true
+        - label: This is a website feature, not a correction to a database record.
+          required: true

@@ -1011,7 +1011,7 @@ body[data-view="contact"] .progress { display: none; }
 
 #data-table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1160px; /* 1080 for the data columns + the pinned action column */
   border-collapse: collapse;
   font-family: var(--sans);
   font-size: 0.81rem;
@@ -1952,3 +1952,287 @@ body[data-view="contact"] .progress { display: none; }
     gap: 0.3rem;
   }
 }
+
+/* --- suggest an edit --- */
+
+.suggest-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.7rem 1.8rem;
+  margin: 2.6rem 0 0;
+  box-shadow: 0 10px 32px rgba(34, 30, 28, 0.06);
+  transition: background-color 450ms ease, color 450ms ease, border-color 450ms ease;
+}
+
+.suggest-title {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0.1rem 0 0.6rem;
+}
+
+.suggest-intro {
+  font-family: var(--sans);
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.suggest-form {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.suggest-form .field { display: grid; gap: 0.3rem; }
+
+.suggest-form label {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.suggest-form .req { color: var(--accent); margin-left: 0.15rem; }
+
+.suggest-form .opt {
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-left: 0.3rem;
+  text-transform: lowercase;
+}
+
+.suggest-form input[type="text"],
+.suggest-form textarea {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+}
+
+.suggest-form textarea { resize: vertical; min-height: 3.2rem; }
+
+.suggest-form input:focus-visible,
+.suggest-form textarea:focus-visible,
+.btn-suggest:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.suggest-form [aria-invalid="true"] { border-color: #b4442e; }
+
+.field-hint,
+.field-match,
+.field-error {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.field-hint { color: var(--muted); max-width: 62ch; }
+.field-match { color: var(--accent); font-weight: 600; }
+.field-error { color: #b4442e; font-weight: 600; }
+.form-error { margin-top: 0.2rem; }
+
+.suggest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.2rem;
+  border-top: 1px solid var(--td-rule);
+  padding-top: 1.2rem;
+}
+
+.btn-suggest {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  font-weight: 650;
+  color: var(--paper);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.62rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+.btn-suggest:hover { opacity: 0.88; }
+
+.suggest-note {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--muted);
+  flex: 1 1 22rem;
+  margin: 0;
+}
+
+@media (max-width: 540px) {
+  .suggest-card { padding: 1.3rem 1.1rem; }
+  .btn-suggest { width: 100%; }
+}
+
+/* per-row "Edit" action feeding the suggest form.
+ * The table scrolls sideways (min-width 1080px in a clipped wrapper), so this
+ * column is pinned to the right edge — otherwise it sits off-screen and the
+ * row hover has nothing visible to reveal. */
+#data-table th.th-action,
+#data-table td.td-action {
+  position: sticky;
+  right: 0;
+  text-align: right;
+  white-space: nowrap;
+  background: var(--card);
+  box-shadow: inset 1px 0 0 var(--td-rule), -7px 0 9px -7px rgba(34, 30, 28, 0.18);
+}
+
+#data-table td.td-action { z-index: 1; }
+#data-table thead th { z-index: 2; }        /* header stays above the pinned column */
+#data-table th.th-action { z-index: 3; background: var(--paper); }
+
+/* the pinned cell carries the row's own background, or rows show through it */
+#data-table tbody tr:hover td.td-action { background: var(--paper); }
+#data-table tbody tr.is-picked td.td-action { background: var(--band-deep); }
+
+/* whole row selects the record */
+#data-table tbody tr { cursor: pointer; }
+
+.row-select {
+  accent-color: var(--accent);
+  width: 0.95rem;
+  height: 0.95rem;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.row-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.th-action-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+#data-table tbody tr.is-picked { background: var(--band-deep); }
+#data-table tbody tr.is-picked td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+#data-table tbody tr.is-picked td { color: var(--ink); }
+
+/* selected-record chips in the form */
+.sg-selection {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  background: var(--paper);
+  display: grid;
+  gap: 0.6rem;
+}
+
+.sg-selection-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sg-selection-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.sel-count { color: var(--accent); letter-spacing: 0.04em; }
+
+.sg-clear {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sg-clear:hover { color: var(--accent); }
+.sg-clear:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.sg-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  max-height: 11rem;
+  overflow-y: auto;
+}
+
+.sg-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.24rem 0.3rem 0.24rem 0.65rem;
+  max-width: 100%;
+}
+
+.sg-chip-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22ch;
+}
+
+.sg-chip-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 18ch;
+}
+
+.sg-chip-drop {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.1rem 0.3rem;
+  cursor: pointer;
+}
+
+.sg-chip-drop:hover { color: var(--accent); background: var(--band-deep); }
+.sg-chip-drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

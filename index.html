@@ -803,6 +803,8 @@
     <h2 id="h-data">Every gazetted publication, 1950–2026</h2>
     <p class="lede">All 3,213 records behind the story — search by title, publisher, printer or
       author, filter by cluster, origin or revocation status, and click a column header to sort.
+      Spotted a mistake? Tick one or more rows — the checkbox column is pinned to the right — to
+      <a href="#suggest" data-goto="suggest">suggest a correction</a>.
       A dash means the gazette record left that field blank; KDN justifications exist for about
       half the records. The five bans revoked in July 2026 stay in the table, marked with a badge.</p>
 
@@ -827,6 +829,77 @@
       <span id="table-page" class="table-count"></span>
       <button type="button" id="table-next">Next →</button>
     </div>
+
+    <!-- suggest an edit: builds a pre-filled GitHub issue, no backend -->
+    <div class="suggest-card" id="suggest">
+      <p class="contact-label">Suggest an edit</p>
+      <h3 class="suggest-title">Spotted something wrong in a record?</h3>
+      <p class="suggest-intro">The classification work is ongoing and the gazette records are
+        uneven. If a field is wrong, a publication is missing, or a ban has since been lifted,
+        describe the change below. Tick any number of rows in the table above and they all travel
+        into one issue — useful when the same mistake runs through a batch of records. Ticks survive
+        searching, sorting and paging, so you can gather records from anywhere in the dataset.
+        Nothing is sent from this page: your answers are packed into a pre-filled issue on the
+        project&rsquo;s GitHub repository, which opens in a new tab for you to review and submit.</p>
+
+      <form id="suggest-form" class="suggest-form" novalidate>
+        <div class="sg-selection" id="sg-selection" hidden>
+          <div class="sg-selection-head">
+            <p class="sg-selection-label">Selected records <span class="sel-count" id="sg-count"></span></p>
+            <button type="button" class="sg-clear" id="sg-clear">Clear all</button>
+          </div>
+          <ul class="sg-chips" id="sg-chips"></ul>
+          <p class="field-hint">One issue covers the whole selection, so describe a change that
+            applies to all of them — otherwise file them separately.</p>
+        </div>
+
+        <div class="field">
+          <label for="sg-title">Publication title <span class="req" id="sg-title-req"
+            aria-hidden="true">*</span><span class="opt" id="sg-title-opt" hidden>optional</span></label>
+          <input type="text" id="sg-title" name="title" list="sg-title-matches" autocomplete="off"
+                 aria-describedby="sg-title-hint">
+          <datalist id="sg-title-matches"></datalist>
+          <p class="field-hint" id="sg-title-hint">Only needed for a publication that is
+            <em>not</em> in the table — tick rows above for records that are. Typing a title that
+            already exists adds that record to the issue too.</p>
+          <p class="field-error" id="sg-title-err" hidden></p>
+          <p class="field-match" id="sg-title-match" role="status"></p>
+        </div>
+
+        <div class="field">
+          <label for="sg-change">Suggested change or correction <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="sg-change" name="change" rows="4" aria-describedby="sg-change-hint" required></textarea>
+          <p class="field-hint" id="sg-change-hint">Which field, and what it should say. For example:
+            &ldquo;Origin should be Local, not Foreign — the publisher was based in Penang.&rdquo;</p>
+          <p class="field-error" id="sg-change-err" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="sg-source">Justification or source link <span class="opt">optional</span></label>
+          <textarea id="sg-source" name="source" rows="3" aria-describedby="sg-source-hint"></textarea>
+          <p class="field-hint" id="sg-source-hint">A gazette notice, archive scan, or catalogue
+            record makes a change far quicker to verify. The issue form asks for this too, so if you
+            leave it blank it will be marked as an unsourced observation.</p>
+        </div>
+
+        <div class="field">
+          <label for="sg-contact">Your name or contact <span class="opt">optional</span></label>
+          <input type="text" id="sg-contact" name="contact" autocomplete="off"
+                 aria-describedby="sg-contact-hint">
+          <p class="field-hint" id="sg-contact-hint">Only if you would like to be credited or
+            contacted about this change.</p>
+        </div>
+
+        <div class="suggest-actions">
+          <button type="submit" class="btn-suggest">Open pre-filled issue →</button>
+          <p class="suggest-note">Submitting the issue needs a free GitHub account. Suggestions are
+            reviewed against the gazette record before the table changes — filing one does not edit
+            the data directly.</p>
+        </div>
+
+        <p class="field-error form-error" id="sg-form-err" role="alert" hidden></p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -843,7 +916,9 @@
       <p class="contact-label">Email</p>
       <a class="contact-email" href="mailto:m.khairie11@gmail.com?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
       <p class="contact-hint">If you are writing about a specific record, include the publication
-        title and year as they appear in the <a href="#/data">Data</a> tab.</p>
+        title and year as they appear in the <a href="#/data">Data</a> tab. For a single-record
+        correction, the <a href="#/data" data-goto="suggest">suggest an edit</a> form under the table
+        is faster — it files the correction as a tracked issue.</p>
     </div>
 
     <div class="contact-grid">
@@ -877,6 +952,7 @@
 <script src="js/motion.js"></script>
 <script src="js/snap.js"></script>
 <script src="js/table.js"></script>
+<script src="js/suggest.js"></script>
 <script src="js/app.js"></script>
 <script type="module" src="js/rain3d.js"></script>
 </body>
