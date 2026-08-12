@@ -1,13 +1,15 @@
 /*
- * Tab routing between the four views: #/story (default), #/data, #/codebook,
+ * Tab routing between the four views: #/story (default), #/data, #/methods,
  * #/contact.
- * In-page anchors (e.g. #overview, or the codebook's table of contents) are
- * left alone so the story dots keep working.
+ * In-page anchors (e.g. #overview, or the research methods table of contents)
+ * are left alone so the story dots keep working.
  */
 var App = (function () {
   "use strict";
 
-  var VIEWS = ["story", "data", "codebook", "contact"];
+  var VIEWS = ["story", "data", "methods", "contact"];
+  /* the methods page replaced the old codebook tab; keep shared links working */
+  var ALIASES = { codebook: "methods" };
   var storyScroll = 0;
   var current = null;
 
@@ -15,6 +17,7 @@ var App = (function () {
     var h = location.hash;
     if (h.indexOf("#/") === 0) {
       var name = h.slice(2);
+      if (ALIASES[name]) name = ALIASES[name];
       if (VIEWS.indexOf(name) !== -1) return name;
     }
     return null;
