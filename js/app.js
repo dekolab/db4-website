@@ -1,14 +1,18 @@
 /*
- * Tab routing between the four views: #/story (default), #/data, #/methods,
- * #/contact.
- * In-page anchors (e.g. #overview, or the research methods table of contents)
- * are left alone so the story dots keep working.
+ * Tab routing between the six views: #/story (default), #/data, #/methods,
+ * #/limitations, #/taxonomy, #/contact.
+ * The last three are the codebook documents: they share one topbar tab, which
+ * is a disclosure button opening a menu of the three.
+ * In-page anchors (e.g. #overview, or a document page's table of contents) are
+ * left alone so the story dots keep working.
  */
 var App = (function () {
   "use strict";
 
-  var VIEWS = ["story", "data", "methods", "contact"];
-  /* the methods page replaced the old codebook tab; keep shared links working */
+  var VIEWS = ["story", "data", "methods", "limitations", "taxonomy", "contact"];
+  /* the views that sit under the Codebook tab */
+  var DOCS = ["methods", "limitations", "taxonomy"];
+  /* the codebook used to be a single page; keep shared links working */
   var ALIASES = { codebook: "methods" };
   var storyScroll = 0;
   var current = null;
@@ -38,6 +42,13 @@ var App = (function () {
       else a.removeAttribute("aria-current");
     });
 
+    /* the Codebook tab stays lit for any of the three documents under it */
+    var btn = document.getElementById("codebook-btn");
+    if (btn) {
+      if (DOCS.indexOf(name) !== -1) btn.setAttribute("aria-current", "page");
+      else btn.removeAttribute("aria-current");
+    }
+
     if (name === "story" && restoreScroll) window.scrollTo(0, storyScroll);
     else window.scrollTo(0, 0);
   }
@@ -49,8 +60,43 @@ var App = (function () {
     /* a non-view hash (in-page anchor) leaves the current view alone */
   }
 
+  /* Codebook menu: a disclosure button, not a role="menu" — the items are
+     ordinary links, so Tab walks them and Escape closes. */
+  function initMenu() {
+    var btn = document.getElementById("codebook-btn");
+    var menu = document.getElementById("codebook-menu");
+    if (!btn || !menu) return;
+
+    function setOpen(open) {
+      menu.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(menu.hidden);
+    });
+
+    /* picking a document closes the menu; routing is left to the hash change */
+    menu.addEventListener("click", function () { setOpen(false); });
+
+    document.addEventListener("click", function (e) {
+      if (!menu.hidden && !menu.contains(e.target)) setOpen(false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !menu.hidden) { setOpen(false); btn.focus(); }
+    });
+
+    /* a link elsewhere on the page can also land on a document */
+    window.addEventListener("hashchange", function () { setOpen(false); });
+  }
+
   window.addEventListener("hashchange", route);
-  document.addEventListener("DOMContentLoaded", route);
+  document.addEventListener("DOMContentLoaded", function () {
+    route();
+    initMenu();
+  });
 
   return { show: show };
 })();

@@ -202,11 +202,13 @@ body::after {
   display: flex;
   align-items: center;
   gap: clamp(0.5rem, 1.6vw, 1.1rem);
+  min-width: 0;
 }
 
 .tabs {
   display: flex;
   gap: clamp(0.4rem, 2vw, 1.4rem);
+  min-width: 0;
 }
 
 .theme-toggle {
@@ -244,6 +246,8 @@ body::after {
   text-decoration: none;
   padding: 0.45rem 0.55rem 0.35rem;
   border-bottom: 2px solid transparent;
+  flex: none;
+  white-space: nowrap;
 }
 
 .tabs a:hover { color: var(--accent); }
@@ -254,10 +258,84 @@ body::after {
 }
 
 .tabs a:focus-visible,
+.tab-btn:focus-visible,
 .brand:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 3px;
+}
+
+/* ---------- the Codebook tab: one tab over three document pages ---------- */
+
+.tab-menu { position: relative; display: flex; }
+
+/* a button, but it has to sit in the row as though it were a tab */
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.45rem 0.55rem 0.35rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab-btn:hover { color: var(--accent); }
+
+.tab-btn[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-caret {
+  font-size: 0.7em;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.tab-btn[aria-expanded="true"] .tab-caret { transform: rotate(180deg); }
+
+.tab-drop {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 12.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+  z-index: 60;
+}
+
+/* the menu items are links inside .tabs, so the tab typography is undone here */
+.tabs .tab-drop a {
+  display: block;
+  font-size: 0.76rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--ink-soft);
+  padding: 0.5rem 0.6rem;
+  border-bottom: none;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.tabs .tab-drop a:hover,
+.tabs .tab-drop a[aria-current="page"] {
+  background: var(--band);
+  color: var(--accent);
 }
 
 /* ---------- dot navigation + progress rail ---------- */
@@ -1210,18 +1288,19 @@ body:not([data-view="story"]) .progress { display: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 }
 
-/* four tabs need tighter tracking than three did, or Contact runs off the edge —
-   and "Research Methods" drops to "Methods" rather than push the row wider */
+/* four tabs need tighter tracking than three did, or Contact runs off the edge */
 @media (max-width: 700px) {
   .tabs { gap: 0.25rem; }
 
-  .tabs a {
+  .tabs a,
+  .tab-btn {
     font-size: 0.72rem;
     letter-spacing: 0.06em;
     padding: 0.45rem 0.3rem 0.35rem;
   }
 
-  .tab-wide { display: none; }
+  /* the menu items keep their own scale — only the tab row is tightened */
+  .tabs .tab-drop a { font-size: 0.76rem; letter-spacing: 0.01em; padding: 0.5rem 0.6rem; }
 }
 
 @media (max-width: 540px) {
@@ -1229,7 +1308,10 @@ body:not([data-view="story"]) .progress { display: none; }
 }
 
 @media (max-width: 400px) {
-  .tabs a { font-size: 0.68rem; letter-spacing: 0.02em; }
+  .tabs a,
+  .tab-btn { font-size: 0.68rem; letter-spacing: 0.02em; }
+
+  .tabs .tab-drop a { font-size: 0.76rem; letter-spacing: 0.01em; }
 }
 
 /* ---------- reduced motion: instant reveals, plain crossfades ---------- */
@@ -2256,12 +2338,12 @@ body:not([data-view="story"]) .progress { display: none; }
 .sg-chip-drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ==========================================================================
-   Research methods page — the research-methods document rendered as a tab.
-   Reuses .page / .page-inner / .kicker / .lede; adds a sticky in-page table
-   of contents and the prose rules for the document itself.
+   Document pages — the research methods and research limitations documents,
+   each rendered as a tab. Reuses .page / .page-inner / .kicker / .lede; adds
+   a sticky in-page table of contents and the prose rules for the document.
    ========================================================================== */
 
-.rm-layout {
+.doc-layout {
   display: grid;
   grid-template-columns: 15rem minmax(0, 1fr);
   gap: clamp(1.5rem, 4vw, 3.5rem);
@@ -2269,7 +2351,7 @@ body:not([data-view="story"]) .progress { display: none; }
 }
 
 /* sticky contents rail — desktop only */
-.rm-toc {
+.doc-toc {
   position: sticky;
   top: calc(var(--topbar) + 1.6rem);
   font-family: var(--sans);
@@ -2277,9 +2359,9 @@ body:not([data-view="story"]) .progress { display: none; }
   padding-left: 1rem;
 }
 
-.rm-toc ul { list-style: none; display: grid; gap: 0.45rem; }
+.doc-toc ul { list-style: none; display: grid; gap: 0.45rem; }
 
-.rm-toc a {
+.doc-toc a {
   font-size: 0.82rem;
   line-height: 1.35;
   color: var(--ink-soft);
@@ -2287,27 +2369,27 @@ body:not([data-view="story"]) .progress { display: none; }
   display: block;
 }
 
-.rm-toc a:hover { color: var(--accent); }
+.doc-toc a:hover { color: var(--accent); }
 
-.rm-toc a:focus-visible {
+.doc-toc a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 3px;
 }
 
-.rm-toc-sub { padding-left: 0.85rem; }
-.rm-toc-sub a { font-size: 0.78rem; color: var(--muted); }
+.doc-toc-sub { padding-left: 0.85rem; }
+.doc-toc-sub a { font-size: 0.78rem; color: var(--muted); }
 
 /* The document itself. The reading measure is held by the prose rules below
    rather than on the column. */
-.rm-body { min-width: 0; }
+.doc-body { min-width: 0; }
 
-.rm-body h3,
-.rm-body h4 {
+.doc-body h3,
+.doc-body h4 {
   scroll-margin-top: calc(var(--topbar) + 1.2rem);
 }
 
-.rm-body h3 {
+.doc-body h3 {
   font-size: clamp(1.2rem, 2.2vw, 1.5rem);
   line-height: 1.25;
   margin: 2.6rem 0 0.8rem;
@@ -2315,9 +2397,9 @@ body:not([data-view="story"]) .progress { display: none; }
   border-top: 1px solid var(--rule);
 }
 
-.rm-body > h3:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.doc-body > h3:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
-.rm-body h4 {
+.doc-body h4 {
   font-family: var(--sans);
   font-size: 0.98rem;
   font-weight: 650;
@@ -2325,29 +2407,32 @@ body:not([data-view="story"]) .progress { display: none; }
   margin: 2rem 0 0.7rem;
 }
 
-.rm-body p {
+.doc-body p {
   color: var(--ink-soft);
   margin-bottom: 1rem;
   max-width: 46rem;
 }
 
-.rm-body strong { color: var(--ink); font-weight: 650; }
+.doc-body strong { color: var(--ink); font-weight: 650; }
+
+/* publication titles quoted inside the prose */
+.doc-body cite { font-style: italic; }
 
 /* lists: the metadata fields and the taxonomies carry most of the meaning */
-.rm-list {
+.doc-list {
   color: var(--ink-soft);
   max-width: 46rem;
   margin: 0 0 1.2rem 1.4rem;
   padding-left: 0.3rem;
 }
 
-.rm-list li { margin-bottom: 0.4rem; }
+.doc-list li { margin-bottom: 0.4rem; }
 
 /* the four classifier steps run longer than a plain list item */
-.rm-steps li { margin-bottom: 0.85rem; }
+.doc-steps li { margin-bottom: 0.85rem; }
 
 /* model identifiers, set to break rather than push the column wide */
-.rm-code {
+.doc-code {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.85em;
   color: var(--ink);
@@ -2358,7 +2443,52 @@ body:not([data-view="story"]) .progress { display: none; }
   overflow-wrap: anywhere;
 }
 
-.rm-foot {
+/* document tables — same skin as the data table, inside a scrolling .table-wrap */
+.doc-table {
+  width: 100%;
+  min-width: 58rem;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.81rem;
+  line-height: 1.45;
+}
+
+.doc-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--paper);
+  border-bottom: 2px solid var(--rule);
+  text-align: left;
+  font-weight: 650;
+  color: var(--ink);
+  white-space: nowrap;
+  padding: 0.6rem 0.75rem;
+}
+
+.doc-table td,
+.doc-table tbody th {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--td-rule);
+  vertical-align: top;
+  text-align: left;
+  color: var(--ink-soft);
+}
+
+/* the cluster columns are spanned down their group, so they read as one block */
+.doc-table tbody th[scope="rowgroup"] {
+  color: var(--ink);
+  font-weight: 700;
+  width: 3rem;
+}
+
+.doc-tcluster { color: var(--ink); font-weight: 650; width: 11rem; }
+.doc-tsub { color: var(--ink); font-weight: 600; width: 10rem; }
+
+/* a firmer rule where one cluster ends and the next begins */
+.doc-table tbody tr.doc-tgroup > * { border-top: 1px solid var(--rule); }
+
+.doc-foot {
   font-family: var(--sans);
   font-size: 0.82rem;
   color: var(--muted);
@@ -2367,6 +2497,6 @@ body:not([data-view="story"]) .progress { display: none; }
 
 @media (max-width: 900px) {
   /* the contents rail costs more than it gives on a phone */
-  .rm-toc { display: none; }
-  .rm-layout { grid-template-columns: minmax(0, 1fr); }
+  .doc-toc { display: none; }
+  .doc-layout { grid-template-columns: minmax(0, 1fr); }
 }

@@ -39,7 +39,16 @@
     <nav class="tabs" aria-label="Site sections">
       <a href="#/story" data-tab="story" aria-current="page">Story</a>
       <a href="#/data" data-tab="data">Data</a>
-      <a href="#/methods" data-tab="methods"><span class="tab-wide">Research </span>Methods</a>
+      <div class="tab-menu">
+        <button type="button" class="tab-btn" id="codebook-btn"
+                aria-expanded="false" aria-controls="codebook-menu">Codebook<span
+                class="tab-caret" aria-hidden="true">▾</span></button>
+        <ul class="tab-drop" id="codebook-menu" hidden>
+          <li><a href="#/methods" data-tab="methods">Research Methods</a></li>
+          <li><a href="#/limitations" data-tab="limitations">Research Limitations</a></li>
+          <li><a href="#/taxonomy" data-tab="taxonomy">Taxonomy Definitions</a></li>
+        </ul>
+      </div>
       <a href="#/contact" data-tab="contact">Contact</a>
     </nav>
     <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">☾</button>
@@ -909,29 +918,29 @@
      Hand-maintained: edit the markdown and this section together. -->
 <section id="view-methods" class="view page" hidden aria-labelledby="h-methods">
   <div class="page-inner">
-    <p class="kicker">Research methods</p>
+    <p class="kicker">Codebook · Research methods</p>
     <h2 id="h-methods">How this database was built</h2>
     <p class="lede">This research combined official government data, human verification and
       AI-assisted analysis to build, clean and classify the PPPA prohibition database.</p>
 
-    <div class="rm-layout">
-      <nav class="rm-toc" aria-labelledby="rm-toc-label">
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="rm-toc-label">
         <p class="contact-label" id="rm-toc-label">On this page</p>
         <ul>
           <li><a href="#rm-collection">1. Data collection</a></li>
           <li><a href="#rm-review">2. Data review and cleaning</a></li>
           <li><a href="#rm-taxonomies">3. Developing research taxonomies</a></li>
-          <li class="rm-toc-sub"><a href="#rm-type">Publication type</a></li>
-          <li class="rm-toc-sub"><a href="#rm-origin">Publication origin</a></li>
-          <li class="rm-toc-sub"><a href="#rm-content">Content taxonomies</a></li>
+          <li class="doc-toc-sub"><a href="#rm-type">Publication type</a></li>
+          <li class="doc-toc-sub"><a href="#rm-origin">Publication origin</a></li>
+          <li class="doc-toc-sub"><a href="#rm-content">Content taxonomies</a></li>
           <li><a href="#rm-classification">4. AI-assisted classification and human review</a></li>
-          <li class="rm-toc-sub"><a href="#rm-embedding">Initial embedding-based classification</a></li>
-          <li class="rm-toc-sub"><a href="#rm-keywords">Revised rule-based keyword classification</a></li>
+          <li class="doc-toc-sub"><a href="#rm-embedding">Initial embedding-based classification</a></li>
+          <li class="doc-toc-sub"><a href="#rm-keywords">Revised rule-based keyword classification</a></li>
           <li><a href="#rm-comparison">5. Comparing taxonomies with KDN justifications</a></li>
         </ul>
       </nav>
 
-      <div class="rm-body">
+      <div class="doc-body">
         <h3 id="rm-collection">1. Data collection</h3>
         <p>The research began by extracting the
           <a href="https://epq.kdn.gov.my/e-pq/index.php?mod=public" target="_blank" rel="noopener">Senarai
@@ -941,7 +950,7 @@
 
         <p>The original metadata included:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li>publication title;</li>
           <li>author or translator;</li>
           <li>publisher;</li>
@@ -953,7 +962,7 @@
 
         <p>The official justifications were grouped under seven grounds:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li>contrary to law;</li>
           <li>morality;</li>
           <li>public interest;</li>
@@ -985,7 +994,7 @@
         <h4 id="rm-type">Publication type</h4>
         <p>Records were classified as:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li><strong>Printed documents:</strong> books, pamphlets, magazines, journals and
             newspapers;</li>
           <li><strong>Visual media:</strong> photographs, drawings, maps, charts and posters;</li>
@@ -1000,7 +1009,7 @@
         <h4 id="rm-origin">Publication origin</h4>
         <p>Publications were classified as:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li><strong>Local:</strong> produced, published, printed or mainly distributed in
             Malaysia;</li>
           <li><strong>Foreign:</strong> produced or published outside Malaysia;</li>
@@ -1011,7 +1020,7 @@
         <h4 id="rm-content">Content taxonomies</h4>
         <p>The main themes of prohibited publications were organised into five broad clusters:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li>subversive ideological and political content;</li>
           <li>race, religion and royalty issues;</li>
           <li>religious doctrinal deviance;</li>
@@ -1033,16 +1042,16 @@
 
         <p>Three models were evaluated:</p>
 
-        <ul class="rm-list">
-          <li><code class="rm-code">paraphrase-multilingual-mpnet-base-v2</code>;</li>
-          <li><code class="rm-code">intfloat/multilingual-e5-large</code>; and</li>
-          <li><code class="rm-code">BAAI/bge-m3</code>.</li>
+        <ul class="doc-list">
+          <li><code class="doc-code">paraphrase-multilingual-mpnet-base-v2</code>;</li>
+          <li><code class="doc-code">intfloat/multilingual-e5-large</code>; and</li>
+          <li><code class="doc-code">BAAI/bge-m3</code>.</li>
         </ul>
 
         <p>The research used a semi-supervised <strong>anchor-based nearest-centroid
           method</strong>:</p>
 
-        <ol class="rm-list rm-steps">
+        <ol class="doc-list doc-steps">
           <li><strong>Anchor selection:</strong> Researchers manually identified 265 publications
             with clear themes across 13 subclusters.</li>
           <li><strong>Centroid computation:</strong> The embeddings of the anchor publications in
@@ -1060,7 +1069,7 @@
         <p>The research therefore adopted a more transparent rule-based keyword classifier. The
           system reviewed the following fields in order:</p>
 
-        <ol class="rm-list">
+        <ol class="doc-list">
           <li>publisher;</li>
           <li>author or translator; and</li>
           <li>publication title.</li>
@@ -1080,7 +1089,7 @@
         <h3 id="rm-comparison">5. Comparing research taxonomies with KDN justifications</h3>
         <p>The analysis kept two coding systems distinct:</p>
 
-        <ul class="rm-list">
+        <ul class="doc-list">
           <li><strong>INITIATE.MY&rsquo;s taxonomies</strong> describe what a publication appears to
             contain.</li>
           <li><strong>KDN&rsquo;s justifications</strong> record the formal legal ground used to
@@ -1092,9 +1101,380 @@
           doctrinal publications with public-order justifications — without treating the two coding
           systems as interchangeable.</p>
 
-        <p class="rm-foot">Records that carry a researcher-assigned cluster are browsable in the
+        <p class="doc-foot">Records that carry a researcher-assigned cluster are browsable in the
           <a href="#/data">Data</a> tab; known gaps are listed under
           <a href="#/contact">Contact</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH LIMITATIONS VIEW ================= -->
+<!-- Static conversion of Finalise-Codebook/research-limitations.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-limitations" class="view page" hidden aria-labelledby="h-limitations">
+  <div class="page-inner">
+    <p class="kicker">Codebook · Research limitations</p>
+    <h2 id="h-limitations">What this database cannot tell you</h2>
+    <p class="lede">The gaps, ambiguities and interpretive limits that shape how far the findings
+      can be pushed — in the source records, in the taxonomies, and in the historical reading.</p>
+
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="rl-toc-label">
+        <p class="contact-label" id="rl-toc-label">On this page</p>
+        <ul>
+          <li><a href="#rl-data">1. Data availability, quality and coverage</a></li>
+          <li class="doc-toc-sub"><a href="#rl-info">A. Limited publication information</a></li>
+          <li class="doc-toc-sub"><a href="#rl-metadata">B. Incomplete and inconsistent metadata</a></li>
+          <li class="doc-toc-sub"><a href="#rl-justifications">C. Uneven coverage of KDN justifications</a></li>
+          <li class="doc-toc-sub"><a href="#rl-revocation">D. Unclear revocation status</a></li>
+          <li class="doc-toc-sub"><a href="#rl-implications">Implications</a></li>
+          <li class="doc-toc-sub"><a href="#rl-mitigation">Mitigation measures</a></li>
+          <li><a href="#rl-taxonomy">2. Taxonomy and interpretation limitations</a></li>
+          <li><a href="#rl-scope">3. Scope and historical interpretation</a></li>
+        </ul>
+      </nav>
+
+      <div class="doc-body">
+        <h3 id="rl-data">1. Data availability, quality and coverage</h3>
+        <p>The dataset was imported from KDN&rsquo;s official prohibition list. However, several
+          limitations affect the reliability of the classifications and the interpretation of the
+          findings.</p>
+
+        <h4 id="rl-info">A. Limited publication information</h4>
+        <p>Many records do not include the full text of the publication. Classification therefore
+          relied mainly on titles, bibliographic details and publicly available online
+          information.</p>
+
+        <p>Some titles provide insufficient context for reliable classification. For example,
+          <cite>Percutian Yang Romantik</cite> (Romantic Holidays), published in 1990, lists no
+          author and provides only the publishing house, making it difficult to determine which
+          cluster it belongs to. Another example is <cite>Suratan2 Dalam Bahasa China Yang
+          Mengandongi Perkataan2 Dan Muzik Dalam Lagu2 Yang Tajok2Nya Ia-Lah: (Terdapat Sebanyak 13
+          Tajuk)</cite>, where the record does not even specify the individual titles that were
+          prohibited. Similarly, <cite>I Am Jazz</cite> does not, from its title alone, clearly
+          indicate that it contains LGBTQ+ themes. Information on older or obsolete publications was
+          also often difficult to locate or verify.</p>
+
+        <h4 id="rl-metadata">B. Incomplete and inconsistent metadata</h4>
+        <p>The official records contain several metadata issues:</p>
+
+        <ul class="doc-list">
+          <li>some Chinese-language titles were translated inaccurately or inconsistently;</li>
+          <li>some records contain incomplete titles;</li>
+          <li>information was occasionally entered under the wrong fields;</li>
+          <li>263 records have an unknown language;</li>
+          <li>1,067 records have an unclear origin; and</li>
+          <li>some printer and publisher fields contain locations, language labels or missing-value
+            terms instead of identifiable entity names.</li>
+        </ul>
+
+        <p>These issues limit the reliability of analysis by language, origin, author, printer and
+          publisher.</p>
+
+        <h4 id="rl-justifications">C. Uneven coverage of KDN justifications</h4>
+        <p>Official KDN justifications are available for 1,590 of the 3,213 publications. These
+          records are overwhelmingly from the post-1984 period, although nine publications pre-date
+          1984.</p>
+
+        <p>Findings on morality, public order, security and other official grounds therefore mainly
+          reflect the post-1984 period and should not be applied to the full historical dataset.</p>
+
+        <p>This may understate the historical relationship between security enforcement and earlier
+          communist, socialist and revolutionary publications.</p>
+
+        <h4 id="rl-revocation">D. Unclear revocation status</h4>
+        <p>Revoked bans are not consistently identified in KDN&rsquo;s official prohibition list.
+          There is also no comprehensive public list showing which prohibitions have been
+          lifted.</p>
+
+        <p>Recent media reports identified revoked publications that were not yet reflected in the
+          official list during the research period. The cumulative number of prohibition orders
+          should therefore not be interpreted automatically as the number of bans that remain
+          active.</p>
+
+        <h4 id="rl-implications">Implications</h4>
+        <p>Findings on publication content, language, origin, publishers, printers and official
+          legal justifications should be interpreted cautiously. The available data supports
+          analysis of broad patterns, but not definitive conclusions in every individual case.</p>
+
+        <h4 id="rl-mitigation">Mitigation measures</h4>
+        <p>The research used online searches, Chinese-language translation tools and contextual
+          information to address data gaps. Missing or unverifiable information remained coded as
+          unknown. Automated classification was combined with human review, and each analysis states
+          its relevant period, coverage and number of records. Entity names should also be cleaned
+          and standardised before detailed publisher, printer or network analysis is conducted.</p>
+
+        <h3 id="rl-taxonomy">2. Taxonomy and interpretation limitations</h3>
+        <p>Some publications may reasonably fit more than one cluster or subcluster. For example,
+          <cite>Voice of the Revolution</cite> by the People&rsquo;s Liberation Army of Malaya,
+          North Johore 5th Brigade, West Section could be classified under either revolutionary
+          politics or terrorism/militancy. <cite>October Revolution and China</cite> could similarly
+          fall under revolutionary politics or communism/socialism. <cite>Lesbian Sex
+          Positions</cite> could be classified as both LGBT-related and obscene or immoral content.
+          Distinguishing erotic or immoral material from pornography was also difficult where the
+          full publication was unavailable.</p>
+
+        <p>Keyword rules may introduce unintended bias. Chinese-language publications, for example,
+          could be associated too readily with communism because of patterns in older records.
+          Language or origin alone does not establish ideological content.</p>
+
+        <p>INITIATE.MY&rsquo;s taxonomies and KDN&rsquo;s justifications also serve different
+          purposes. The taxonomies describe what a publication appears to contain, while KDN&rsquo;s
+          justifications record the formal legal ground used for prohibition. Repeated appearances
+          of particular authors, printers or publishers likewise do not necessarily prove targeted
+          enforcement.</p>
+
+        <p><strong>Implication:</strong> The classifications should be treated as analytical
+          categories rather than definitive descriptions of every publication. Relationships between
+          content, official legal grounds and recurring entities should not be interpreted as
+          evidence of government intent or targeted enforcement without further evidence.</p>
+
+        <p><strong>Mitigation:</strong> Each publication was assigned a primary category based on
+          its most identifiable theme, while overlaps were recognised. Keywords were assessed
+          alongside the title, period, author, publisher and available contextual information.</p>
+
+        <h3 id="rl-scope">3. Scope and historical interpretation</h3>
+        <p>The database covers PPPA prohibition records and is mainly focused on printed
+          publications. It does not represent the wider regulation of digital, audiovisual or online
+          content under other laws and enforcement systems.</p>
+
+        <p>The dataset shows when bans were recorded but does not prove why enforcement rose in
+          particular years. Peaks may reflect political or security developments, but they may also
+          result from delayed gazettement or administrative batching.</p>
+
+        <p>The 2020s are incomplete and should not be compared directly with full decades. Aggregate
+          language and origin data also cannot show historical changes without decade-level
+          analysis. The cumulative total represents all recorded prohibition orders, not necessarily
+          the number that remains legally active.</p>
+
+        <p><strong>Implication:</strong> The findings can identify broad enforcement patterns but
+          cannot establish the cause of each peak, demonstrate changes in the wider regulation of
+          information, or determine the current number of active bans.</p>
+
+        <p><strong>Mitigation:</strong> Historical interpretations were checked against gazette
+          dates, legal grounds, content taxonomies and relevant events where possible. Researchers
+          applied contextual judgement when interpreting ambiguous records and historical patterns,
+          while expert reviewers were consulted to assess the reasonableness and consistency of key
+          interpretations. Further decade-level analysis and more complete review and revocation
+          data are required for stronger conclusions.</p>
+
+        <p class="doc-foot">How the records were collected and classified in the first place is set
+          out under <a href="#/methods">Research Methods</a>; the records themselves are browsable
+          in the <a href="#/data">Data</a> tab.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAXONOMY DEFINITIONS VIEW ================= -->
+<!-- Static conversion of Finalise-Codebook/taxonomy-definition.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-taxonomy" class="view page" hidden aria-labelledby="h-taxonomy">
+  <div class="page-inner">
+    <p class="kicker">Codebook · Taxonomy definitions</p>
+    <h2 id="h-taxonomy">How each publication was categorised</h2>
+    <p class="lede">The three classification systems applied to every record: what kind of
+      publication it is, where it came from, and the cluster and subcluster themes describing what
+      it contains.</p>
+
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="tx-toc-label">
+        <p class="contact-label" id="tx-toc-label">On this page</p>
+        <ul>
+          <li><a href="#tx-types">Publication types / Jenis Penerbitan</a></li>
+          <li><a href="#tx-origin">Publication origin / Asal Penerbitan</a></li>
+          <li><a href="#tx-clusters">Cluster themes / Tema Kluster</a></li>
+        </ul>
+      </nav>
+
+      <div class="doc-body">
+        <h3 id="tx-types">Publication types / Jenis Penerbitan</h3>
+        <p>Under the Printing Presses and Publications Act 1984 (PPPA) of Malaysia, the Home Affairs
+          Minister has broad, &ldquo;absolute discretion&rdquo; to ban items defined as
+          &ldquo;publications&rdquo; if they are deemed prejudicial to public order, morality,
+          security, or national interest. Because the legal definition of a
+          &ldquo;publication&rdquo; is extremely wide — covering anything capable of suggesting
+          words or ideas — the ban extends beyond books and newspapers to various physical
+          goods.</p>
+
+        <ol class="doc-list">
+          <li><strong>Printed documents:</strong> Books, pamphlets, magazines, journals, and
+            newspapers.</li>
+          <li><strong>Visual media:</strong> Photographs, caricatures, drawings, maps, charts, and
+            posters.</li>
+          <li><strong>Audio / recordings:</strong> Sound recordings, music, tapes, and discs.</li>
+          <li><strong>Digital / electronic:</strong> Computer databases, internet publications, and
+            microfilm.</li>
+          <li><strong>Physical goods:</strong> Items with symbolic content, such as clothing,
+            watches.</li>
+        </ol>
+
+        <h3 id="tx-origin">Publication origin / Asal Penerbitan</h3>
+        <ol class="doc-list">
+          <li><strong>Local</strong> — Publications that are produced, published, printed, or
+            primarily distributed within Malaysia, including materials authored or issued by
+            Malaysian individuals, organisations, or publishing houses.</li>
+          <li><strong>Foreign</strong> — Publications that are produced or published outside
+            Malaysia, including materials authored, printed, or distributed by foreign publishers,
+            organisations, or individuals based overseas.</li>
+          <li><strong>Both</strong> — Publications that involve joint or overlapping local and
+            foreign production or distribution, such as foreign titles printed locally, Malaysian
+            editions of international publications, or collaborative publications involving both
+            Malaysian and foreign publishers.</li>
+          <li><strong>Unclear</strong> — Publications where the origin cannot be reliably determined
+            due to insufficient or missing information about the publisher, author, printing
+            location, or distribution source.</li>
+        </ol>
+
+        <h3 id="tx-clusters">Cluster themes / Tema Kluster</h3>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Cluster and subcluster definitions">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Num.</th>
+                <th scope="col">Cluster theme</th>
+                <th scope="col">Definition</th>
+                <th scope="col">Sub-cluster</th>
+                <th scope="col">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="4">1</th>
+                <td class="doc-tcluster" rowspan="4">Subversive ideological and political
+                  content</td>
+                <td rowspan="4">Publications that promote, justify, or discuss ideologies,
+                  movements, or narratives considered to challenge the authority of the state,
+                  constitutional order, or national security. These publications typically advocate
+                  revolutionary political change, extremist ideologies, or alternative political
+                  systems perceived as destabilising Malaysia&rsquo;s governance structure.</td>
+                <td class="doc-tsub">Communism/socialism</td>
+                <td>Publications that promote, defend, or disseminate ideological materials related
+                  to communism, Marxism, Leninism, Maoism, or socialist revolutionary movements.
+                  This includes materials advocating class struggle, overthrow of capitalist
+                  systems, or historical narratives supportive of communist movements such as the
+                  Communist Party of Malaya.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Revolutionary politics</td>
+                <td>Publications advocating political upheaval, regime change, or revolutionary
+                  transformation of the state through radical or confrontational political
+                  movements. This includes materials encouraging mass mobilisation, civil resistance
+                  aimed at overthrowing institutions, or ideological justification for dismantling
+                  the current political system.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Terrorism / militancy</td>
+                <td>Publications that promote, glorify, justify, or provide information supporting
+                  violent extremist groups, terrorist organisations, or militant activities. This
+                  includes propaganda, recruitment material, operational guidance, or narratives
+                  legitimising violence against civilians or state institutions.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">LGBT</td>
+                <td>Publications that explicitly promote, advocate, or discuss lesbian, gay,
+                  bisexual, and transgender identities, lifestyles, or rights, particularly where
+                  framed as challenging prevailing social norms or moral standards. Materials may
+                  include advocacy, personal narratives, educational texts, or activist literature
+                  relating to sexual orientation and gender identity.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="3">2</th>
+                <td class="doc-tcluster" rowspan="3">Race, religion &amp; royalty (3R issues)</td>
+                <td rowspan="3">Publications containing narratives, statements, or depictions that
+                  may incite hostility, tension, or conflict related to race, religion, or royalty
+                  (3R) in Malaysia. These materials may challenge social harmony or involve
+                  sensitive issues affecting inter-ethnic relations, religious respect, or the
+                  constitutional monarchy.</td>
+                <td class="doc-tsub">Ethnic incitement</td>
+                <td>Publications that contain derogatory, inflammatory, or hostile narratives
+                  targeting specific ethnic groups, or that encourage discrimination, hatred, or
+                  violence between communities.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Insults to religion</td>
+                <td>Publications that contain content perceived as insulting, mocking, or degrading
+                  religious beliefs, figures, scriptures, or institutions. These materials may
+                  provoke religious sensitivities or challenge established religious doctrines in a
+                  way considered offensive.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Insults to royalty</td>
+                <td>Publications containing content perceived as insulting, mocking, or degrading
+                  the Malaysian monarchy or members of royal institutions. This includes narratives
+                  that question the legitimacy, authority, dignity, or role of the royal institution
+                  in a manner considered offensive or disrespectful.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="4">3</th>
+                <td class="doc-tcluster" rowspan="4">Religious doctrinal deviance</td>
+                <td rowspan="4">Publications associated with religious teachings or interpretations
+                  considered deviant, unorthodox, or contrary to mainstream Sunni Islamic doctrine as
+                  recognised by Malaysian religious authorities.</td>
+                <td class="doc-tsub">Al-Arqam</td>
+                <td>Publications promoting, defending, or documenting the teachings, ideology,
+                  leadership, or activities of the Al-Arqam movement, including materials associated
+                  with its founder or organisational structure.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Syiah</td>
+                <td>Publications advocating or explaining Shi&rsquo;a Islamic theology,
+                  jurisprudence, or religious practices, particularly where presented as an
+                  alternative to Sunni doctrine dominant in Malaysia.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Ahmadiyyah</td>
+                <td>Publications promoting or explaining the beliefs and teachings of the Ahmadiyyah
+                  movement, including materials related to its founder, theological interpretations,
+                  or organisational structure.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Others</td>
+                <td>Publications associated with other religious movements or teachings classified
+                  as deviant by Malaysian religious authorities but not belonging to the Al-Arqam,
+                  Shi&rsquo;a, or Ahmadiyyah traditions, and Christian proselytisation.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="2">4</th>
+                <td class="doc-tcluster" rowspan="2">Obscene / immoral publications</td>
+                <td rowspan="2">Publications containing sexually explicit, obscene, or morally
+                  offensive material, including depictions or narratives that violate public decency
+                  standards.</td>
+                <td class="doc-tsub">Erotic / immoral content</td>
+                <td>Publications featuring sexual themes, suggestive imagery, drug glorification, or
+                  narratives intended to stimulate sexual interest, but not necessarily containing
+                  explicit graphic sexual acts.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Pornography</td>
+                <td>Publications containing explicit depictions of sexual acts, nudity, or graphic
+                  sexual imagery intended primarily for sexual arousal.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup">5</th>
+                <td class="doc-tcluster">General / unidentified</td>
+                <td>Publications where the reason for prohibition is based on multiple overlapping
+                  grounds, making precise classification difficult or unclear and other
+                  administrative reasons.</td>
+                <td class="doc-tsub">Administrative / unclear rationale</td>
+                <td>Publications where the official prohibition notice does not clearly specify the
+                  reason, or where available information is insufficient to classify the content
+                  into other clusters.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="doc-foot">How these categories were assigned is set out under
+          <a href="#/methods">Research Methods</a>, and where they fall short under
+          <a href="#/limitations">Research Limitations</a>; the classified records are browsable in
+          the <a href="#/data">Data</a> tab.</p>
       </div>
     </div>
   </div>
@@ -1136,7 +1516,8 @@
           half the dataset — 1,590 of 3,213 records, just nine of them pre-dating 1984 — so
           justification findings apply only to records that carry one. The printer field is
           contaminated with locations and other non-printer values and needs cleaning. And the
-          2020s are an incomplete decade that should not be compared directly with full ones.</p>
+          2020s are an incomplete decade that should not be compared directly with full ones. The
+          full set is set out under <a href="#/limitations">Research Limitations</a>.</p>
       </div>
     </div>
   </div>
