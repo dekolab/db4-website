@@ -27,7 +27,7 @@ body:
       required: true
 
   - type: input
-    id: title
+    id: publication_title
     attributes:
       label: Publication title
       description: Exactly as it appears in the directory, or as gazetted for a new entry.
@@ -89,6 +89,14 @@ body:
     attributes:
       label: Why this change is correct
       description: Brief explanation, especially for reclassification requests where the source is a judgement call.
+    validations:
+      required: false
+
+  - type: input
+    id: contact
+    attributes:
+      label: Your name or contact (optional)
+      description: Only if you'd like to be credited or contacted about this change. Your GitHub handle is already attached to this issue.
     validations:
       required: false
 

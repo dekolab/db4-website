@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Malaysia Banned — Gazetted Publications under the PPPA, 1950–2026</title>
-<meta name="description" content="A visual narrative through 3,213 publications gazetted as prohibited under Malaysia's Printing Presses and Publications Act, 1950–2026.">
+<meta name="description" content="A visual narrative through 3,212 publications gazetted as prohibited under Malaysia's Printing Presses and Publications Act, 1950–2026.">
 <script>
 /* Set the theme before first paint to avoid a flash. */
 (function () {
@@ -39,6 +39,17 @@
     <nav class="tabs" aria-label="Site sections">
       <a href="#/story" data-tab="story" aria-current="page">Story</a>
       <a href="#/data" data-tab="data">Data</a>
+      <div class="tab-menu">
+        <button type="button" class="tab-btn" id="codebook-btn"
+                aria-expanded="false" aria-controls="codebook-menu">Codebook<span
+                class="tab-caret" aria-hidden="true">▾</span></button>
+        <ul class="tab-drop" id="codebook-menu" hidden>
+          <li><a href="#/methods" data-tab="methods">Research Methods</a></li>
+          <li><a href="#/limitations" data-tab="limitations">Research Limitations</a></li>
+          <li><a href="#/taxonomy" data-tab="taxonomy">Taxonomy Definitions</a></li>
+          <li><a href="#/team" data-tab="team">Research Team</a></li>
+        </ul>
+      </div>
       <a href="#/contact" data-tab="contact">Contact</a>
     </nav>
     <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">☾</button>
@@ -61,6 +72,7 @@
   <a href="#kdn"          data-dot="kdn"          aria-label="The Ministry's stated reasons"><span></span></a>
   <a href="#decade-mix"   data-dot="decade-mix"   aria-label="How the focus shifted"><span></span></a>
   <a href="#subclusters"  data-dot="subclusters"  aria-label="The most common types"><span></span></a>
+  <a href="#examples"     data-dot="examples"     aria-label="Six records, up close"><span></span></a>
   <a href="#crosswalk"    data-dot="crosswalk"    aria-label="Legal grounds vs content"><span></span></a>
   <a href="#revocations"  data-dot="revocations"  aria-label="Bans lifted in 2026"><span></span></a>
   <a href="#reform"       data-dot="reform"       aria-label="How to reform the law"><span></span></a>
@@ -77,7 +89,7 @@
     <p class="kicker reveal">A data story · Printing Presses and Publications Act, Malaysia</p>
     <h1 class="reveal">What a country bans is a diary of what it fears.</h1>
     <p class="standfirst reveal">
-      Between 1950 and 2026, Malaysia gazetted 3,213 publications as prohibited under the
+      Between 1950 and 2026, Malaysia gazetted 3,212 publications as prohibited under the
       Printing Presses and Publications Act and the ordinances that preceded it — songbooks and
       pamphlets, paperbacks and cassettes. INITIATE.MY compiled, cleaned and classified every
       record. Read together, they trace how the grounds for banning shifted, decade by decade.
@@ -265,9 +277,9 @@
     <div class="full-head">
       <p class="kicker reveal"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>Part 2 · Time</p>
       <h2 id="h-per-year" class="reveal">Bans came in waves, not at a steady rate.</h2>
-      <p class="reveal">The dataset records 3,213 publication bans. The largest concentration
-        appeared in the early 1950s — 787 bans, or 24.5% of the dataset — followed by another
-        sustained enforcement cycle in the early-to-mid-1990s, with 715, or 22.2%. Between and
+      <p class="reveal">The dataset records 3,212 publication bans. The largest concentration
+        appeared in the early 1950s — 786 bans, or 24.5% of the dataset — followed by another
+        sustained enforcement cycle in the early-to-mid-1990s, with 715, or 22.3%. Between and
         after these peaks the pattern stayed uneven: 247 bans in the 1960s, 408 in the 1970s, 358
         in the 1980s, 399 in the 2000s, and 229 in the 2010s.</p>
     </div>
@@ -307,15 +319,15 @@
         </div>
         <div id="rain-view-year" hidden>
           <div class="chart ch-md" id="c-rain-year" role="img"
-               aria-label="Line chart of gazetted publications per year, 1950 to 2026. A sharp spike reaches 445 in 1951, then counts stay below 150, with waves around 1975, twin surges of 148 and 149 in 1992 and 1994, 108 in 1999, the mid-2000s, 69 in 2017, and 27 recorded so far in 2026."></div>
+               aria-label="Line chart of gazetted publications per year, 1950 to 2026. A sharp spike reaches 444 in 1951, then counts stay below 150, with waves around 1975, twin surges of 148 and 149 in 1992 and 1994, 108 in 1999, the mid-2000s, 69 in 2017, and 27 recorded so far in 2026."></div>
         </div>
         <div id="rain-view-decade" hidden>
           <div class="chart ch-md" id="c-rain-decade" role="img"
-               aria-label="Column chart of bans per decade: 1950s 787, 1960s 247, 1970s 408, 1980s 358, 1990s 715, 2000s 399, 2010s 229, and 70 so far in the incomplete 2020s, drawn as an outlined column."></div>
+               aria-label="Column chart of bans per decade: 1950s 786, 1960s 247, 1970s 408, 1980s 358, 1990s 715, 2000s 399, 2010s 229, and 70 so far in the incomplete 2020s, drawn as an outlined column."></div>
         </div>
         <div id="rain-view-cume" hidden>
           <div class="chart ch-md" id="c-rain-cume" role="img"
-               aria-label="Area chart of cumulative bans, rising steeply from 136 in 1950 to over 700 by 1952, then climbing steadily to reach 3,213 by 2026."></div>
+               aria-label="Area chart of cumulative bans, rising steeply from 136 in 1950 to over 700 by 1952, then climbing steadily to reach 3,212 by 2026."></div>
         </div>
       </div>
       <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> One falling book stands
@@ -331,7 +343,7 @@
     </div>
     <aside class="pull-quote">
       <span class="pq-rule" aria-hidden="true"></span>
-      <span class="pq-number">445</span>
+      <span class="pq-number">444</span>
       <span class="pq-label">publications gazetted in 1951 alone, at the height of the Malayan
         Emergency — the largest single year in the record</span>
     </aside>
@@ -345,7 +357,7 @@
           <div class="chart-card">
             <h3>Languages of banned publications</h3>
             <div class="chart ch-md" id="c-languages" role="img"
-                 aria-label="Column chart of publication languages: Chinese 1,158, English 947, Malay 765, unknown 263, and all other languages combined 150, shown in a muted colour. The grouping applies to this chart only — the full breakdown is in the Data tab."></div>
+                 aria-label="Column chart of publication languages: Chinese 1,158, English 947, Malay 765, unknown 262, and all other languages combined 150, shown in a muted colour. The grouping applies to this chart only — the full breakdown is in the Data tab."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Smaller languages are
             grouped as &ldquo;Other&rdquo; in this chart only — the full breakdown stays in the
@@ -360,7 +372,7 @@
           <p class="kicker reveal"><i class="fa-solid fa-language" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
           <h2 id="h-languages" class="reveal">Three languages carry the banned list.</h2>
           <p class="reveal">Chinese is the largest recorded language category, with 1,158 entries,
-            followed by English with 947 and Malay with 765 — together, 2,870 records. Another 263
+            followed by English with 947 and Malay with 765 — together, 2,870 records. Another 262
             records have no known language.</p>
           <p class="reveal">These figures show the linguistic distribution of prohibited
             publications, but they do not explain why the materials were banned. Language should
@@ -380,7 +392,7 @@
           <div class="chart-card">
             <h3>What form did banned publications take?</h3>
             <div class="chart pict-chart" id="c-types" role="img"
-                 aria-label="Pictograph of publication types: printed documents account for 3,148 of 3,213 records, or 98%; audio and recordings for 57; and physical goods, visual media and digital or electronic materials together for eight. One icon represents 50 records."></div>
+                 aria-label="Pictograph of publication types: printed documents account for 3,147 of 3,212 records, or 98%; audio and recordings for 57; and physical goods, visual media and digital or electronic materials together for eight. One icon represents 50 records."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> One icon = 50 records.
             The print focus reflects the scope of the PPPA dataset — it does not mean audiovisual
@@ -390,7 +402,7 @@
           <div class="chart-card">
             <h3>Where did they come from?</h3>
             <div class="chart ch-lg" id="c-map" role="img"
-                 aria-label="Map of Malaysia — Peninsular Malaysia and Sabah and Sarawak on Borneo — showing publication origin: foreign publications 1,477, or 46%, arriving from outside the region; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
+                 aria-label="Map of Malaysia — Peninsular Malaysia and Sabah and Sarawak on Borneo — showing publication origin: foreign publications 1,476, or 46%, arriving from outside the region; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Coastlines from
             Natural Earth; neighbouring land is drawn for context and carries no data. The dataset
@@ -406,7 +418,7 @@
           <p class="kicker reveal"><i class="fa-solid fa-book" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
           <h2 id="h-types-origin" class="reveal">Almost everything banned was ink on paper.</h2>
           <p class="reveal">The dataset is overwhelmingly focused on print. Printed documents
-            account for 3,148 of 3,213 records, or 98%. Audio and recordings account for 57, while
+            account for 3,147 of 3,212 records, or 98%. Audio and recordings account for 57, while
             physical goods, visual media and digital or electronic materials together account for
             only eight.</p>
           <p class="reveal">This reflects the print-based scope of the PPPA dataset — it does not
@@ -417,7 +429,7 @@
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-globe" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
           <h2 id="h-origin-map" class="reveal">Foreign titles lead — but a third belong on no map.</h2>
-          <p class="reveal">Foreign-origin publications form the largest category, with 1,477
+          <p class="reveal">Foreign-origin publications form the largest category, with 1,476
             records, or 46%. Local publications account for 669, or 20.8%. And for 1,067 records —
             33.2% — the origin remains unclear.</p>
           <p class="mini-stat reveal"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><strong>1 in 3</strong> records has no confirmed country of origin</p>
@@ -485,7 +497,7 @@
             <h3>Bans per decade, stacked by cluster</h3>
             <div class="legend-slot"></div>
             <div class="chart ch-md" id="c-decades" role="img"
-                 aria-label="Stacked column chart of bans per decade, coloured by research cluster. The 1950s column reaches 787, dominated by subversive ideological and political content at 660. The 1990s reach 715, led by obscene or immoral publications at 411 and religious doctrinal deviance at 275. The 2020s column stands at 70 so far."></div>
+                 aria-label="Stacked column chart of bans per decade, coloured by research cluster. The 1950s column reaches 786, dominated by subversive ideological and political content at 659. The 1990s reach 715, led by obscene or immoral publications at 411 and religious doctrinal deviance at 275. The 2020s column stands at 70 so far."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hover a segment, or a
             legend entry to isolate a cluster. Each cluster keeps its colour everywhere in the story.</figcaption>
@@ -495,7 +507,7 @@
             <h3>The same decades, as trajectories</h3>
             <div class="legend-slot"></div>
             <div class="chart ch-md" id="c-clusterlines" role="img"
-                 aria-label="Line chart of bans per decade by cluster. Subversive ideological and political content starts at 660 in the 1950s and falls away. Obscene or immoral publications rise through the 1970s and 1980s to peak at 411 in the 1990s. Religious doctrinal deviance appears in the 1980s, peaks at 275 in the 1990s, and leads the 2010s with 153. The final segment, the incomplete 2020s, is dashed."></div>
+                 aria-label="Line chart of bans per decade by cluster. Subversive ideological and political content starts at 659 in the 1950s and falls away. Obscene or immoral publications rise through the 1970s and 1980s to peak at 411 in the 1990s. Religious doctrinal deviance appears in the 1980s, peaks at 275 in the 1990s, and leads the 2010s with 153. The final segment, the incomplete 2020s, is dashed."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The dashed final
             segment is the incomplete 2020s. Classifications are INITIATE.MY&rsquo;s research
@@ -508,13 +520,18 @@
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Part 5 · What was banned</p>
           <h2 id="h-clusters-time" class="reveal">What were publications banned for?</h2>
-          <p class="reveal">The composition of publication bans changed substantially over time.
-            In the 1950s, subversive ideological and political content accounted for 660 of 787
-            bans — 83.9% of the decade&rsquo;s total.</p>
-          <p class="reveal">By the 1990s, obscene or immoral publications had become the largest
-            category, with 411 bans, while religious doctrinal deviance recorded 275. Religious
-            doctrinal classifications remained substantial in the 2000s, with 194 bans, and the
-            2010s, with 153.</p>
+          <p class="reveal">INITIATE.MY grouped all 3,212 records into five broad content
+            clusters. Obscene or immoral publications form the largest, with 1,252 records
+            (39.0%), followed by subversive ideological and political content with 973 (30.3%)
+            and religious doctrinal deviance with 684 (21.3%). Race, religion and royalty issues
+            form the smallest cluster, with 22 (0.7%); a further 281 (8.7%) are general or
+            unidentified, where titles, metadata or context were too limited for reliable
+            classification.</p>
+          <p class="reveal">The composition changed substantially over time. In the 1950s,
+            subversive ideological and political content accounted for 659 of 786 bans — 83.8% of
+            the decade&rsquo;s total. By the 1990s, obscene or immoral publications had become the
+            largest category, with 411 bans, while religious doctrinal deviance recorded 275 and
+            remained substantial in the 2000s, with 194, and the 2010s, with 153.</p>
         </div>
       </div>
       <div class="scene" id="clusters-lines" data-scene="clusters-lines">
@@ -522,13 +539,14 @@
           <p class="kicker reveal"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Part 5 · What was banned</p>
           <h2 id="h-clusters-lines" class="reveal">Two themes tower over everything else.</h2>
           <p class="reveal">Across the full dataset, erotic or immoral content is the largest
-            subcluster, with 1,097 bans, or 34.1%. Communism or socialism follows with 850, or
-            26.5%. Together, these two categories account for 60.6% of all records — making moral
+            subcluster, with 1,097 bans, or 34.2%. Communism or socialism follows with 849, or
+            26.4%. Together, these two categories account for 60.6% of all records — making moral
             regulation and ideological security the two largest classified themes.</p>
-          <p class="reveal">Other recorded subclusters include pornography with 155 bans, Al-Arqam
-            with 95, revolutionary politics with 78, LGBT-related content with 41 and ethnic
-            incitement with 15. Smaller numbers should not be read as lower policy significance —
-            their relevance depends on the period, legal basis and nature of the alleged harm.</p>
+          <p class="reveal">Together, the three largest clusters — obscene or immoral, subversive
+            ideological and political, and religious doctrinal content — account for 90.6% of the
+            dataset. These clusters describe the apparent content of the publications under
+            INITIATE.MY&rsquo;s research taxonomy; they are separate from KDN&rsquo;s formal legal
+            justifications and do not, by themselves, establish government policy intent.</p>
         </div>
       </div>
     </div>
@@ -543,11 +561,11 @@
             <h3>Stated KDN justifications per decade, 1980s onward</h3>
             <div class="legend-slot"></div>
             <div class="chart ch-md" id="c-kdnlines" role="img"
-                 aria-label="Line chart of stated KDN justifications per decade from the 1980s onward. Morality peaks at 383 in the 1990s and public order at 282; both fall thereafter, with public order leading the 2010s at 123. All five other grounds stay near zero throughout. Justifications are recorded for 1,590 of 3,213 publications, only nine of them before 1984."></div>
+                 aria-label="Line chart of stated KDN justifications per decade from the 1980s onward. Morality peaks at 383 in the 1990s and public order at 282; both fall thereafter, with public order leading the 2010s at 123. All five other grounds stay near zero throughout. Justifications are recorded for 1,586 of 3,212 publications, only five of them before 1984."></div>
           </div>
           <figcaption><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Coverage
-            caveat: official justifications exist for only 1,590 of 3,213 records — about half the
-            dataset, and only nine pre-date 1984. These findings apply to records with a stated
+            caveat: official justifications exist for only 1,586 of 3,212 records — about half the
+            dataset, and only five pre-date 1984. These findings apply to records with a stated
             justification.</figcaption>
         </figure>
         <figure class="viz" data-viz="decade-mix">
@@ -566,17 +584,17 @@
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-stamp" aria-hidden="true"></i>Part 5 · What was banned</p>
           <h2 id="h-kdn" class="reveal">What reasons did the Ministry itself give?</h2>
-          <p class="reveal">Official KDN justifications are available for 1,590 of the 3,213
-            publications, of which only nine pre-date 1984. Two reasons dominate: morality
-            accounts for 895 bans and public order for 654 — together, 97.4% of all recorded
+          <p class="reveal">Official KDN justifications are available for 1,586 of the 3,212
+            publications, of which only five pre-date 1984. Two reasons dominate: morality
+            accounts for 893 bans and public order for 652 — together, 97.4% of all recorded
             justifications.</p>
           <p class="reveal">Every other ground appears only rarely: causing public alarm 23,
             public interest nine, security five, national interest three, contrary to law one.
             Formal <em>security</em> grounds were recorded in only five cases — even though the
             research classifies many publications as ideological or politically subversive.</p>
           <div class="grounds grounds-mini reveal" aria-hidden="true">
-            <span class="ground-chip is-hot">Morality · 895</span>
-            <span class="ground-chip is-hot">Public order · 654</span>
+            <span class="ground-chip is-hot">Morality · 893</span>
+            <span class="ground-chip is-hot">Public order · 652</span>
             <span class="ground-chip">Public alarm · 23</span>
             <span class="ground-chip">Public interest · 9</span>
             <span class="ground-chip">Security · 5</span>
@@ -590,7 +608,7 @@
           <p class="kicker reveal"><i class="fa-solid fa-table-cells" aria-hidden="true"></i>Part 5 · What was banned</p>
           <h2 id="h-decade-mix" class="reveal">The focus of enforcement migrated across the grid.</h2>
           <p class="reveal">Normalise each decade to 100% and the shift is unmistakable. The 1950s
-            were dominated by subversive ideological and political content — 660 of 787 bans. By
+            were dominated by subversive ideological and political content — 659 of 786 bans. By
             the 1980s the focus had moved to moral and religious content: 232 obscene or immoral
             bans against 33 subversive and 47 religious doctrinal cases. In the 1990s, obscene or
             immoral publications (411) and religious doctrinal deviance (275) together accounted
@@ -611,16 +629,16 @@
       <p class="kicker reveal"><i class="fa-solid fa-tags" aria-hidden="true"></i>Part 5 · What was banned</p>
       <h2 id="h-subclusters" class="reveal">The most common types of banned publication.</h2>
       <p class="reveal">Two themes dominate INITIATE.MY&rsquo;s taxonomies: erotic or immoral
-        content, with 1,097 bans (34.1%), and communism or socialism, with 850 (26.5%) — together
-        1,947 bans, or 60.6% of the dataset. Pornography is classified separately, with 155 bans;
-        combined with erotic or immoral content, the broader obscene or immoral cluster holds
-        1,252 records, although the two categories remain distinct in the research.</p>
+        content, with 1,097 bans (34.2%), and communism or socialism, with 849 (26.4%) — together
+        1,946 bans, or 60.6% of the dataset. Pornography is classified separately, with 155 bans
+        (4.8%); combined with erotic or immoral content, the broader obscene or immoral cluster
+        holds 1,252 records, although the two categories remain distinct in the research.</p>
     </div>
     <figure class="wide-fig">
       <div class="chart-card">
         <h3>Every subcluster, by ban frequency</h3>
         <div class="chart ch-lg" id="c-suball" role="img"
-             aria-label="Horizontal bar chart of all fourteen subclusters: erotic/immoral content 1,097, communism/socialism 850, other 573, administrative/unclear ground 281, pornography 155, Al-Arqam 95, revolutionary politics 78, LGBT 41, ethnic incitement 15, Syiah 10, Ahmadiyyah 6, terrorism/militancy 5, insults to religion 4, and royalty 3."></div>
+             aria-label="Horizontal bar chart of all fourteen subclusters: erotic/immoral content 1,097, communism/socialism 849, other 573, administrative/unclear ground 281, pornography 155, Al-Arqam 95, revolutionary politics 78, LGBT 41, ethnic incitement 15, Syiah 10, Ahmadiyyah 6, terrorism/militancy 5, insults to religion 4, and royalty 3."></div>
       </div>
       <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A publication can carry
         more than one subcluster label. Smaller counts do not mean lower policy significance —
@@ -628,11 +646,170 @@
         not frequency alone.</figcaption>
     </figure>
     <div class="full-foot">
-      <p class="reveal">A further 854 publications — 26.6% — fall under &ldquo;Other&rdquo; or
-        administrative and unclear grounds, limiting more specific interpretation. Below the big
-        two sit the named campaigns: Al-Arqam (95), revolutionary politics (78), LGBT-related
-        content (41), ethnic incitement (15), Syiah (10), Ahmadiyyah (6), terrorism or militancy
-        (5), insults to religion (4) and royalty (3).</p>
+      <p class="reveal">The third-largest subcluster — labelled &ldquo;Other&rdquo; in the chart —
+        holds 573 bans (17.8%): religious doctrinal publications not classified under the more
+        specific Al-Arqam, Syiah or Ahmadiyyah subclusters. Another 281 records (8.7%) sit under
+        &ldquo;administrative/unclear ground&rdquo;, the only subcluster within general or
+        unidentified, where limited information, vague titles or overlapping themes prevented a
+        more precise classification. The remaining subclusters, in descending order, are Al-Arqam
+        (95), revolutionary politics (78), LGBT-related content (41), ethnic incitement (15),
+        Syiah (10), Ahmadiyyah (6), terrorism or militancy (5), insults to religion (4) and
+        royalty (3).</p>
+    </div>
+  </section>
+
+  <!-- Beat 14b · six example records (storytelling.md Frame 14) -->
+  <section class="chapter full tone-wash" id="examples" data-scene="examples" aria-labelledby="h-examples">
+    <div class="full-head">
+      <p class="kicker reveal"><i class="fa-solid fa-box-archive" aria-hidden="true"></i>Part 5 · What was banned</p>
+      <h2 id="h-examples" class="reveal">Six records, up close.</h2>
+      <p class="reveal">Aggregates hide the object itself. These six cards are drawn straight from
+        the dataset — fields exactly as the gazette record left them, a dash where it left nothing —
+        and show what the classification works with: a title, sometimes an author, sometimes a
+        publisher, and often little more. Five of the six have no traceable cover, which is the
+        ordinary case.</p>
+    </div>
+    <div class="cover-shelf">
+      <div class="cover-shelf-row" aria-hidden="true">
+        <img src="asset/img/covers/1952_Foundations_Of_Leninism.jpg" alt="" width="351" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/1967_Quotations_From_Chairman_Mao_Tse-Tung.jpg" alt="" width="318" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/1989_The_Satanic_Verses.jpg" alt="" width="352" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/1992_Arqam_Militan.jpg" alt="" width="128" height="196" loading="lazy" decoding="async">
+        <img src="asset/img/covers/1992_Among_The_Believers.jpg" alt="" width="152" height="240" loading="lazy" decoding="async">
+        <img src="asset/img/covers/1994_Kahwin_Cara_Arqam.jpg" alt="" width="128" height="205" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2007_The_Qur'an.jpg" alt="" width="331" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2009_The_Trouble_With_Islam_Today.jpg" alt="" width="333" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2012_Allah,_Liberty_And_Love.jpg" alt="" width="327" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2016_A_Treasury_Of_Asian_Literature.jpg" alt="" width="312" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2022_Heartstopper_Volume_2.jpg" alt="" width="325" height="500" loading="lazy" decoding="async">
+        <img src="asset/img/covers/2025_My_Shadow_Is_Purple.jpg" alt="" width="472" height="500" loading="lazy" decoding="async">
+      </div>
+      <p class="cover-shelf-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A shelf
+        of the ones that survive. Cover images could be traced for only 158 of the 3,212 records —
+        for the rest, the gazette line is all that is left of the object.</p>
+    </div>
+    <div class="specimen-grid">
+      <article class="specimen cl-religious reveal card">
+        <div class="specimen-plate is-blank">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <span>No cover found</span>
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Religious doctrinal deviance · Syiah</p>
+          <h3 class="specimen-title">Risalah Bertajuk &ldquo;Pakatan Jahat Kuasa-Kuasa Besar Terhadap
+            Islam-Imam Khomeini&rdquo;</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">1984</span> · Malay · origin unclear</dd></div>
+            <div><dt>Author</dt><dd>—</dd></div>
+            <div><dt>Publisher</dt><dd>—</dd></div>
+            <div><dt>Stated ground</dt><dd>—</dd></div>
+          </dl>
+          <p class="specimen-note">The title is nearly all the gazette offers — no author, no
+            publisher, no stated ground. For a record this sparse, classification rests on the words
+            of the title itself: here, <em>Imam Khomeini</em>.</p>
+        </div>
+      </article>
+      <article class="specimen cl-subversive reveal card">
+        <div class="specimen-plate is-blank">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <span>No cover found</span>
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Subversive / political · Communism/socialism</p>
+          <h3 class="specimen-title">Mao Zedong: China Dalam Dunia Abad Ke-20</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">2026</span> · Malay · local</dd></div>
+            <div><dt>Author</dt><dd>Rebecca E. Karl / Dian Saleh</dd></div>
+            <div><dt>Publisher</dt><dd>Ibde Ilham Sdn. Bhd.</dd></div>
+            <div><dt>Stated ground</dt><dd>—</dd></div>
+          </dl>
+          <p class="specimen-note"><span class="specimen-flag"><i class="fa-solid fa-rotate-left"
+            aria-hidden="true"></i>Revoked July 2026</span> Banned and unbanned inside a single year:
+            one of 27 titles gazetted in 2026 so far — and one of the five revocations that
+            July.</p>
+        </div>
+      </article>
+      <article class="specimen cl-religious reveal card">
+        <div class="specimen-plate">
+          <img src="asset/img/covers/1994_Kahwin_Cara_Arqam.jpg"
+               alt="Cover of Kahwin Cara Arqam: the title set in heavy black capitals on a plain white ground, with the author&rsquo;s name beneath."
+               width="128" height="205" loading="lazy" decoding="async">
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Religious doctrinal deviance · Al-Arqam</p>
+          <h3 class="specimen-title">Kahwin Cara Arqam</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">1994</span> · Malay · origin unclear</dd></div>
+            <div><dt>Author</dt><dd>Nur S Biedyn Beseri</dd></div>
+            <div><dt>Publisher</dt><dd>Trans Media Publications</dd></div>
+            <div><dt>Stated ground</dt><dd>Public order · Ketenteraman Awam</dd></div>
+          </dl>
+          <p class="specimen-note">One of 75 Al-Arqam titles gazetted in 1994 alone — the year the
+            movement&rsquo;s publications were swept from circulation. Of the 95 bans carrying the
+            label, four in five date from that single year.</p>
+        </div>
+      </article>
+      <article class="specimen cl-subversive reveal card">
+        <div class="specimen-plate is-blank">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <span>No cover found</span>
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Subversive / political · Revolutionary politics</p>
+          <h3 class="specimen-title">Perak Darul Kartun</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">2010</span> · Malay · local</dd></div>
+            <div><dt>Author</dt><dd>Zunar</dd></div>
+            <div><dt>Publisher</dt><dd>Sepakat Efektif Sdn. Bhd.</dd></div>
+            <div><dt>Stated ground</dt><dd>Public order · Ketenteraman Awam</dd></div>
+          </dl>
+          <p class="specimen-note">A book of political cartoons. Both Zunar titles in the record —
+            this and <em>1 Funny Malaysia</em> — were gazetted in 2010, on public-order grounds.</p>
+        </div>
+      </article>
+      <article class="specimen cl-subversive reveal card">
+        <div class="specimen-plate is-blank">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <span>No cover found</span>
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Subversive / political · Revolutionary politics</p>
+          <h3 class="specimen-title">Torture in Malaysia Prisons: Who You Didn&rsquo;t Know and Need
+            to Know to Act</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">2016</span> · English · origin unclear</dd></div>
+            <div><dt>Author</dt><dd>Varatharajoo Murugan</dd></div>
+            <div><dt>Publisher</dt><dd>—</dd></div>
+            <div><dt>Stated ground</dt><dd>Causing public alarm · Menggemparkan Fikiran Orang Ramai</dd></div>
+          </dl>
+          <p class="specimen-note">One of only 23 bans in the entire record justified as causing
+            public alarm — a ground so rare it barely registers on the charts above.</p>
+        </div>
+      </article>
+      <article class="specimen cl-3r reveal card">
+        <div class="specimen-plate is-blank">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <span>No cover found</span>
+        </div>
+        <div class="specimen-body">
+          <p class="specimen-tag">Race, religion &amp; royalty · Ethnic incitement</p>
+          <h3 class="specimen-title">When I Was a Kid 3</h3>
+          <dl class="specimen-fields">
+            <div><dt>Gazetted</dt><dd><span class="num">2023</span> · English · local</dd></div>
+            <div><dt>Author</dt><dd>Cheeming Boey</dd></div>
+            <div><dt>Publisher</dt><dd>Grey Pigeon Sdn. Bhd.</dd></div>
+            <div><dt>Stated ground</dt><dd>Morality · Kemoralan</dd></div>
+          </dl>
+          <p class="specimen-note">A graphic memoir, classified under 3R content — yet the
+            Ministry&rsquo;s stated ground was morality. The legal ground and the content cluster
+            are not the same thing, and that mismatch is the next chapter.</p>
+        </div>
+      </article>
+    </div>
+    <div class="full-foot">
+      <p class="reveal">These six are illustrative, chosen to span the clusters — not a sample.
+        Every card sits in the <a href="#/data">Data</a> tab alongside the other 3,206 records,
+        with the same fields and the same gaps.</p>
     </div>
   </section>
 
@@ -644,7 +821,7 @@
           <div class="chart-card">
             <h3>KDN&rsquo;s legal ground × INITIATE.MY&rsquo;s content cluster</h3>
             <div class="chart ch-md" id="c-crosswalk" role="img"
-                 aria-label="Heatmap of KDN justification against INITIATE.MY content cluster, for the 1,590 records with a stated justification. Morality concentrates in obscene or immoral publications: 820 of 895 cases. Public order concentrates in religious doctrinal deviance: 565 of 654. Communism or socialism was formally justified on security grounds in only one case, against twelve under public order."></div>
+                 aria-label="Heatmap of KDN justification against INITIATE.MY content cluster, for the 1,586 records with a stated justification. Morality concentrates in obscene or immoral publications: 820 of 893 cases. Public order concentrates in religious doctrinal deviance: 564 of 652. Communism or socialism was formally justified on security grounds in only one case, against twelve under public order."></div>
           </div>
           <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Rows are the legal
             ground the Ministry recorded; columns are what the publication was about. Related — but
@@ -661,9 +838,9 @@
             prohibit a publication; INITIATE.MY&rsquo;s clusters describe what the publication was
             about. They are related but should not be treated the same.</p>
           <p class="reveal">Most publications prohibited on morality grounds were classified as
-            obscene or immoral — 820 of 895 cases, including 701 erotic or immoral publications,
+            obscene or immoral — 820 of 893 cases, including 701 erotic or immoral publications,
             119 pornography cases and 37 LGBT-related publications. Public order was used mainly
-            for religious doctrinal content: 565 of 654 public-order bans, including 90 Al-Arqam,
+            for religious doctrinal content: 564 of 652 public-order bans, including 90 Al-Arqam,
             seven Syiah and six Ahmadiyyah cases.</p>
           <p class="reveal">Ideological publications look different. In the post-1984 records,
             communism or socialism appears in only <em>one</em> case formally justified on
@@ -688,26 +865,43 @@
     </div>
     <div class="revoke-list" role="list">
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate">
+          <img src="asset/img/covers/2017_Islam_Without_Extremes_A_Muslim_Case_For_Liberty.jpg"
+               alt="Cover of Islam Without Extremes: a red crescent-and-title design on a pale ground, by Mustafa Akyol."
+               width="320" height="500" loading="lazy" decoding="async">
+        </div>
         <span class="revoke-title">Islam Without Extremes: A Muslim Case for Liberty</span>
         <span class="revoke-meta"><span class="num">Banned 2017</span> · Religious doctrinal deviance</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Komrad Asi (Rejimen 10) Dalam Denyut Nihilisme Sejarah</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Sigandi</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Revolutionary politics</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Memoir Shamsiah Fakeh Dari Awas Ke Rejimen Ke-10</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Mao Zedong: China Dalam Dunia Abad ke-20</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
@@ -743,7 +937,7 @@
       <div class="reform-card reveal">
         <span class="reform-num num" aria-hidden="true">2</span>
         <h3><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Review legacy bans; add sunset clauses</h3>
-        <p>The 1950s recorded 787 bans and the 1990s 715 — prohibitions that arose under different
+        <p>The 1950s recorded 786 bans and the 1990s 715 — prohibitions that arose under different
           political and security conditions and should not remain in force indefinitely. Each ban
           should expire unless KDN can show it remains necessary and proportionate.</p>
       </div>
@@ -774,7 +968,7 @@
     <p class="kicker reveal"><i class="fa-solid fa-quote-left" aria-hidden="true"></i>Coda</p>
     <h2 class="reveal">The record shows the grounds shifting — not the impulse fading.</h2>
     <p class="standfirst reveal">
-      Across 3,213 publications and 76 years, the through-line is a moving target: ideological
+      Across 3,212 publications and 76 years, the through-line is a moving target: ideological
       security in the Emergency era, then — from the 1980s onward — moral and religious content,
       until the two largest classified themes, moral regulation and ideological security, account
       for six in ten of everything ever gazetted. The Ministry&rsquo;s own stated grounds are
@@ -789,7 +983,7 @@
     <p class="colophon reveal">
       Source: INITIATE.MY&rsquo;s database of publications gazetted as prohibited under
       Malaysia&rsquo;s Printing Presses and Publications Act and predecessor laws, 1950–2026
-      (n&nbsp;=&nbsp;3,213). Explore every record in the <a href="#/data">Data</a> tab.
+      (n&nbsp;=&nbsp;3,212). Explore every record in the <a href="#/data">Data</a> tab.
     </p>
   </div>
 </footer>
@@ -801,8 +995,12 @@
   <div class="page-inner">
     <p class="kicker">The dataset</p>
     <h2 id="h-data">Every gazetted publication, 1950–2026</h2>
-    <p class="lede">All 3,213 records behind the story — search by title, publisher, printer or
+    <p class="lede">All 3,212 records behind the story — search by title, publisher, printer or
       author, filter by cluster, origin or revocation status, and click a column header to sort.
+      <strong>Download</strong> takes whatever the table is currently showing as a CSV, so filter
+      first to export a slice or leave it clear to take the whole database.
+      Spotted a mistake? Tick one or more rows — the checkbox column is pinned to the right — to
+      <a href="#suggest" data-goto="suggest">suggest a correction</a>.
       A dash means the gazette record left that field blank; KDN justifications exist for about
       half the records. The five bans revoked in July 2026 stay in the table, marked with a badge.</p>
 
@@ -813,6 +1011,9 @@
       <select id="table-origin" aria-label="Filter by origin"></select>
       <label class="table-check"><input type="checkbox" id="table-revoked"> Revoked only</label>
       <span id="table-count" class="table-count" role="status"></span>
+      <button type="button" id="table-download" class="table-download">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span id="table-download-label">Download CSV</span>
+      </button>
     </div>
 
     <div class="table-wrap" tabindex="0" role="region" aria-label="Publications table">
@@ -827,6 +1028,716 @@
       <span id="table-page" class="table-count"></span>
       <button type="button" id="table-next">Next →</button>
     </div>
+
+    <!-- suggest an edit: builds a pre-filled GitHub issue, no backend -->
+    <div class="suggest-card" id="suggest">
+      <p class="contact-label">Suggest an edit</p>
+      <h3 class="suggest-title">Spotted something wrong in a record?</h3>
+      <p class="suggest-intro">The classification work is ongoing and the gazette records are
+        uneven. If a field is wrong, a publication is missing, or a ban has since been lifted,
+        describe the change below. Tick any number of rows in the table above and they all travel
+        into one issue — useful when the same mistake runs through a batch of records. Ticks survive
+        searching, sorting and paging, so you can gather records from anywhere in the dataset.
+        Nothing is sent from this page: your answers are packed into a pre-filled issue on the
+        project&rsquo;s GitHub repository, which opens in a new tab for you to review and submit.</p>
+
+      <form id="suggest-form" class="suggest-form" novalidate>
+        <div class="sg-selection" id="sg-selection" hidden>
+          <div class="sg-selection-head">
+            <p class="sg-selection-label">Selected records <span class="sel-count" id="sg-count"></span></p>
+            <button type="button" class="sg-clear" id="sg-clear">Clear all</button>
+          </div>
+          <ul class="sg-chips" id="sg-chips"></ul>
+          <p class="field-hint">One issue covers the whole selection, so describe a change that
+            applies to all of them — otherwise file them separately.</p>
+        </div>
+
+        <div class="field">
+          <label for="sg-title">Publication title <span class="req" id="sg-title-req"
+            aria-hidden="true">*</span><span class="opt" id="sg-title-opt" hidden>optional</span></label>
+          <input type="text" id="sg-title" name="title" list="sg-title-matches" autocomplete="off"
+                 aria-describedby="sg-title-hint">
+          <datalist id="sg-title-matches"></datalist>
+          <p class="field-hint" id="sg-title-hint">Only needed for a publication that is
+            <em>not</em> in the table — tick rows above for records that are. Typing a title that
+            already exists adds that record to the issue too.</p>
+          <p class="field-error" id="sg-title-err" hidden></p>
+          <p class="field-match" id="sg-title-match" role="status"></p>
+        </div>
+
+        <div class="field">
+          <label for="sg-change">Suggested change or correction <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="sg-change" name="change" rows="4" aria-describedby="sg-change-hint" required></textarea>
+          <p class="field-hint" id="sg-change-hint">Which field, and what it should say. For example:
+            &ldquo;Origin should be Local, not Foreign — the publisher was based in Penang.&rdquo;</p>
+          <p class="field-error" id="sg-change-err" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="sg-source">Justification or source link <span class="opt">optional</span></label>
+          <textarea id="sg-source" name="source" rows="3" aria-describedby="sg-source-hint"></textarea>
+          <p class="field-hint" id="sg-source-hint">A gazette notice, archive scan, or catalogue
+            record makes a change far quicker to verify. The issue form asks for this too, so if you
+            leave it blank it will be marked as an unsourced observation.</p>
+        </div>
+
+        <div class="field">
+          <label for="sg-contact">Your name or contact <span class="opt">optional</span></label>
+          <input type="text" id="sg-contact" name="contact" autocomplete="off"
+                 aria-describedby="sg-contact-hint">
+          <p class="field-hint" id="sg-contact-hint">Only if you would like to be credited or
+            contacted about this change.</p>
+        </div>
+
+        <div class="suggest-actions">
+          <button type="submit" class="btn-suggest">Open pre-filled issue →</button>
+          <p class="suggest-note">Submitting the issue needs a free GitHub account. Suggestions are
+            reviewed against the gazette record before the table changes — filing one does not edit
+            the data directly.</p>
+        </div>
+
+        <p class="field-error form-error" id="sg-form-err" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH METHODS VIEW ================= -->
+<!-- Static conversion of Finalise-Codebook/research-methods.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-methods" class="view page" hidden aria-labelledby="h-methods">
+  <div class="page-inner">
+    <p class="kicker">Codebook · Research methods</p>
+    <h2 id="h-methods">How this database was built</h2>
+    <p class="lede">This research combined official government data, human verification and
+      AI-assisted analysis to build, clean and classify the PPPA prohibition database.</p>
+
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="rm-toc-label">
+        <p class="contact-label" id="rm-toc-label">On this page</p>
+        <ul>
+          <li><a href="#rm-collection">1. Data collection</a></li>
+          <li><a href="#rm-review">2. Data review and cleaning</a></li>
+          <li><a href="#rm-taxonomies">3. Developing research taxonomies</a></li>
+          <li class="doc-toc-sub"><a href="#rm-type">Publication type</a></li>
+          <li class="doc-toc-sub"><a href="#rm-origin">Publication origin</a></li>
+          <li class="doc-toc-sub"><a href="#rm-content">Content taxonomies</a></li>
+          <li><a href="#rm-classification">4. AI-assisted classification and human review</a></li>
+          <li class="doc-toc-sub"><a href="#rm-embedding">Initial embedding-based classification</a></li>
+          <li class="doc-toc-sub"><a href="#rm-keywords">Revised rule-based keyword classification</a></li>
+          <li><a href="#rm-comparison">5. Comparing taxonomies with KDN justifications</a></li>
+        </ul>
+      </nav>
+
+      <div class="doc-body">
+        <h3 id="rm-collection">1. Data collection</h3>
+        <p>The research began by extracting the
+          <a href="https://epq.kdn.gov.my/e-pq/index.php?mod=public" target="_blank" rel="noopener">Senarai
+          Perintah Larangan</a> from the Ministry of Home Affairs (KDN) website. KDN&rsquo;s
+          Enforcement and Control Division also provided a separate list containing the available
+          official justification for each prohibition.</p>
+
+        <p>The original metadata included:</p>
+
+        <ul class="doc-list">
+          <li>publication title;</li>
+          <li>author or translator;</li>
+          <li>publisher;</li>
+          <li>printer;</li>
+          <li>gazette date;</li>
+          <li>language; and</li>
+          <li>KDN&rsquo;s stated justification for prohibition.</li>
+        </ul>
+
+        <p>The official justifications were grouped under seven grounds:</p>
+
+        <ul class="doc-list">
+          <li>contrary to law;</li>
+          <li>morality;</li>
+          <li>public interest;</li>
+          <li>national interest;</li>
+          <li>security;</li>
+          <li>public order; and</li>
+          <li>causing public alarm.</li>
+        </ul>
+
+        <p>A script generated with Claude was used to extract the website records directly into a
+          comma-separated values file. Using a script reduces the risk of information being altered
+          or generated during extraction. Subsequent updates were identified by monitoring KDN&rsquo;s
+          website and relevant news reports and were added manually.</p>
+
+        <h3 id="rm-review">2. Data review and cleaning</h3>
+        <p>The research team reviewed the extracted records to identify inaccurate, incomplete or
+          misplaced information. Where possible, titles, authors, translators, publishers, printers,
+          languages and other metadata were verified using publicly available sources.</p>
+
+        <p>Some information remained unavailable, particularly for older publications. These gaps
+          were retained as unknown or unclear rather than filled without sufficient evidence.</p>
+
+        <p>The team then developed additional taxonomies — also referred to as classifications
+          throughout the research — to supplement the original KDN data.</p>
+
+        <h3 id="rm-taxonomies">3. Developing research taxonomies</h3>
+        <p>The taxonomies covered three areas.</p>
+
+        <h4 id="rm-type">Publication type</h4>
+        <p>Records were classified as:</p>
+
+        <ul class="doc-list">
+          <li><strong>Printed documents:</strong> books, pamphlets, magazines, journals and
+            newspapers;</li>
+          <li><strong>Visual media:</strong> photographs, drawings, maps, charts and posters;</li>
+          <li><strong>Audio or recordings:</strong> music, tapes, discs and other sound
+            recordings;</li>
+          <li><strong>Digital or electronic materials:</strong> databases, internet publications and
+            microfilm; or</li>
+          <li><strong>Physical goods:</strong> items carrying words, symbols or ideas, such as
+            clothing and watches.</li>
+        </ul>
+
+        <h4 id="rm-origin">Publication origin</h4>
+        <p>Publications were classified as:</p>
+
+        <ul class="doc-list">
+          <li><strong>Local:</strong> produced, published, printed or mainly distributed in
+            Malaysia;</li>
+          <li><strong>Foreign:</strong> produced or published outside Malaysia;</li>
+          <li><strong>Both:</strong> involving local and foreign production or distribution; or</li>
+          <li><strong>Unclear:</strong> origin could not be determined reliably.</li>
+        </ul>
+
+        <h4 id="rm-content">Content taxonomies</h4>
+        <p>The main themes of prohibited publications were organised into five broad clusters:</p>
+
+        <ul class="doc-list">
+          <li>subversive ideological and political content;</li>
+          <li>race, religion and royalty issues;</li>
+          <li>religious doctrinal deviance;</li>
+          <li>obscene or immoral publications; and</li>
+          <li>general or unidentified records.</li>
+        </ul>
+
+        <p>These were divided into more specific subclusters, including communism or socialism,
+          revolutionary politics, terrorism or militancy, LGBT-related content, Al-Arqam, Syiah,
+          Ahmadiyyah, pornography, and erotic or immoral content.</p>
+
+        <h3 id="rm-classification">4. AI-assisted classification and human review</h3>
+        <p>The content taxonomies were applied through two stages.</p>
+
+        <h4 id="rm-embedding">Initial embedding-based classification</h4>
+        <p>The metadata for each publication — including its title, author, translator and publisher
+          — was combined into a single text string. This was converted into a numerical
+          representation, or embedding, using multilingual sentence-transformer models.</p>
+
+        <p>Three models were evaluated:</p>
+
+        <ul class="doc-list">
+          <li><code class="doc-code">paraphrase-multilingual-mpnet-base-v2</code>;</li>
+          <li><code class="doc-code">intfloat/multilingual-e5-large</code>; and</li>
+          <li><code class="doc-code">BAAI/bge-m3</code>.</li>
+        </ul>
+
+        <p>The research used a semi-supervised <strong>anchor-based nearest-centroid
+          method</strong>:</p>
+
+        <ol class="doc-list doc-steps">
+          <li><strong>Anchor selection:</strong> Researchers manually identified 265 publications
+            with clear themes across 13 subclusters.</li>
+          <li><strong>Centroid computation:</strong> The embeddings of the anchor publications in
+            each subcluster were averaged to represent that subcluster.</li>
+          <li><strong>Assignment:</strong> Each publication was assigned to the subcluster with the
+            highest cosine similarity.</li>
+          <li><strong>Confidence thresholding:</strong> Low-similarity records were intended to be
+            flagged for manual review or placed under General/Unidentified.</li>
+        </ol>
+
+        <p>However, the confidence threshold did not reliably identify uncertain records because
+          very few publications received low-confidence scores.</p>
+
+        <h4 id="rm-keywords">Revised rule-based keyword classification</h4>
+        <p>The research therefore adopted a more transparent rule-based keyword classifier. The
+          system reviewed the following fields in order:</p>
+
+        <ol class="doc-list">
+          <li>publisher;</li>
+          <li>author or translator; and</li>
+          <li>publication title.</li>
+        </ol>
+
+        <p>Earlier matches took priority. For example, recognised publishers, authors or title terms
+          could assign a publication to Al-Arqam, Syiah, communism or socialism, pornography, or
+          another relevant subcluster.</p>
+
+        <p>ChatGPT, Claude and DeepSeek were used to help generate multilingual keywords and
+          phrases. However, the research team determined the taxonomies, reviewed the keyword rules
+          and verified the resulting classifications.</p>
+
+        <p>Publications that did not match any rule were placed under
+          <strong>General/Unidentified</strong> for further review.</p>
+
+        <h3 id="rm-comparison">5. Comparing research taxonomies with KDN justifications</h3>
+        <p>The analysis kept two coding systems distinct:</p>
+
+        <ul class="doc-list">
+          <li><strong>INITIATE.MY&rsquo;s taxonomies</strong> describe what a publication appears to
+            contain.</li>
+          <li><strong>KDN&rsquo;s justifications</strong> record the formal legal ground used to
+            prohibit it.</li>
+        </ul>
+
+        <p>This allowed the research to compare content patterns with official grounds — for
+          example, obscene or immoral publications with morality-based prohibitions, and religious
+          doctrinal publications with public-order justifications — without treating the two coding
+          systems as interchangeable.</p>
+
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-next" href="#/limitations">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Research Limitations</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH LIMITATIONS VIEW ================= -->
+<!-- Static conversion of Finalise-Codebook/research-limitations.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-limitations" class="view page" hidden aria-labelledby="h-limitations">
+  <div class="page-inner">
+    <p class="kicker">Codebook · Research limitations</p>
+    <h2 id="h-limitations">What this database cannot tell you</h2>
+    <p class="lede">The gaps, ambiguities and interpretive limits that shape how far the findings
+      can be pushed — in the source records, in the taxonomies, and in the historical reading.</p>
+
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="rl-toc-label">
+        <p class="contact-label" id="rl-toc-label">On this page</p>
+        <ul>
+          <li><a href="#rl-data">1. Data availability, quality and coverage</a></li>
+          <li class="doc-toc-sub"><a href="#rl-info">A. Limited publication information</a></li>
+          <li class="doc-toc-sub"><a href="#rl-metadata">B. Incomplete and inconsistent metadata</a></li>
+          <li class="doc-toc-sub"><a href="#rl-justifications">C. Uneven coverage of KDN justifications</a></li>
+          <li class="doc-toc-sub"><a href="#rl-revocation">D. Unclear revocation status</a></li>
+          <li class="doc-toc-sub"><a href="#rl-implications">Implications</a></li>
+          <li class="doc-toc-sub"><a href="#rl-mitigation">Mitigation measures</a></li>
+          <li><a href="#rl-taxonomy">2. Taxonomy and interpretation limitations</a></li>
+          <li><a href="#rl-scope">3. Scope and historical interpretation</a></li>
+        </ul>
+      </nav>
+
+      <div class="doc-body">
+        <h3 id="rl-data">1. Data availability, quality and coverage</h3>
+        <p>The dataset was imported from KDN&rsquo;s official prohibition list. However, several
+          limitations affect the reliability of the classifications and the interpretation of the
+          findings.</p>
+
+        <h4 id="rl-info">A. Limited publication information</h4>
+        <p>Many records do not include the full text of the publication. Classification therefore
+          relied mainly on titles, bibliographic details and publicly available online
+          information.</p>
+
+        <p>Some titles provide insufficient context for reliable classification. For example,
+          <cite>Percutian Yang Romantik</cite> (Romantic Holidays), published in 1990, lists no
+          author and provides only the publishing house, making it difficult to determine which
+          cluster it belongs to. Another example is <cite>Suratan2 Dalam Bahasa China Yang
+          Mengandongi Perkataan2 Dan Muzik Dalam Lagu2 Yang Tajok2Nya Ia-Lah: (Terdapat Sebanyak 13
+          Tajuk)</cite>, where the record does not even specify the individual titles that were
+          prohibited. Similarly, <cite>I Am Jazz</cite> does not, from its title alone, clearly
+          indicate that it contains LGBTQ+ themes. Information on older or obsolete publications was
+          also often difficult to locate or verify.</p>
+
+        <h4 id="rl-metadata">B. Incomplete and inconsistent metadata</h4>
+        <p>The official records contain several metadata issues:</p>
+
+        <ul class="doc-list">
+          <li>some Chinese-language titles were translated inaccurately or inconsistently;</li>
+          <li>some records contain incomplete titles;</li>
+          <li>information was occasionally entered under the wrong fields;</li>
+          <li>263 records have an unknown language;</li>
+          <li>1,067 records have an unclear origin; and</li>
+          <li>some printer and publisher fields contain locations, language labels or missing-value
+            terms instead of identifiable entity names.</li>
+        </ul>
+
+        <p>These issues limit the reliability of analysis by language, origin, author, printer and
+          publisher.</p>
+
+        <h4 id="rl-justifications">C. Uneven coverage of KDN justifications</h4>
+        <p>Official KDN justifications are available for 1,590 of the 3,213 publications. These
+          records are overwhelmingly from the post-1984 period, although nine publications pre-date
+          1984.</p>
+
+        <p>Findings on morality, public order, security and other official grounds therefore mainly
+          reflect the post-1984 period and should not be applied to the full historical dataset.</p>
+
+        <p>This may understate the historical relationship between security enforcement and earlier
+          communist, socialist and revolutionary publications.</p>
+
+        <h4 id="rl-revocation">D. Unclear revocation status</h4>
+        <p>Revoked bans are not consistently identified in KDN&rsquo;s official prohibition list.
+          There is also no comprehensive public list showing which prohibitions have been
+          lifted.</p>
+
+        <p>Recent media reports identified revoked publications that were not yet reflected in the
+          official list during the research period. The cumulative number of prohibition orders
+          should therefore not be interpreted automatically as the number of bans that remain
+          active.</p>
+
+        <h4 id="rl-implications">Implications</h4>
+        <p>Findings on publication content, language, origin, publishers, printers and official
+          legal justifications should be interpreted cautiously. The available data supports
+          analysis of broad patterns, but not definitive conclusions in every individual case.</p>
+
+        <h4 id="rl-mitigation">Mitigation measures</h4>
+        <p>The research used online searches, Chinese-language translation tools and contextual
+          information to address data gaps. Missing or unverifiable information remained coded as
+          unknown. Automated classification was combined with human review, and each analysis states
+          its relevant period, coverage and number of records. Entity names should also be cleaned
+          and standardised before detailed publisher, printer or network analysis is conducted.</p>
+
+        <h3 id="rl-taxonomy">2. Taxonomy and interpretation limitations</h3>
+        <p>Some publications may reasonably fit more than one cluster or subcluster. For example,
+          <cite>Voice of the Revolution</cite> by the People&rsquo;s Liberation Army of Malaya,
+          North Johore 5th Brigade, West Section could be classified under either revolutionary
+          politics or terrorism/militancy. <cite>October Revolution and China</cite> could similarly
+          fall under revolutionary politics or communism/socialism. <cite>Lesbian Sex
+          Positions</cite> could be classified as both LGBT-related and obscene or immoral content.
+          Distinguishing erotic or immoral material from pornography was also difficult where the
+          full publication was unavailable.</p>
+
+        <p>Keyword rules may introduce unintended bias. Chinese-language publications, for example,
+          could be associated too readily with communism because of patterns in older records.
+          Language or origin alone does not establish ideological content.</p>
+
+        <p>INITIATE.MY&rsquo;s taxonomies and KDN&rsquo;s justifications also serve different
+          purposes. The taxonomies describe what a publication appears to contain, while KDN&rsquo;s
+          justifications record the formal legal ground used for prohibition. Repeated appearances
+          of particular authors, printers or publishers likewise do not necessarily prove targeted
+          enforcement.</p>
+
+        <p><strong>Implication:</strong> The classifications should be treated as analytical
+          categories rather than definitive descriptions of every publication. Relationships between
+          content, official legal grounds and recurring entities should not be interpreted as
+          evidence of government intent or targeted enforcement without further evidence.</p>
+
+        <p><strong>Mitigation:</strong> Each publication was assigned a primary category based on
+          its most identifiable theme, while overlaps were recognised. Keywords were assessed
+          alongside the title, period, author, publisher and available contextual information.</p>
+
+        <h3 id="rl-scope">3. Scope and historical interpretation</h3>
+        <p>The database covers PPPA prohibition records and is mainly focused on printed
+          publications. It does not represent the wider regulation of digital, audiovisual or online
+          content under other laws and enforcement systems.</p>
+
+        <p>The dataset shows when bans were recorded but does not prove why enforcement rose in
+          particular years. Peaks may reflect political or security developments, but they may also
+          result from delayed gazettement or administrative batching.</p>
+
+        <p>The 2020s are incomplete and should not be compared directly with full decades. Aggregate
+          language and origin data also cannot show historical changes without decade-level
+          analysis. The cumulative total represents all recorded prohibition orders, not necessarily
+          the number that remains legally active.</p>
+
+        <p><strong>Implication:</strong> The findings can identify broad enforcement patterns but
+          cannot establish the cause of each peak, demonstrate changes in the wider regulation of
+          information, or determine the current number of active bans.</p>
+
+        <p><strong>Mitigation:</strong> Historical interpretations were checked against gazette
+          dates, legal grounds, content taxonomies and relevant events where possible. Researchers
+          applied contextual judgement when interpreting ambiguous records and historical patterns,
+          while expert reviewers were consulted to assess the reasonableness and consistency of key
+          interpretations. Further decade-level analysis and more complete review and revocation
+          data are required for stronger conclusions.</p>
+
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-prev" href="#/methods">
+            <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+            <span class="doc-pager-title">Research Methods</span>
+          </a>
+          <a class="doc-pager-link is-next" href="#/taxonomy">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Taxonomy Definitions</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAXONOMY DEFINITIONS VIEW ================= -->
+<!-- Static conversion of Finalise-Codebook/taxonomy-definition.md.
+     Hand-maintained: edit the markdown and this section together. -->
+<section id="view-taxonomy" class="view page" hidden aria-labelledby="h-taxonomy">
+  <div class="page-inner">
+    <p class="kicker">Codebook · Taxonomy definitions</p>
+    <h2 id="h-taxonomy">How each publication was categorised</h2>
+    <p class="lede">The three classification systems applied to every record: what kind of
+      publication it is, where it came from, and the cluster and subcluster themes describing what
+      it contains.</p>
+
+    <div class="doc-layout">
+      <nav class="doc-toc" aria-labelledby="tx-toc-label">
+        <p class="contact-label" id="tx-toc-label">On this page</p>
+        <ul>
+          <li><a href="#tx-types">Publication types / Jenis Penerbitan</a></li>
+          <li><a href="#tx-origin">Publication origin / Asal Penerbitan</a></li>
+          <li><a href="#tx-clusters">Cluster themes / Tema Kluster</a></li>
+        </ul>
+      </nav>
+
+      <div class="doc-body">
+        <h3 id="tx-types">Publication types / Jenis Penerbitan</h3>
+        <p>Under the Printing Presses and Publications Act 1984 (PPPA) of Malaysia, the Home Affairs
+          Minister has broad, &ldquo;absolute discretion&rdquo; to ban items defined as
+          &ldquo;publications&rdquo; if they are deemed prejudicial to public order, morality,
+          security, or national interest. Because the legal definition of a
+          &ldquo;publication&rdquo; is extremely wide — covering anything capable of suggesting
+          words or ideas — the ban extends beyond books and newspapers to various physical
+          goods.</p>
+
+        <ol class="doc-list">
+          <li><strong>Printed documents:</strong> Books, pamphlets, magazines, journals, and
+            newspapers.</li>
+          <li><strong>Visual media:</strong> Photographs, caricatures, drawings, maps, charts, and
+            posters.</li>
+          <li><strong>Audio / recordings:</strong> Sound recordings, music, tapes, and discs.</li>
+          <li><strong>Digital / electronic:</strong> Computer databases, internet publications, and
+            microfilm.</li>
+          <li><strong>Physical goods:</strong> Items with symbolic content, such as clothing,
+            watches.</li>
+        </ol>
+
+        <h3 id="tx-origin">Publication origin / Asal Penerbitan</h3>
+        <ol class="doc-list">
+          <li><strong>Local</strong> — Publications that are produced, published, printed, or
+            primarily distributed within Malaysia, including materials authored or issued by
+            Malaysian individuals, organisations, or publishing houses.</li>
+          <li><strong>Foreign</strong> — Publications that are produced or published outside
+            Malaysia, including materials authored, printed, or distributed by foreign publishers,
+            organisations, or individuals based overseas.</li>
+          <li><strong>Both</strong> — Publications that involve joint or overlapping local and
+            foreign production or distribution, such as foreign titles printed locally, Malaysian
+            editions of international publications, or collaborative publications involving both
+            Malaysian and foreign publishers.</li>
+          <li><strong>Unclear</strong> — Publications where the origin cannot be reliably determined
+            due to insufficient or missing information about the publisher, author, printing
+            location, or distribution source.</li>
+        </ol>
+
+        <h3 id="tx-clusters">Cluster themes / Tema Kluster</h3>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Cluster and subcluster definitions">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Num.</th>
+                <th scope="col">Cluster theme</th>
+                <th scope="col">Definition</th>
+                <th scope="col">Sub-cluster</th>
+                <th scope="col">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="4">1</th>
+                <td class="doc-tcluster" rowspan="4">Subversive ideological and political
+                  content</td>
+                <td rowspan="4">Publications that promote, justify, or discuss ideologies,
+                  movements, or narratives considered to challenge the authority of the state,
+                  constitutional order, or national security. These publications typically advocate
+                  revolutionary political change, extremist ideologies, or alternative political
+                  systems perceived as destabilising Malaysia&rsquo;s governance structure.</td>
+                <td class="doc-tsub">Communism/socialism</td>
+                <td>Publications that promote, defend, or disseminate ideological materials related
+                  to communism, Marxism, Leninism, Maoism, or socialist revolutionary movements.
+                  This includes materials advocating class struggle, overthrow of capitalist
+                  systems, or historical narratives supportive of communist movements such as the
+                  Communist Party of Malaya.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Revolutionary politics</td>
+                <td>Publications advocating political upheaval, regime change, or revolutionary
+                  transformation of the state through radical or confrontational political
+                  movements. This includes materials encouraging mass mobilisation, civil resistance
+                  aimed at overthrowing institutions, or ideological justification for dismantling
+                  the current political system.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Terrorism / militancy</td>
+                <td>Publications that promote, glorify, justify, or provide information supporting
+                  violent extremist groups, terrorist organisations, or militant activities. This
+                  includes propaganda, recruitment material, operational guidance, or narratives
+                  legitimising violence against civilians or state institutions.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">LGBT</td>
+                <td>Publications that explicitly promote, advocate, or discuss lesbian, gay,
+                  bisexual, and transgender identities, lifestyles, or rights, particularly where
+                  framed as challenging prevailing social norms or moral standards. Materials may
+                  include advocacy, personal narratives, educational texts, or activist literature
+                  relating to sexual orientation and gender identity.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="3">2</th>
+                <td class="doc-tcluster" rowspan="3">Race, religion &amp; royalty (3R issues)</td>
+                <td rowspan="3">Publications containing narratives, statements, or depictions that
+                  may incite hostility, tension, or conflict related to race, religion, or royalty
+                  (3R) in Malaysia. These materials may challenge social harmony or involve
+                  sensitive issues affecting inter-ethnic relations, religious respect, or the
+                  constitutional monarchy.</td>
+                <td class="doc-tsub">Ethnic incitement</td>
+                <td>Publications that contain derogatory, inflammatory, or hostile narratives
+                  targeting specific ethnic groups, or that encourage discrimination, hatred, or
+                  violence between communities.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Insults to religion</td>
+                <td>Publications that contain content perceived as insulting, mocking, or degrading
+                  religious beliefs, figures, scriptures, or institutions. These materials may
+                  provoke religious sensitivities or challenge established religious doctrines in a
+                  way considered offensive.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Insults to royalty</td>
+                <td>Publications containing content perceived as insulting, mocking, or degrading
+                  the Malaysian monarchy or members of royal institutions. This includes narratives
+                  that question the legitimacy, authority, dignity, or role of the royal institution
+                  in a manner considered offensive or disrespectful.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="4">3</th>
+                <td class="doc-tcluster" rowspan="4">Religious doctrinal deviance</td>
+                <td rowspan="4">Publications associated with religious teachings or interpretations
+                  considered deviant, unorthodox, or contrary to mainstream Sunni Islamic doctrine as
+                  recognised by Malaysian religious authorities.</td>
+                <td class="doc-tsub">Al-Arqam</td>
+                <td>Publications promoting, defending, or documenting the teachings, ideology,
+                  leadership, or activities of the Al-Arqam movement, including materials associated
+                  with its founder or organisational structure.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Syiah</td>
+                <td>Publications advocating or explaining Shi&rsquo;a Islamic theology,
+                  jurisprudence, or religious practices, particularly where presented as an
+                  alternative to Sunni doctrine dominant in Malaysia.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Ahmadiyyah</td>
+                <td>Publications promoting or explaining the beliefs and teachings of the Ahmadiyyah
+                  movement, including materials related to its founder, theological interpretations,
+                  or organisational structure.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Others</td>
+                <td>Publications associated with other religious movements or teachings classified
+                  as deviant by Malaysian religious authorities but not belonging to the Al-Arqam,
+                  Shi&rsquo;a, or Ahmadiyyah traditions, and Christian proselytisation.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup" rowspan="2">4</th>
+                <td class="doc-tcluster" rowspan="2">Obscene / immoral publications</td>
+                <td rowspan="2">Publications containing sexually explicit, obscene, or morally
+                  offensive material, including depictions or narratives that violate public decency
+                  standards.</td>
+                <td class="doc-tsub">Erotic / immoral content</td>
+                <td>Publications featuring sexual themes, suggestive imagery, drug glorification, or
+                  narratives intended to stimulate sexual interest, but not necessarily containing
+                  explicit graphic sexual acts.</td>
+              </tr>
+              <tr>
+                <td class="doc-tsub">Pornography</td>
+                <td>Publications containing explicit depictions of sexual acts, nudity, or graphic
+                  sexual imagery intended primarily for sexual arousal.</td>
+              </tr>
+
+              <tr class="doc-tgroup">
+                <th scope="rowgroup">5</th>
+                <td class="doc-tcluster">General / unidentified</td>
+                <td>Publications where the reason for prohibition is based on multiple overlapping
+                  grounds, making precise classification difficult or unclear and other
+                  administrative reasons.</td>
+                <td class="doc-tsub">Administrative / unclear rationale</td>
+                <td>Publications where the official prohibition notice does not clearly specify the
+                  reason, or where available information is insufficient to classify the content
+                  into other clusters.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-prev" href="#/limitations">
+            <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+            <span class="doc-pager-title">Research Limitations</span>
+          </a>
+          <a class="doc-pager-link is-next" href="#/team">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Research Team</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH TEAM VIEW ================= -->
+<!-- Credits for the codebook. Hand-maintained: no markdown source. -->
+<section id="view-team" class="view page" hidden aria-labelledby="h-team">
+  <div class="page-inner narrow">
+    <p class="kicker">Codebook · Research team</p>
+    <h2 id="h-team">Who built this database</h2>
+    <p class="lede">The compilation, cleaning, classification and analysis behind this record —
+      and the people accountable for each part of it.</p>
+
+    <dl class="team-credits">
+      <div class="team-row">
+        <dt>Organisation</dt>
+        <dd>
+          <span class="team-name">Initiative to Promote Tolerance and Prevent Violence</span>
+          <span class="team-note">INITIATE.MY</span>
+        </dd>
+      </div>
+      <div class="team-row">
+        <dt>Researchers</dt>
+        <dd>
+          <span class="team-name">Aizat Shamsuddin</span>
+          <span class="team-name">Irdina Sofrina</span>
+        </dd>
+      </div>
+      <div class="team-row">
+        <dt>Data science</dt>
+        <dd><span class="team-name">Khairie Iswandy</span></dd>
+      </div>
+      <div class="team-row">
+        <dt>Project management</dt>
+        <dd><span class="team-name">Zulaikha Zainal Efendi</span></dd>
+      </div>
+      <div class="team-row">
+        <dt>Expert reviewers</dt>
+        <dd>
+          <div class="team-slots">
+            <span class="team-slot">To be announced</span>
+            <span class="team-slot">To be announced</span>
+          </div>
+          <p class="team-pending">Reviewers are still being confirmed, and will be named here once
+            they are. Their role — assessing the reasonableness and consistency of key
+            interpretations — is described under
+            <a href="#/limitations">Research Limitations</a>.</p>
+        </dd>
+      </div>
+    </dl>
+
+    <nav class="doc-pager" aria-label="Codebook sections">
+      <a class="doc-pager-link is-prev" href="#/taxonomy">
+        <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+        <span class="doc-pager-title">Taxonomy Definitions</span>
+      </a>
+    </nav>
   </div>
 </section>
 
@@ -834,37 +1745,92 @@
 <section id="view-contact" class="view page" hidden aria-labelledby="h-contact">
   <div class="page-inner narrow">
     <p class="kicker">Contact</p>
-    <h2 id="h-contact">Questions, corrections, and the underlying data</h2>
-    <p class="lede">This site presents INITIATE.MY&rsquo;s analysis of publications gazetted as
-      prohibited under Malaysia&rsquo;s Printing Presses and Publications Act. The classification
-      of clusters and subclusters is a work in progress — corrections and additions are welcome.</p>
+    <h2 id="h-contact">Use the data, and help correct it</h2>
+    <p class="lede">Everything behind this site — the 3,212 records, the scripts that build them,
+      the codebook and the site itself — is open. The classification is a work in progress, so
+      corrections, additions and challenges to it are the most useful thing you can send.</p>
 
     <div class="contact-card">
-      <p class="contact-label">Email</p>
-      <a class="contact-email" href="mailto:m.khairie11@gmail.com?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
-      <p class="contact-hint">If you are writing about a specific record, include the publication
-        title and year as they appear in the <a href="#/data">Data</a> tab.</p>
+      <p class="contact-label"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> Repository</p>
+      <a class="contact-email" href="https://github.com/dekolab/db4-website" target="_blank"
+         rel="noopener">github.com/dekolab/db4-website</a>
+      <p class="contact-hint">The repository holds the finalised dataset and the script that
+        generates it, the codebook documents, and the full source of this site. Issues and pull
+        requests are open to anyone.</p>
     </div>
 
-    <div class="contact-grid">
-      <div>
-        <h3>About the data</h3>
-        <p>The dataset covers 3,213 publications gazetted between 1950 and 2026, compiled from
-          federal gazette notices published by the Ministry of Home Affairs. Fields include title,
-          gazette date and number, type, origin, language, publisher, printer, author/translator,
-          the Ministry&rsquo;s stated justification, and a researcher-assigned cluster and
-          subcluster. Five bans revoked in July 2026 are retained and flagged, since they were in
-          force during the research period.</p>
-      </div>
-      <div>
-        <h3>Known limitations</h3>
-        <p>The origin of one-third of records (1,067 of 3,213) is unconfirmed, so foreign-versus-
-          local comparisons should stay cautious. Official KDN justifications exist for only about
-          half the dataset — 1,590 of 3,213 records, just nine of them pre-dating 1984 — so
-          justification findings apply only to records that carry one. The printer field is
-          contaminated with locations and other non-printer values and needs cleaning. And the
-          2020s are an incomplete decade that should not be compared directly with full ones.</p>
-      </div>
+    <h3 class="contact-heading">Three ways to contribute</h3>
+    <ol class="contribute-list">
+      <li>
+        <span class="contribute-num num" aria-hidden="true">1</span>
+        <div>
+          <h4>Correct or add a record</h4>
+          <p>The fastest route is the <a href="#/data" data-goto="suggest">suggest an edit</a> form
+            under the data table. Tick any number of rows and the form carries their current field
+            values into a pre-filled GitHub issue for you — no account setup beyond a GitHub login,
+            and nothing is sent from this page. You can also name a publication the directory is
+            missing entirely.</p>
+          <p class="contribute-note">Please cite a source. A change traceable to the
+            <em>Warta Kerajaan</em> (Federal Gazette) notice can be verified quickly; one without a
+            source takes far longer.</p>
+        </div>
+      </li>
+      <li>
+        <span class="contribute-num num" aria-hidden="true">2</span>
+        <div>
+          <h4>Report a bug, or ask for a feature</h4>
+          <p>For the website rather than the data — a chart that misreads, a broken filter, an
+            accessibility problem, or something you wish the explorer could do — open a
+            <a href="https://github.com/dekolab/db4-website/issues/new?template=feature_request.yml"
+               target="_blank" rel="noopener">feature request</a>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="contribute-num num" aria-hidden="true">3</span>
+        <div>
+          <h4>Work with the data directly</h4>
+          <p>Clone or fork the repository and the whole dataset comes with it. Re-run the analysis,
+            check our figures against the gazette, build something else on top of it, or send a
+            pull request. If you publish anything using it, please cite INITIATE.MY and link back
+            so readers can check the record for themselves.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3 class="contact-heading">Tools in the Data tab</h3>
+    <p class="contact-intro">Every record behind the story is browsable in the
+      <a href="#/data">Data</a> tab, with a few tools worth knowing about:</p>
+    <ul class="tool-list">
+      <li><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span><strong>Search</strong>
+        matches across title, publisher, printer and author at once — useful for tracing one
+        publisher&rsquo;s whole run of bans.</span></li>
+      <li><i class="fa-solid fa-filter" aria-hidden="true"></i><span><strong>Filters</strong> narrow
+        by cluster and by origin, and combine with the search. The definitions behind each cluster
+        are under <a href="#/taxonomy">Taxonomy Definitions</a>.</span></li>
+      <li><i class="fa-solid fa-rotate-left" aria-hidden="true"></i><span><strong>Revoked only</strong>
+        isolates the five bans lifted in July 2026. They stay in the table, badged, because they
+        were in force during the research period.</span></li>
+      <li><i class="fa-solid fa-arrow-down-a-z" aria-hidden="true"></i><span><strong>Sorting</strong>
+        works on any column header — click once for ascending, again for descending.</span></li>
+      <li><i class="fa-solid fa-square-check" aria-hidden="true"></i><span><strong>Row selection</strong>
+        (the pinned right-hand column) gathers records for a correction; ticked rows travel to the
+        suggest form together.</span></li>
+      <li><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span><strong>Download
+        CSV</strong> exports exactly what the table is showing — the whole database by default, or
+        just the matching slice once you have filtered. Same columns, same order, UTF-8.</span></li>
+    </ul>
+    <p class="contact-hint">A dash in any cell means the gazette record left that field blank —
+      not that the value is zero or unknown to us specifically. Official KDN justifications exist
+      for 1,586 of the 3,212 records, so that column is empty about half the time. What the data
+      cannot support is set out under <a href="#/limitations">Research Limitations</a>.</p>
+
+    <div class="contact-card">
+      <p class="contact-label"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</p>
+      <a class="contact-email" href="mailto:programme@initiate.my?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
+      <p class="contact-hint">For anything that does not fit an issue — press and research
+        enquiries, collaboration, or a question about the methodology. If you are writing about a
+        specific record, include its title and year exactly as they appear in the
+        <a href="#/data">Data</a> tab.</p>
     </div>
   </div>
 </section>
@@ -877,6 +1843,7 @@
 <script src="js/motion.js"></script>
 <script src="js/snap.js"></script>
 <script src="js/table.js"></script>
+<script src="js/suggest.js"></script>
 <script src="js/app.js"></script>
 <script type="module" src="js/rain3d.js"></script>
 </body>

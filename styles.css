@@ -25,6 +25,13 @@
   --closing-soft: #cfc6bc;
   --closing-muted: #8d8378;
   --closing-accent: #7ea6dd; /* lifted navy for the dark closing panel */
+  /* cluster keys — mirror the chart theme slots in charts.js so a cluster
+     keeps its colour everywhere in the story, HTML and canvas alike */
+  --cl-subversive: #2e64ad;
+  --cl-obscene: #c0392b;
+  --cl-general: #b3892b;
+  --cl-religious: #6f5bb5;
+  --cl-3r: #3d8a52;
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --fade: 850ms;
@@ -55,6 +62,11 @@
   --closing-soft: #4a443e;
   --closing-muted: #6e675f;
   --closing-accent: #1d4f96; /* deep navy on the light closing panel */
+  --cl-subversive: #5b8ad0;
+  --cl-obscene: #cf5f64;
+  --cl-general: #b08d24;
+  --cl-religious: #8a77cb;
+  --cl-3r: #4a9a63;
   color-scheme: dark;
 }
 
@@ -202,11 +214,13 @@ body::after {
   display: flex;
   align-items: center;
   gap: clamp(0.5rem, 1.6vw, 1.1rem);
+  min-width: 0;
 }
 
 .tabs {
   display: flex;
   gap: clamp(0.4rem, 2vw, 1.4rem);
+  min-width: 0;
 }
 
 .theme-toggle {
@@ -244,6 +258,8 @@ body::after {
   text-decoration: none;
   padding: 0.45rem 0.55rem 0.35rem;
   border-bottom: 2px solid transparent;
+  flex: none;
+  white-space: nowrap;
 }
 
 .tabs a:hover { color: var(--accent); }
@@ -254,10 +270,84 @@ body::after {
 }
 
 .tabs a:focus-visible,
+.tab-btn:focus-visible,
 .brand:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 3px;
+}
+
+/* ---------- the Codebook tab: one tab over three document pages ---------- */
+
+.tab-menu { position: relative; display: flex; }
+
+/* a button, but it has to sit in the row as though it were a tab */
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.45rem 0.55rem 0.35rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab-btn:hover { color: var(--accent); }
+
+.tab-btn[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-caret {
+  font-size: 0.7em;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.tab-btn[aria-expanded="true"] .tab-caret { transform: rotate(180deg); }
+
+.tab-drop {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 12.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+  z-index: 60;
+}
+
+/* the menu items are links inside .tabs, so the tab typography is undone here */
+.tabs .tab-drop a {
+  display: block;
+  font-size: 0.76rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--ink-soft);
+  padding: 0.5rem 0.6rem;
+  border-bottom: none;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.tabs .tab-drop a:hover,
+.tabs .tab-drop a[aria-current="page"] {
+  background: var(--band);
+  color: var(--accent);
 }
 
 /* ---------- dot navigation + progress rail ---------- */
@@ -368,10 +458,10 @@ body::after {
   outline-offset: 2px;
 }
 
-body[data-view="data"] .dots,
-body[data-view="data"] .progress,
-body[data-view="contact"] .dots,
-body[data-view="contact"] .progress { display: none; }
+/* story-only chrome: the rail and the reading progress bar belong to the
+   scrollytelling view, so every other tab hides them */
+body:not([data-view="story"]) .dots,
+body:not([data-view="story"]) .progress { display: none; }
 
 /* ---------- shared editorial type ---------- */
 
@@ -1001,6 +1091,37 @@ body[data-view="contact"] .progress { display: none; }
   font-variant-numeric: tabular-nums;
 }
 
+/* export what the table is currently showing */
+.table-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.table-download i { color: var(--accent); font-size: 0.85rem; }
+
+.table-download:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+.table-download:disabled { opacity: 0.4; cursor: default; }
+
+.table-download:disabled i { color: var(--muted); }
+
+.table-download:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 /* the table */
 .table-wrap {
   overflow-x: auto;
@@ -1011,7 +1132,7 @@ body[data-view="contact"] .progress { display: none; }
 
 #data-table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1160px; /* 1080 for the data columns + the pinned action column */
   border-collapse: collapse;
   font-family: var(--sans);
   font-size: 0.81rem;
@@ -1124,21 +1245,91 @@ body[data-view="contact"] .progress { display: none; }
   margin-top: 0.8rem;
 }
 
-.contact-grid {
+.contact-label i { margin-right: 0.4rem; color: var(--accent); }
+
+.contact-heading {
+  font-size: 1.15rem;
+  margin: 2.6rem 0 0.5rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.contact-intro {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+/* the three contribution routes, numbered */
+.contribute-list {
+  list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 1.4rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
 }
 
-.contact-grid h3 {
-  font-size: 1.05rem;
-  margin-bottom: 0.4rem;
+.contribute-list > li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0 0.9rem;
 }
 
-.contact-grid p {
+.contribute-num {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.4;
+}
+
+.contribute-list h4 {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  font-weight: 650;
+  margin-bottom: 0.3rem;
+}
+
+.contribute-list p {
   font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--ink-soft);
 }
+
+.contribute-note {
+  font-family: var(--sans);
+  font-size: 0.82rem !important;
+  color: var(--muted) !important;
+  border-left: 2px solid var(--rule);
+  padding-left: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+/* what each control in the data table does */
+.tool-list {
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+.tool-list li {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.tool-list i {
+  color: var(--accent);
+  font-size: 0.85rem;
+  padding-top: 0.28rem;
+}
+
+.tool-list strong { color: var(--ink); font-weight: 650; }
 
 /* ---------- responsive: every variant collapses to one column ---------- */
 
@@ -1206,12 +1397,32 @@ body[data-view="contact"] .progress { display: none; }
   .duo-row { grid-template-columns: 1fr; }
 
   .callout-card { border-left-width: 3px; }
+}
 
-  .contact-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+/* four tabs need tighter tracking than three did, or Contact runs off the edge */
+@media (max-width: 700px) {
+  .tabs { gap: 0.25rem; }
+
+  .tabs a,
+  .tab-btn {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 0.45rem 0.3rem 0.35rem;
+  }
+
+  /* the menu items keep their own scale — only the tab row is tightened */
+  .tabs .tab-drop a { font-size: 0.76rem; letter-spacing: 0.01em; padding: 0.5rem 0.6rem; }
 }
 
 @media (max-width: 540px) {
   .brand-name { display: none; }
+}
+
+@media (max-width: 400px) {
+  .tabs a,
+  .tab-btn { font-size: 0.68rem; letter-spacing: 0.02em; }
+
+  .tabs .tab-drop a { font-size: 0.76rem; letter-spacing: 0.01em; }
 }
 
 /* ---------- reduced motion: instant reveals, plain crossfades ---------- */
@@ -1780,8 +1991,8 @@ body[data-view="contact"] .progress { display: none; }
 
 .revoke-card {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "title badge" "meta badge";
+  grid-template-columns: 2.5rem 1fr auto;
+  grid-template-areas: "plate title badge" "plate meta badge";
   gap: 0.15rem 1rem;
   align-items: center;
   background: var(--card);
@@ -1790,6 +2001,34 @@ body[data-view="contact"] .progress { display: none; }
   border-radius: 10px;
   padding: 0.9rem 1.1rem;
   box-shadow: 0 8px 26px rgba(34, 30, 28, 0.06);
+}
+
+/* a thumbnail where a cover was traced, an empty plate where none was — the
+   same vocabulary as the specimen cards, at list scale */
+.revoke-plate {
+  grid-area: plate;
+  /* explicit width, so the plate never depends on the grid stretching it */
+  width: 2.5rem;
+  aspect-ratio: 2 / 3;
+  display: grid;
+  place-items: center;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.revoke-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+
+.revoke-plate.is-blank {
+  border: 1px dashed var(--rule);
+  background: var(--band);
+  color: var(--blank);
+  font-size: 0.7rem;
 }
 
 .revoke-title { grid-area: title; font-weight: 700; font-style: italic; }
@@ -1816,6 +2055,210 @@ body[data-view="contact"] .progress { display: none; }
   border-radius: 999px;
   padding: 0.35rem 0.75rem;
   white-space: nowrap;
+}
+
+/* --- six example records: the cover shelf, then the specimen drawer --- */
+
+/* A row of the real covers, bottom-aligned like books on a shelf. Heights are
+   equal and widths fall where the jackets do, so the row keeps a real
+   shelf's ragged rhythm. Decorative: it clips at both edges rather than
+   scrolling, so nothing is trapped out of a keyboard's reach. */
+.cover-shelf {
+  max-width: 62rem;
+  margin: 2.4rem auto 0;
+}
+
+.cover-shelf-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.4rem, 1.2vw, 0.9rem);
+  overflow: hidden;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  /* the full run fits on a wide screen; on narrow ones it thins out at both
+     ends instead of being cut off square */
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.cover-shelf-row img {
+  height: clamp(4.4rem, 7vw, 6.6rem);
+  width: auto;
+  flex: none;
+  border-radius: 2px;
+  /* a hairline keeps pale jackets from dissolving into the paper */
+  border: 1px solid var(--rule);
+  box-shadow: 0 6px 14px rgba(34, 30, 28, 0.18);
+}
+
+:root[data-theme="dark"] .cover-shelf-row img {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.cover-shelf-note {
+  max-width: 46rem;
+  margin: 0.9rem auto 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--muted);
+  text-align: center;
+}
+
+.cover-shelf-note i { color: var(--accent); margin-right: 0.35rem; }
+
+.specimen-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  max-width: 62rem;
+  margin: 2.6rem auto 0;
+}
+
+/* each card carries its cluster's key colour on --cl */
+.specimen {
+  --cl: var(--muted);
+  display: grid;
+  grid-template-columns: 5.6rem minmax(0, 1fr);
+  gap: 0 1.05rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--cl);
+  border-radius: 10px;
+  padding: 1rem 1.15rem 0.95rem;
+  box-shadow: 0 8px 26px rgba(34, 30, 28, 0.06);
+}
+
+.specimen-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* the cover sits in a fixed book-shaped well, so a jacket and an empty plate
+   occupy exactly the same space and the six cards line up */
+.specimen-plate {
+  aspect-ratio: 2 / 3;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.specimen-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  box-shadow: 0 4px 12px rgba(34, 30, 28, 0.22);
+}
+
+:root[data-theme="dark"] .specimen-plate img {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* no cover traced: an honest empty plate, not a stand-in jacket */
+.specimen-plate.is-blank {
+  gap: 0.4rem;
+  align-content: center;
+  border: 1px dashed var(--rule);
+  background: var(--band);
+  color: var(--blank);
+  text-align: center;
+  padding: 0.4rem;
+}
+
+.specimen-plate.is-blank i { font-size: 1.1rem; }
+
+.specimen-plate.is-blank span {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.specimen.cl-subversive { --cl: var(--cl-subversive); }
+.specimen.cl-obscene    { --cl: var(--cl-obscene); }
+.specimen.cl-general    { --cl: var(--cl-general); }
+.specimen.cl-religious  { --cl: var(--cl-religious); }
+.specimen.cl-3r         { --cl: var(--cl-3r); }
+
+.specimen-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cl);
+}
+
+.specimen-tag::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  background: var(--cl);
+  flex: none;
+}
+
+.specimen-title {
+  font-size: 1.02rem;
+  line-height: 1.35;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.specimen-fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.18rem 0.8rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.specimen-fields > div { display: contents; }
+.specimen-fields dt { color: var(--muted); white-space: nowrap; }
+.specimen-fields dd { font-variant-numeric: tabular-nums; }
+
+/* the note follows the fields directly — pinning it to the foot left a hole
+   mid-card whenever a card's row-mate ran longer */
+.specimen-note {
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--rule);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.specimen-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1.5px dashed var(--accent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  margin-right: 0.45rem;
+  vertical-align: 0.1em;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .specimen-grid { grid-template-columns: 1fr; }
+  .specimen { grid-template-columns: 4.6rem minmax(0, 1fr); gap: 0 0.9rem; }
 }
 
 /* --- reform recommendations --- */
@@ -1946,9 +2389,579 @@ body[data-view="contact"] .progress { display: none; }
   .reform-grid { grid-template-columns: 1fr; }
 
   .revoke-card {
-    grid-template-columns: 1fr;
-    grid-template-areas: "title" "meta" "badge";
+    grid-template-columns: 2.2rem 1fr;
+    grid-template-areas: "plate title" "plate meta" "plate badge";
     justify-items: start;
-    gap: 0.3rem;
+    gap: 0.3rem 0.8rem;
   }
+
+  .revoke-plate { width: 2.2rem; }
+}
+
+/* --- suggest an edit --- */
+
+.suggest-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.7rem 1.8rem;
+  margin: 2.6rem 0 0;
+  box-shadow: 0 10px 32px rgba(34, 30, 28, 0.06);
+  transition: background-color 450ms ease, color 450ms ease, border-color 450ms ease;
+}
+
+.suggest-title {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0.1rem 0 0.6rem;
+}
+
+.suggest-intro {
+  font-family: var(--sans);
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.suggest-form {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.suggest-form .field { display: grid; gap: 0.3rem; }
+
+.suggest-form label {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.suggest-form .req { color: var(--accent); margin-left: 0.15rem; }
+
+.suggest-form .opt {
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-left: 0.3rem;
+  text-transform: lowercase;
+}
+
+.suggest-form input[type="text"],
+.suggest-form textarea {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+}
+
+.suggest-form textarea { resize: vertical; min-height: 3.2rem; }
+
+.suggest-form input:focus-visible,
+.suggest-form textarea:focus-visible,
+.btn-suggest:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.suggest-form [aria-invalid="true"] { border-color: #b4442e; }
+
+.field-hint,
+.field-match,
+.field-error {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.field-hint { color: var(--muted); max-width: 62ch; }
+.field-match { color: var(--accent); font-weight: 600; }
+.field-error { color: #b4442e; font-weight: 600; }
+.form-error { margin-top: 0.2rem; }
+
+.suggest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.2rem;
+  border-top: 1px solid var(--td-rule);
+  padding-top: 1.2rem;
+}
+
+.btn-suggest {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  font-weight: 650;
+  color: var(--paper);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.62rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+.btn-suggest:hover { opacity: 0.88; }
+
+.suggest-note {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--muted);
+  flex: 1 1 22rem;
+  margin: 0;
+}
+
+@media (max-width: 540px) {
+  .suggest-card { padding: 1.3rem 1.1rem; }
+  .btn-suggest { width: 100%; }
+}
+
+/* per-row "Edit" action feeding the suggest form.
+ * The table scrolls sideways (min-width 1080px in a clipped wrapper), so this
+ * column is pinned to the right edge — otherwise it sits off-screen and the
+ * row hover has nothing visible to reveal. */
+#data-table th.th-action,
+#data-table td.td-action {
+  position: sticky;
+  right: 0;
+  text-align: right;
+  white-space: nowrap;
+  background: var(--card);
+  box-shadow: inset 1px 0 0 var(--td-rule), -7px 0 9px -7px rgba(34, 30, 28, 0.18);
+}
+
+#data-table td.td-action { z-index: 1; }
+#data-table thead th { z-index: 2; }        /* header stays above the pinned column */
+#data-table th.th-action { z-index: 3; background: var(--paper); }
+
+/* the pinned cell carries the row's own background, or rows show through it */
+#data-table tbody tr:hover td.td-action { background: var(--paper); }
+#data-table tbody tr.is-picked td.td-action { background: var(--band-deep); }
+
+/* whole row selects the record */
+#data-table tbody tr { cursor: pointer; }
+
+.row-select {
+  accent-color: var(--accent);
+  width: 0.95rem;
+  height: 0.95rem;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.row-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.th-action-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+#data-table tbody tr.is-picked { background: var(--band-deep); }
+#data-table tbody tr.is-picked td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+#data-table tbody tr.is-picked td { color: var(--ink); }
+
+/* selected-record chips in the form */
+.sg-selection {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  background: var(--paper);
+  display: grid;
+  gap: 0.6rem;
+}
+
+.sg-selection-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sg-selection-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.sel-count { color: var(--accent); letter-spacing: 0.04em; }
+
+.sg-clear {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sg-clear:hover { color: var(--accent); }
+.sg-clear:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.sg-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  max-height: 11rem;
+  overflow-y: auto;
+}
+
+.sg-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.24rem 0.3rem 0.24rem 0.65rem;
+  max-width: 100%;
+}
+
+.sg-chip-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22ch;
+}
+
+.sg-chip-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 18ch;
+}
+
+.sg-chip-drop {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.1rem 0.3rem;
+  cursor: pointer;
+}
+
+.sg-chip-drop:hover { color: var(--accent); background: var(--band-deep); }
+.sg-chip-drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ==========================================================================
+   Document pages — the research methods and research limitations documents,
+   each rendered as a tab. Reuses .page / .page-inner / .kicker / .lede; adds
+   a sticky in-page table of contents and the prose rules for the document.
+   ========================================================================== */
+
+.doc-layout {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+/* sticky contents rail — desktop only */
+.doc-toc {
+  position: sticky;
+  top: calc(var(--topbar) + 1.6rem);
+  font-family: var(--sans);
+  border-left: 1px solid var(--rule);
+  padding-left: 1rem;
+}
+
+.doc-toc ul { list-style: none; display: grid; gap: 0.45rem; }
+
+.doc-toc a {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  text-decoration: none;
+  display: block;
+}
+
+.doc-toc a:hover { color: var(--accent); }
+
+.doc-toc a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.doc-toc-sub { padding-left: 0.85rem; }
+.doc-toc-sub a { font-size: 0.78rem; color: var(--muted); }
+
+/* The document itself. The reading measure is held by the prose rules below
+   rather than on the column. */
+.doc-body { min-width: 0; }
+
+.doc-body h3,
+.doc-body h4 {
+  scroll-margin-top: calc(var(--topbar) + 1.2rem);
+}
+
+.doc-body h3 {
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  line-height: 1.25;
+  margin: 2.6rem 0 0.8rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+}
+
+.doc-body > h3:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+.doc-body h4 {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  margin: 2rem 0 0.7rem;
+}
+
+.doc-body p {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+  max-width: 46rem;
+}
+
+.doc-body strong { color: var(--ink); font-weight: 650; }
+
+/* publication titles quoted inside the prose */
+.doc-body cite { font-style: italic; }
+
+/* lists: the metadata fields and the taxonomies carry most of the meaning */
+.doc-list {
+  color: var(--ink-soft);
+  max-width: 46rem;
+  margin: 0 0 1.2rem 1.4rem;
+  padding-left: 0.3rem;
+}
+
+.doc-list li { margin-bottom: 0.4rem; }
+
+/* the four classifier steps run longer than a plain list item */
+.doc-steps li { margin-bottom: 0.85rem; }
+
+/* model identifiers, set to break rather than push the column wide */
+.doc-code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  color: var(--ink);
+  background: var(--band);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  overflow-wrap: anywhere;
+}
+
+/* document tables — same skin as the data table, inside a scrolling .table-wrap */
+.doc-table {
+  width: 100%;
+  min-width: 58rem;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.81rem;
+  line-height: 1.45;
+}
+
+.doc-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--paper);
+  border-bottom: 2px solid var(--rule);
+  text-align: left;
+  font-weight: 650;
+  color: var(--ink);
+  white-space: nowrap;
+  padding: 0.6rem 0.75rem;
+}
+
+.doc-table td,
+.doc-table tbody th {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--td-rule);
+  vertical-align: top;
+  text-align: left;
+  color: var(--ink-soft);
+}
+
+/* the cluster columns are spanned down their group, so they read as one block */
+.doc-table tbody th[scope="rowgroup"] {
+  color: var(--ink);
+  font-weight: 700;
+  width: 3rem;
+}
+
+.doc-tcluster { color: var(--ink); font-weight: 650; width: 11rem; }
+.doc-tsub { color: var(--ink); font-weight: 600; width: 10rem; }
+
+/* a firmer rule where one cluster ends and the next begins */
+.doc-table tbody tr.doc-tgroup > * { border-top: 1px solid var(--rule); }
+
+/* prev / next through the codebook: Methods → Limitations → Taxonomy → Team */
+.doc-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.7rem, 2vw, 1.2rem);
+  margin-top: 2.8rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.doc-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem 1.05rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+/* the first and last documents have only one neighbour, so both links pin their
+   own column — a lone "next" still sits on the right */
+.doc-pager-link.is-prev { grid-column: 1; }
+
+.doc-pager-link.is-next {
+  grid-column: 2;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.doc-pager-link:hover { border-color: var(--accent); background: var(--band); }
+
+.doc-pager-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.doc-pager-dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.doc-pager-title {
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .doc-pager { grid-template-columns: minmax(0, 1fr); }
+  .doc-pager-link.is-next { grid-column: 1; }
+}
+
+/* --- research team: a masthead-style credit list --- */
+
+.team-credits {
+  margin: 2.4rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.team-row {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 0.4rem 1.6rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.team-row dt {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.2rem;
+}
+
+.team-row dd { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.team-name {
+  font-size: 1.02rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.team-note {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+/* reviewers not yet named: obviously a held slot, never a fabricated name */
+.team-slots { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.team-slot {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--blank);
+  border: 1px dashed var(--rule);
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+}
+
+.team-pending {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .team-row { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+}
+
+@media (max-width: 900px) {
+  /* the contents rail costs more than it gives on a phone */
+  .doc-toc { display: none; }
+  .doc-layout { grid-template-columns: minmax(0, 1fr); }
 }
