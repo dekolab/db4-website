@@ -1029,19 +1029,29 @@ var Charts = (function () {
     /* --- the seven grounds --- */
     groundsMindmap(document.getElementById("c-grounds"));
 
-    /* --- types pictograph + origin map --- */
+    /* --- types pictograph + origin map ---
+       counts come from the generated aggregates so they can't drift from the
+       data; typeCounts/originCounts are sorted by count desc (see data.js) */
+    var totalRecs = PPPA.meta.total;
+    var pct1 = function (n) { return (Math.round(n / totalRecs * 1000) / 10) + "%"; };
+    var printedCount = PPPA.typeCounts[0][1];
+    var audioCount = PPPA.typeCounts[1][1];
     pictograph(document.getElementById("c-types"), {
       per: 50,
       groups: [
-        { icon: "fa-book", label: "Printed documents", count: 3148, share: "98%" },
-        { icon: "fa-music", label: "Audio & recordings", count: 57 },
-        { icon: "fa-compact-disc", label: "Physical, visual & digital media", count: 8 }
+        { icon: "fa-book", label: "Printed documents", count: printedCount,
+          share: Math.round(printedCount / totalRecs * 100) + "%" },
+        { icon: "fa-music", label: "Audio & recordings", count: audioCount },
+        { icon: "fa-compact-disc", label: "Physical, visual & digital media",
+          count: totalRecs - printedCount - audioCount }
       ]
     });
+    var originOf = {};
+    PPPA.originCounts.forEach(function (d) { originOf[d[0]] = d[1]; });
     mapOrigin(document.getElementById("c-map"), {
-      local: 669, localPct: "20.8%",
-      foreign: 1477, foreignPct: "46%",
-      unclear: 1067, unclearPct: "33.2%"
+      local: originOf.Local, localPct: pct1(originOf.Local),
+      foreign: originOf.Foreign, foreignPct: pct1(originOf.Foreign),
+      unclear: originOf.Unclear, unclearPct: pct1(originOf.Unclear)
     });
 
     /* --- the people podiums --- */

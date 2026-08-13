@@ -19,7 +19,7 @@
 
   /* ---------- staggered one-shot reveals ---------- */
 
-  var SCOPES = ".hero-inner, .scene-text, .full-head, .full-foot, .callout-card, .closing .hero-inner, .law-duel, .trio-row, .revoke-list, .reform-grid";
+  var SCOPES = ".hero-inner, .scene-text, .full-head, .full-foot, .callout-card, .closing .hero-inner, .law-duel, .trio-row, .revoke-list, .reform-grid, .specimen-grid";
 
   document.querySelectorAll(SCOPES).forEach(function (scope) {
     scope.querySelectorAll(".reveal").forEach(function (el, i) {
@@ -70,7 +70,7 @@
     .concat(targetsFor(".hero .hero-inner, .closing .hero-inner", { hold: 0.55, range: 0.4 }))
     .concat(targetsFor(".scene-text", { hold: 0.42, range: 0.4 }))
     .concat(targetsFor(".full-head, .full-foot, .chapter.full > .pull-quote", { hold: 0.5, range: 0.42 }))
-    .concat(targetsFor(".wide-fig, .duo-row > figure, .trio-row > figure, .callout-card, .revoke-list, .reform-grid", { hold: 0.55, range: 0.42 }))
+    .concat(targetsFor(".wide-fig, .duo-row > figure, .trio-row > figure, .callout-card, .revoke-list, .reform-grid, .specimen-grid, .cover-shelf", { hold: 0.55, range: 0.42 }))
     /* the sticky stage sits at centre while pinned; fade only at chapter
        edges, opacity-only so stickiness is never disturbed */
     .concat(targetsFor(".chapter.pinned .stage", { hold: 0.72, range: 0.32, translate: false }));

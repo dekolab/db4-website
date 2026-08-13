@@ -1,4 +1,5 @@
-# Regenerates js/data.js from sample-data.csv. Run from inside Analysis-Reference/:
+# Regenerates js/data.js from the finalised dataset. Run from inside
+# Analysis-Reference/:
 #   python3 generate_data.py
 #
 # Standard library only (no pandas). Ties in "top N" lists break by order of
@@ -9,7 +10,7 @@ import csv
 import json
 from collections import Counter, OrderedDict
 
-with open("sample-data.csv", newline="", encoding="utf-8") as f:
+with open("../Finalise-Codebook/final-data.csv", newline="", encoding="utf-8") as f:
     raw_rows = list(csv.DictReader(f))
 
 # Colour-slot order: same positions as the previous six-cluster list so each
@@ -288,7 +289,7 @@ data["rows"] = [
 ]
 
 with open("../js/data.js", "w", encoding="utf-8") as f:
-    f.write("/* Generated from Analysis-Reference/sample-data.csv — do not edit by hand. */\n")
+    f.write("/* Generated from Finalise-Codebook/final-data.csv — do not edit by hand. */\n")
     f.write("var PPPA = ")
     json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
     f.write(";\n")
