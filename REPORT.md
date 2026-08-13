@@ -169,6 +169,36 @@ unidentified"* — so the prose reads correctly against the chart labels.
 
    Total added page weight: 13 images, ~486 KB, all lazy.
 
+3. **Frame 16 covers (the revocations beat).** None of the five revoked titles had a
+   traced cover — all five were `placeholder` in `_source_log.csv`. A fuzzy and keyword
+   sweep across the 148 real covers confirmed no near match under a variant title, so I
+   queried Open Library directly for each of the five:
+
+   | Title | Result |
+   |---|---|
+   | *Islam Without Extremes: A Muslim Case for Liberty* | **cover found** (Mustafa Akyol, 2011, cover id 10305304) |
+   | *Memoir Shamsiah Fakeh Dari Awas Ke Rejimen Ke-10* | record exists, **no cover image** |
+   | *Komrad Asi (Rejimen 10) Dalam Denyut Nihilisme Sejarah* | no record |
+   | *Mao Zedong: China Dalam Dunia Abad Ke-20* | no record |
+   | *Sigandi* | no record |
+
+   The Akyol cover was fetched (320×500, 29 KB), **visually verified as the correct book**
+   before use, saved as
+   `asset/img/covers/2017_Islam_Without_Extremes_A_Muslim_Case_For_Liberty.jpg` following
+   the existing naming convention, and its `_source_log.csv` row updated from
+   `placeholder` to `open_library` with the new path. Real covers: 148 → **149**.
+
+   Why the original run missed it is worth noting for the next sourcing pass: the dataset
+   title carries a spaced colon — `Islam Without Extremes : A Muslim Case For Liberty` —
+   which likely defeated the match. Other placeholders may be recoverable with light title
+   normalisation.
+
+   All five revoke cards now carry a plate at list scale (2.5 rem, 2:3) — the traced cover
+   on the first, empty plates on the other four — so the one cover sits in a consistent
+   frame rather than making a single card lopsided. The mobile breakpoint was updated too:
+   its single-column rule had no `plate` area, which would have auto-placed the plate and
+   stretched it to full card width.
+
 ## 4b. Placeholder covers removed
 
 `asset/img/covers/` held **101 MB across 3,157 files**, of which 3,009 were generated
@@ -184,7 +214,8 @@ referenced by `index.html` resolve, manifest untouched.
 The 3,009-vs-3,026 gap between files and manifest rows is 17 duplicate titles that
 sanitise to the same filename — not a shortfall.
 
-`_source_log.csv` still logs all 3,026 placeholder rows with their old `file` paths. That
+`_source_log.csv` now logs 3,025 placeholder rows with their old `file` paths (one row
+moved to `open_library` when the *Islam Without Extremes* cover was traced — see §4). That
 is deliberate — it remains an accurate record of the sourcing run, and the `source`
 column is the authoritative signal. **Any future cover lookup must test
 `source != 'placeholder'` before trusting the `file` column**, since those paths no
@@ -192,17 +223,111 @@ longer resolve. Note also that the placeholders will return if the cover-sourcin
 is rerun; a `*PLACEHOLDER*` line in `.gitignore` would guard against that, but I have not
 added one.
 
+## 4c. Research Team page
+
+Added as a fourth entry in the Codebook dropdown (`#/team`, "Research Team") — the group
+now reads Research Methods · Research Limitations · Taxonomy Definitions · Research Team.
+It is a masthead-style credit list rather than a document, so it carries no table of
+contents; it uses the narrow page width the Contact tab uses.
+
+Credits as supplied: Organisation — Initiative to Promote Tolerance and Prevent Violence
+(INITIATE.MY); Researchers — Aizat Shamsuddin, Irdina Sofrina; Data science — Khairie
+Iswandy; Project management — Zulaikha Zainal Efendi.
+
+**Two things to check.** The brief spelled the organisation "INTIATE.MY"; I used
+**INITIATE.MY**, which is what the other 17 occurrences across the site use — correct me
+if the brief was right. And the expert-reviewer placeholder is two dashed "To be
+announced" slots plus a line saying reviewers are still being confirmed. **I did not
+invent reviewer names** — placeholder names for real people in a credited research role
+would be indistinguishable from a real credit once published. The slots make the gap
+visible instead, and the note ties the role to the description already in Research
+Limitations. Replacing them is a one-line edit each.
+
+## 4d. Codebook prev / next navigation
+
+The four prose cross-reference footers at the end of the codebook documents were replaced
+with a prev/next pager running **Methods → Limitations → Taxonomy → Team**. Research
+Methods shows only "Next"; Research Team shows only "Previous"; both pin their own grid
+column so a lone link still sits on its correct side. Verified by walking the chain
+programmatically — every page's prev and next resolve to the right neighbour, and the two
+endpoints correctly have none. The now-unused `.doc-foot` rule was removed from
+`styles.css`.
+
+Note this drops the inline links to the Data and Contact tabs that those footers carried;
+both remain one click away in the topbar.
+
+## 4e. Contact tab rewritten
+
+Refocused on the repository, contributing, and the Data tab's tools, with the email kept
+as the last block rather than the first.
+
+- **Repository card** (top): `github.com/dekolab/db4-website`, taken from the git remote.
+- **Three ways to contribute**: correct/add a record via the suggest-an-edit form (which
+  pre-fills the `directory_change_request.yml` issue form — described accurately from
+  `js/suggest.js`, including that nothing is sent from the page itself), report a bug or
+  request a feature via a deep link to `feature_request.yml`, and work with the data
+  directly by cloning. The source-citation requirement comes from the issue template's own
+  wording.
+- **Tools in the Data tab**: search across title/publisher/printer/author, cluster and
+  origin filters, revoked-only, column sorting, and row selection — each verified against
+  the actual controls in `index.html` and `js/table.js`.
+- Dropped the old two-column "About the data" / "Known limitations" blocks, which
+  duplicated the codebook documents and carried the stale 3,213 / 1,590 / nine figures.
+  The figures that remain (3,212 and 1,586) are correct against `final-data.csv`.
+- `.contact-grid` is now unused and was removed from `styles.css`, including its
+  responsive rule. The GitHub icon uses `fa-solid fa-code-branch`, not a brand icon — no
+  `fa-brands` glyph appears anywhere else on the site, so I did not assume the kit ships
+  that family.
+
+**Pre-existing defect, now fixed:** the email link displayed `programme@initiate.my` but
+its `mailto:` targeted `m.khairie11@gmail.com`, so clicking it mailed a different address
+than the one shown. Confirmed and corrected — the link now targets
+`programme@initiate.my`, matching its visible text, with the existing subject line kept.
+That address no longer appears anywhere in the repository.
+
+## 4f. CSV download in the Data tab
+
+A **Download** button sits at the right of the table controls. It exports **exactly what
+the table is showing** — current search, filters and sort order, same columns, same header
+names. The label answers the question the button raises: "Download all 3,212 (CSV)" with
+no filters, "Download these 95 (CSV)" once you filter, and it disables when nothing
+matches. Filenames record the scope and date:
+`pppa-gazetted-publications-all-2026-08-13.csv` or `…-filtered-….csv`.
+
+Decisions that matter for whoever opens the file:
+
+- **RFC 4180 quoting.** 974 fields in the dataset contain a comma and 75 contain a double
+  quote — without correct quoting the export would be silently corrupt.
+- **UTF-8 BOM**, so Excel reads the Chinese and Malay titles correctly rather than as
+  mojibake.
+- **Raw values, not screen values.** Blank fields export as empty rather than the table's
+  em dash, and a revoked row carries `2026-07` rather than the badge text "Revoked Jul
+  2026" — the file is data, not a picture of the page.
+- **No formula-injection mangling.** Seven fields begin with `-` (e.g. `-Sama-`); none
+  begin with `=`, `+` or `@`. Prefixing values to defuse spreadsheet formulas would corrupt
+  real titles, so the export quotes correctly and leaves values intact.
+
+Verified by running the real `table.js` against the real dataset in a DOM shim and parsing
+the output back with a CSV parser — 18 checks, all passing: BOM, CRLF, header + 3,212
+rows, 12 fields per row, exact round-trip of a title containing double quotes, one
+containing a comma and one in Chinese, no em dashes, correct revoked value, correct
+filtered row count and filename, correct label text in both states, and the disabled state
+exporting nothing.
+
+Also surfaced in two places: the Data tab lede, and the tools list on the Contact tab.
+While editing that lede I corrected its stale "3,213" to **3,212**.
+
 ## 5. Known-stale text in do-not-touch zones
 
 These still carry old-snapshot figures and were left alone per the constraints — worth a
 follow-up pass once you approve wording:
 
-- **Data tab lede:** "All 3,213 records behind the story"
-- **Contact tab:** "3,213 publications", "1,067 of 3,213", "1,590 of 3,213 records, just
-  nine of them pre-dating 1984"
-- **Research Limitations doc:** "263 records have an unknown language", "1,067 records
-  have an unclear origin" (still true), "1,590 of the 3,213 publications … nine
-  publications pre-date 1984"
+- ~~Data tab lede~~ — fixed to 3,212, see §4f
+- **Research Limitations doc** (the only remaining stale figures on the site): "263 records
+  have an unknown language" (now 262), "1,067
+  records have an unclear origin" (still true), "1,590 of the 3,213 publications … nine
+  publications pre-date 1984" (now 1,586 of 3,212, five pre-1984)
+- ~~Contact tab~~ — fixed in the rewrite, see §4e
 
 ## 6. Verification performed
 
