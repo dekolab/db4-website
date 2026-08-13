@@ -1,17 +1,17 @@
 /*
- * Tab routing between the six views: #/story (default), #/data, #/methods,
- * #/limitations, #/taxonomy, #/contact.
- * The last three are the codebook documents: they share one topbar tab, which
- * is a disclosure button opening a menu of the three.
+ * Tab routing between the seven views: #/story (default), #/data, #/methods,
+ * #/limitations, #/taxonomy, #/team, #/contact.
+ * The middle four are the codebook documents: they share one topbar tab, which
+ * is a disclosure button opening a menu of the four.
  * In-page anchors (e.g. #overview, or a document page's table of contents) are
  * left alone so the story dots keep working.
  */
 var App = (function () {
   "use strict";
 
-  var VIEWS = ["story", "data", "methods", "limitations", "taxonomy", "contact"];
+  var VIEWS = ["story", "data", "methods", "limitations", "taxonomy", "team", "contact"];
   /* the views that sit under the Codebook tab */
-  var DOCS = ["methods", "limitations", "taxonomy"];
+  var DOCS = ["methods", "limitations", "taxonomy", "team"];
   /* the codebook used to be a single page; keep shared links working */
   var ALIASES = { codebook: "methods" };
   var storyScroll = 0;

@@ -47,6 +47,7 @@
           <li><a href="#/methods" data-tab="methods">Research Methods</a></li>
           <li><a href="#/limitations" data-tab="limitations">Research Limitations</a></li>
           <li><a href="#/taxonomy" data-tab="taxonomy">Taxonomy Definitions</a></li>
+          <li><a href="#/team" data-tab="team">Research Team</a></li>
         </ul>
       </div>
       <a href="#/contact" data-tab="contact">Contact</a>
@@ -864,26 +865,43 @@
     </div>
     <div class="revoke-list" role="list">
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate">
+          <img src="asset/img/covers/2017_Islam_Without_Extremes_A_Muslim_Case_For_Liberty.jpg"
+               alt="Cover of Islam Without Extremes: a red crescent-and-title design on a pale ground, by Mustafa Akyol."
+               width="320" height="500" loading="lazy" decoding="async">
+        </div>
         <span class="revoke-title">Islam Without Extremes: A Muslim Case for Liberty</span>
         <span class="revoke-meta"><span class="num">Banned 2017</span> · Religious doctrinal deviance</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Komrad Asi (Rejimen 10) Dalam Denyut Nihilisme Sejarah</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Sigandi</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Revolutionary politics</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Memoir Shamsiah Fakeh Dari Awas Ke Rejimen Ke-10</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
       </div>
       <div class="revoke-card reveal" role="listitem">
+        <div class="revoke-plate is-blank" aria-hidden="true">
+          <i class="fa-solid fa-book"></i>
+        </div>
         <span class="revoke-title">Mao Zedong: China Dalam Dunia Abad ke-20</span>
         <span class="revoke-meta"><span class="num">Banned 2026</span> · Communism/socialism</span>
         <span class="revoke-badge"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Revoked July 2026</span>
@@ -977,8 +995,10 @@
   <div class="page-inner">
     <p class="kicker">The dataset</p>
     <h2 id="h-data">Every gazetted publication, 1950–2026</h2>
-    <p class="lede">All 3,213 records behind the story — search by title, publisher, printer or
+    <p class="lede">All 3,212 records behind the story — search by title, publisher, printer or
       author, filter by cluster, origin or revocation status, and click a column header to sort.
+      <strong>Download</strong> takes whatever the table is currently showing as a CSV, so filter
+      first to export a slice or leave it clear to take the whole database.
       Spotted a mistake? Tick one or more rows — the checkbox column is pinned to the right — to
       <a href="#suggest" data-goto="suggest">suggest a correction</a>.
       A dash means the gazette record left that field blank; KDN justifications exist for about
@@ -991,6 +1011,9 @@
       <select id="table-origin" aria-label="Filter by origin"></select>
       <label class="table-check"><input type="checkbox" id="table-revoked"> Revoked only</label>
       <span id="table-count" class="table-count" role="status"></span>
+      <button type="button" id="table-download" class="table-download">
+        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span id="table-download-label">Download CSV</span>
+      </button>
     </div>
 
     <div class="table-wrap" tabindex="0" role="region" aria-label="Publications table">
@@ -1267,9 +1290,12 @@
           doctrinal publications with public-order justifications — without treating the two coding
           systems as interchangeable.</p>
 
-        <p class="doc-foot">Records that carry a researcher-assigned cluster are browsable in the
-          <a href="#/data">Data</a> tab; known gaps are listed under
-          <a href="#/contact">Contact</a>.</p>
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-next" href="#/limitations">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Research Limitations</span>
+          </a>
+        </nav>
       </div>
     </div>
   </div>
@@ -1425,9 +1451,16 @@
           interpretations. Further decade-level analysis and more complete review and revocation
           data are required for stronger conclusions.</p>
 
-        <p class="doc-foot">How the records were collected and classified in the first place is set
-          out under <a href="#/methods">Research Methods</a>; the records themselves are browsable
-          in the <a href="#/data">Data</a> tab.</p>
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-prev" href="#/methods">
+            <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+            <span class="doc-pager-title">Research Methods</span>
+          </a>
+          <a class="doc-pager-link is-next" href="#/taxonomy">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Taxonomy Definitions</span>
+          </a>
+        </nav>
       </div>
     </div>
   </div>
@@ -1637,12 +1670,74 @@
           </table>
         </div>
 
-        <p class="doc-foot">How these categories were assigned is set out under
-          <a href="#/methods">Research Methods</a>, and where they fall short under
-          <a href="#/limitations">Research Limitations</a>; the classified records are browsable in
-          the <a href="#/data">Data</a> tab.</p>
+        <nav class="doc-pager" aria-label="Codebook sections">
+          <a class="doc-pager-link is-prev" href="#/limitations">
+            <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+            <span class="doc-pager-title">Research Limitations</span>
+          </a>
+          <a class="doc-pager-link is-next" href="#/team">
+            <span class="doc-pager-dir">Next<i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span>
+            <span class="doc-pager-title">Research Team</span>
+          </a>
+        </nav>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH TEAM VIEW ================= -->
+<!-- Credits for the codebook. Hand-maintained: no markdown source. -->
+<section id="view-team" class="view page" hidden aria-labelledby="h-team">
+  <div class="page-inner narrow">
+    <p class="kicker">Codebook · Research team</p>
+    <h2 id="h-team">Who built this database</h2>
+    <p class="lede">The compilation, cleaning, classification and analysis behind this record —
+      and the people accountable for each part of it.</p>
+
+    <dl class="team-credits">
+      <div class="team-row">
+        <dt>Organisation</dt>
+        <dd>
+          <span class="team-name">Initiative to Promote Tolerance and Prevent Violence</span>
+          <span class="team-note">INITIATE.MY</span>
+        </dd>
+      </div>
+      <div class="team-row">
+        <dt>Researchers</dt>
+        <dd>
+          <span class="team-name">Aizat Shamsuddin</span>
+          <span class="team-name">Irdina Sofrina</span>
+        </dd>
+      </div>
+      <div class="team-row">
+        <dt>Data science</dt>
+        <dd><span class="team-name">Khairie Iswandy</span></dd>
+      </div>
+      <div class="team-row">
+        <dt>Project management</dt>
+        <dd><span class="team-name">Zulaikha Zainal Efendi</span></dd>
+      </div>
+      <div class="team-row">
+        <dt>Expert reviewers</dt>
+        <dd>
+          <div class="team-slots">
+            <span class="team-slot">To be announced</span>
+            <span class="team-slot">To be announced</span>
+          </div>
+          <p class="team-pending">Reviewers are still being confirmed, and will be named here once
+            they are. Their role — assessing the reasonableness and consistency of key
+            interpretations — is described under
+            <a href="#/limitations">Research Limitations</a>.</p>
+        </dd>
+      </div>
+    </dl>
+
+    <nav class="doc-pager" aria-label="Codebook sections">
+      <a class="doc-pager-link is-prev" href="#/taxonomy">
+        <span class="doc-pager-dir"><i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>Previous</span>
+        <span class="doc-pager-title">Taxonomy Definitions</span>
+      </a>
+    </nav>
   </div>
 </section>
 
@@ -1650,41 +1745,92 @@
 <section id="view-contact" class="view page" hidden aria-labelledby="h-contact">
   <div class="page-inner narrow">
     <p class="kicker">Contact</p>
-    <h2 id="h-contact">Questions, corrections, and the underlying data</h2>
-    <p class="lede">This site presents INITIATE.MY&rsquo;s analysis of publications gazetted as
-      prohibited under Malaysia&rsquo;s Printing Presses and Publications Act. The classification
-      of clusters and subclusters is a work in progress — corrections and additions are welcome.</p>
+    <h2 id="h-contact">Use the data, and help correct it</h2>
+    <p class="lede">Everything behind this site — the 3,212 records, the scripts that build them,
+      the codebook and the site itself — is open. The classification is a work in progress, so
+      corrections, additions and challenges to it are the most useful thing you can send.</p>
 
     <div class="contact-card">
-      <p class="contact-label">Email</p>
-      <a class="contact-email" href="mailto:m.khairie11@gmail.com?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
-      <p class="contact-hint">If you are writing about a specific record, include the publication
-        title and year as they appear in the <a href="#/data">Data</a> tab. For a single-record
-        correction, the <a href="#/data" data-goto="suggest">suggest an edit</a> form under the table
-        is faster — it files the correction as a tracked issue.</p>
+      <p class="contact-label"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> Repository</p>
+      <a class="contact-email" href="https://github.com/dekolab/db4-website" target="_blank"
+         rel="noopener">github.com/dekolab/db4-website</a>
+      <p class="contact-hint">The repository holds the finalised dataset and the script that
+        generates it, the codebook documents, and the full source of this site. Issues and pull
+        requests are open to anyone.</p>
     </div>
 
-    <div class="contact-grid">
-      <div>
-        <h3>About the data</h3>
-        <p>The dataset covers 3,213 publications gazetted between 1950 and 2026, compiled from
-          federal gazette notices published by the Ministry of Home Affairs. Fields include title,
-          gazette date and number, type, origin, language, publisher, printer, author/translator,
-          the Ministry&rsquo;s stated justification, and a researcher-assigned cluster and
-          subcluster. How those clusters were defined and assigned is set out under
-          <a href="#/methods">Research Methods</a>. Five bans revoked in July 2026 are retained and
-          flagged, since they were in force during the research period.</p>
-      </div>
-      <div>
-        <h3>Known limitations</h3>
-        <p>The origin of one-third of records (1,067 of 3,213) is unconfirmed, so foreign-versus-
-          local comparisons should stay cautious. Official KDN justifications exist for only about
-          half the dataset — 1,590 of 3,213 records, just nine of them pre-dating 1984 — so
-          justification findings apply only to records that carry one. The printer field is
-          contaminated with locations and other non-printer values and needs cleaning. And the
-          2020s are an incomplete decade that should not be compared directly with full ones. The
-          full set is set out under <a href="#/limitations">Research Limitations</a>.</p>
-      </div>
+    <h3 class="contact-heading">Three ways to contribute</h3>
+    <ol class="contribute-list">
+      <li>
+        <span class="contribute-num num" aria-hidden="true">1</span>
+        <div>
+          <h4>Correct or add a record</h4>
+          <p>The fastest route is the <a href="#/data" data-goto="suggest">suggest an edit</a> form
+            under the data table. Tick any number of rows and the form carries their current field
+            values into a pre-filled GitHub issue for you — no account setup beyond a GitHub login,
+            and nothing is sent from this page. You can also name a publication the directory is
+            missing entirely.</p>
+          <p class="contribute-note">Please cite a source. A change traceable to the
+            <em>Warta Kerajaan</em> (Federal Gazette) notice can be verified quickly; one without a
+            source takes far longer.</p>
+        </div>
+      </li>
+      <li>
+        <span class="contribute-num num" aria-hidden="true">2</span>
+        <div>
+          <h4>Report a bug, or ask for a feature</h4>
+          <p>For the website rather than the data — a chart that misreads, a broken filter, an
+            accessibility problem, or something you wish the explorer could do — open a
+            <a href="https://github.com/dekolab/db4-website/issues/new?template=feature_request.yml"
+               target="_blank" rel="noopener">feature request</a>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="contribute-num num" aria-hidden="true">3</span>
+        <div>
+          <h4>Work with the data directly</h4>
+          <p>Clone or fork the repository and the whole dataset comes with it. Re-run the analysis,
+            check our figures against the gazette, build something else on top of it, or send a
+            pull request. If you publish anything using it, please cite INITIATE.MY and link back
+            so readers can check the record for themselves.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3 class="contact-heading">Tools in the Data tab</h3>
+    <p class="contact-intro">Every record behind the story is browsable in the
+      <a href="#/data">Data</a> tab, with a few tools worth knowing about:</p>
+    <ul class="tool-list">
+      <li><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span><strong>Search</strong>
+        matches across title, publisher, printer and author at once — useful for tracing one
+        publisher&rsquo;s whole run of bans.</span></li>
+      <li><i class="fa-solid fa-filter" aria-hidden="true"></i><span><strong>Filters</strong> narrow
+        by cluster and by origin, and combine with the search. The definitions behind each cluster
+        are under <a href="#/taxonomy">Taxonomy Definitions</a>.</span></li>
+      <li><i class="fa-solid fa-rotate-left" aria-hidden="true"></i><span><strong>Revoked only</strong>
+        isolates the five bans lifted in July 2026. They stay in the table, badged, because they
+        were in force during the research period.</span></li>
+      <li><i class="fa-solid fa-arrow-down-a-z" aria-hidden="true"></i><span><strong>Sorting</strong>
+        works on any column header — click once for ascending, again for descending.</span></li>
+      <li><i class="fa-solid fa-square-check" aria-hidden="true"></i><span><strong>Row selection</strong>
+        (the pinned right-hand column) gathers records for a correction; ticked rows travel to the
+        suggest form together.</span></li>
+      <li><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span><strong>Download
+        CSV</strong> exports exactly what the table is showing — the whole database by default, or
+        just the matching slice once you have filtered. Same columns, same order, UTF-8.</span></li>
+    </ul>
+    <p class="contact-hint">A dash in any cell means the gazette record left that field blank —
+      not that the value is zero or unknown to us specifically. Official KDN justifications exist
+      for 1,586 of the 3,212 records, so that column is empty about half the time. What the data
+      cannot support is set out under <a href="#/limitations">Research Limitations</a>.</p>
+
+    <div class="contact-card">
+      <p class="contact-label"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</p>
+      <a class="contact-email" href="mailto:programme@initiate.my?subject=PPPA%20gazetted%20publications%20analysis">programme@initiate.my</a>
+      <p class="contact-hint">For anything that does not fit an issue — press and research
+        enquiries, collaboration, or a question about the methodology. If you are writing about a
+        specific record, include its title and year exactly as they appear in the
+        <a href="#/data">Data</a> tab.</p>
     </div>
   </div>
 </section>
