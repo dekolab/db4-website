@@ -339,9 +339,16 @@
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-globe" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
           <h2 id="h-origin-map" class="reveal">Foreign titles lead — but a third belong on no map.</h2>
+          <p class="reveal"><em>Foreign-origin</em> here means produced or published outside
+            Malaysia — authored, printed or distributed by publishers, organisations or individuals
+            based overseas. <em>Local</em> means produced, published, printed or primarily
+            distributed within Malaysia. Neither is a claim about a country: the gazette records
+            the category, never the place. Full wording under
+            <a href="#/taxonomy">Taxonomy Definitions</a>.</p>
           <p class="reveal">Foreign-origin publications form the largest category, with 1,476
             records, or 46%. Local publications account for 669, or 20.8%. And for 1,067 records —
-            33.2% — the origin remains unclear.</p>
+            33.2% — the origin remains unclear: the publisher, author, printing location or
+            distribution source was too thin to decide either way.</p>
           <p class="mini-stat reveal"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><strong>1 in 3</strong> records has no confirmed country of origin</p>
           <p class="reveal">Because a third of the records lack a confirmed origin, comparisons
             between foreign and local enforcement should remain cautious.</p>
@@ -390,6 +397,37 @@
           than deliberate targeting.</figcaption>
       </figure>
     </div>
+    <!-- TODO(copy): profile text for the three most frequent names. Counts and
+         cluster splits below are generated from the dataset and are correct;
+         only the <p class="who-bio"> paragraphs need filling, and the
+         data-todo attribute removing from the card once each is written.
+         Please keep them to two or three sentences and sourced. -->
+    <div class="who-grid">
+      <article class="who-card reveal" data-todo="profile">
+        <p class="who-count num">21 bans</p>
+        <h3 class="who-name">Wei Wei</h3>
+        <p class="who-meta">Most frequent name in the author/translator field.</p>
+        <p class="who-bio">TODO — profile to be supplied.</p>
+      </article>
+      <article class="who-card reveal" data-todo="profile">
+        <p class="who-count num">18 bans</p>
+        <h3 class="who-name">Ustaz Ashaari Muhammad</h3>
+        <p class="who-meta">A further seven bans are recorded against
+          &ldquo;Ustaz Haji Ashaari Muhammad&rdquo;, which the dataset holds as a separate
+          entry.</p>
+        <p class="who-bio">TODO — profile to be supplied.</p>
+      </article>
+      <article class="who-card reveal" data-todo="profile">
+        <p class="who-count num">16 bans</p>
+        <h3 class="who-name">Marcus Van Heller</h3>
+        <p class="who-meta">Third most frequent name in the author/translator field.</p>
+        <p class="who-bio">TODO — profile to be supplied.</p>
+      </article>
+    </div>
+    <p class="who-note reveal"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> A high
+      count is a count of gazette entries, not a measure of influence: multiple editions, repeated
+      imports and inconsistent spellings of the same name all inflate it. Whether the two Ashaari
+      Muhammad entries are one person is a question for the record, not for this chart.</p>
     <aside class="pull-quote">
       <span class="pq-rule" aria-hidden="true"></span>
       <span class="pq-number">95</span>
@@ -430,6 +468,14 @@
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Part 5 · What was banned</p>
           <h2 id="h-clusters-time" class="reveal">What were publications banned for?</h2>
+          <p class="reveal">The gazette does not say what a publication was about, so the
+            categories on this chart are INITIATE.MY&rsquo;s, not the Ministry&rsquo;s. Each
+            record&rsquo;s title, author, translator and publisher were read by a rule-based
+            multilingual keyword classifier against taxonomies the research team defined, and the
+            results were reviewed by hand. AI models helped generate candidate keywords; the team
+            set the taxonomies and verified the classifications. The full procedure is under
+            <a href="#/methods">Research Methods</a>, and what it cannot support is under
+            <a href="#/limitations">Research Limitations</a>.</p>
           <p class="reveal">INITIATE.MY grouped all 3,212 records into five broad content
             clusters. Obscene or immoral publications form the largest, with 1,252 records
             (39.0%), followed by subversive ideological and political content with 973 (30.3%)
@@ -497,6 +543,30 @@
         (95), revolutionary politics (78), LGBT-related content (41), ethnic incitement (15),
         Syiah (10), Ahmadiyyah (6), terrorism or militancy (5), insults to religion (4) and
         royalty (3).</p>
+      <dl class="term-list reveal">
+        <div>
+          <dt>Al-Arqam</dt>
+          <dd>A Malaysian Islamic movement whose publications were declared deviant by the
+            religious authorities and swept from circulation in 1994. The subcluster covers
+            material promoting, defending or documenting its teachings, leadership or activities.</dd>
+        </div>
+        <div>
+          <dt>Syiah</dt>
+          <dd>Shi&rsquo;a Islam. The subcluster covers publications advocating or explaining Shi&rsquo;a
+            theology, jurisprudence or practice, particularly where presented as an alternative to
+            the Sunni doctrine dominant in Malaysia.</dd>
+        </div>
+        <div>
+          <dt>Ahmadiyyah</dt>
+          <dd>A movement founded in nineteenth-century Punjab whose status within Islam is
+            disputed by mainstream authorities in Malaysia. The subcluster covers publications
+            explaining its beliefs, its founder or its organisation.</dd>
+        </div>
+      </dl>
+      <p class="reveal term-note">These are the research&rsquo;s labels for what a publication
+        appears to be <em>about</em> — not a finding about the movements themselves, and not
+        KDN&rsquo;s legal ground for banning them. Every definition, in full, is under
+        <a href="#/taxonomy">Taxonomy Definitions</a>.</p>
     </div>
   </section>
 
@@ -774,9 +844,20 @@
             seven Syiah and six Ahmadiyyah cases.</p>
           <p class="reveal">Ideological publications look different. In the post-1984 records,
             communism or socialism appears in only <em>one</em> case formally justified on
-            security grounds, against 12 under public order. That likely understates the
-            historical use of security justifications: most communist, socialist and revolutionary
-            publications were banned before 1984, outside the available justification data.</p>
+            security grounds, against 12 under public order.</p>
+          <p class="reveal">Those two cases, side by side, are the whole point of the distinction.
+            <em>Perjalanan Yang Cemerlang 1930&ndash;1980</em>, gazetted in 2017 and attributed to
+            the Communist Party of Malaya, is the single title in the record carrying
+            <em>Keselamatan</em> — security. <em>Arguments For Revolutionery Socialism</em> by John
+            Molyneux, gazetted in 1989 and spelled here as the gazette spelled it, is classified
+            in the same content subcluster but was prohibited under <em>Ketenteraman Awam</em> —
+            public order. Same theme, different legal ground.</p>
+          <p class="reveal">One caveat governs this whole grid: KDN&rsquo;s stated justification is
+            only available from 1984 onward. Just five of the 1,586 records carrying a ground
+            pre-date the Act, so the 1950s and 1960s — when most communist, socialist and
+            revolutionary publications were banned — contribute almost nothing to it. The rarity of
+            security grounds here is a fact about the post-1984 paperwork, not about the whole
+            history of the Act.</p>
         </div>
       </div>
     </div>
@@ -959,6 +1040,16 @@
       <p class="reveal">In July 2026, the Ministry of Home Affairs gazetted five revocation orders.
         The affected publications may now be legally printed, published, distributed, sold and
         possessed.</p>
+      <p class="reveal">These five are the only revocations this database records — and that is a
+        statement about the database, not about the Act. The source list gazettes prohibition
+        orders; it carries no revocation field, so a ban lifted quietly in, say, 1978 would still
+        appear here as a ban in force. These five were added by hand from the July 2026 notice.
+        Whether other bans have been revoked over the past 76 years is a question this dataset
+        cannot answer, and neither can this site.
+        <!-- TODO(sourcing): if KDN publishes revocation orders anywhere trackable — a gazette
+             series, an FOI response, the Warta Kerajaan index — name it here and link it. If it
+             does not, say so explicitly instead of leaving it open. -->
+      </p>
     </div>
     <div class="revoke-list" role="list">
       <div class="revoke-card reveal" role="listitem">
@@ -1008,7 +1099,9 @@
       <p class="reveal">The database still includes these five publications because their bans
         remained in force during the research period. Their inclusion reflects the historical
         prohibition record rather than their current legal status — so they are marked as
-        <em>revoked after the study period</em> in the <a href="#/data">Data</a> tab, not removed.</p>
+        <em>revoked after the study period</em> in the <a href="#/data">Data</a> tab, not removed.
+        The same caution applies in reverse: a record with no revocation badge has not been shown
+        to be still in force, only that no revocation is known to this dataset.</p>
     </div>
   </section>
 
