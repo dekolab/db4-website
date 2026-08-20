@@ -317,6 +317,55 @@ exporting nothing.
 Also surfaced in two places: the Data tab lede, and the tools list on the Contact tab.
 While editing that lede I corrected its stale "3,213" to **3,212**.
 
+## 4g. Design review — chart and section revisions
+
+All five review items addressed. Two needed a decision first (see below).
+
+**1. Blue arrow.** The origin map carried three thin arrows, a separate "Foreign"
+chip and a floating "arrives from outside" label — four elements for one idea. Replaced
+with a single broad block arrow entering past the frame edge, carrying both lines of the
+label on the arrow itself. Its text fill is `th.surface` (white on light, near-black on
+dark), so the label keeps contrast against the blue in both themes.
+
+**2. KDN justifications: line chart → 100% stacked bar by decade.** As lines, five of the
+seven grounds sat flat on zero and the morality/public-order split was unreadable.
+`stacked()` gained three optional flags — `normalize`, `colorOf` (non-cluster series) and
+`barMax` — with defaults that reproduce the previous behaviour exactly; the absolute
+cluster chart that shares the function was re-rendered and is unchanged.
+
+**3. Enforcement-focus grid.** New `severity` ramp (green = a small share of the decade,
+red = dominant), the 2020s column asterisked in its header with a footnote inside the
+chart, and the caption split into three discrete notes. The ramp's lightness falls
+steadily from green to red so the grid still reads as a value ramp in greyscale — worth
+keeping in mind, since red-green is the one pairing ~8% of men cannot separate by hue.
+Cell ink is now chosen from each cell's own luminance rather than a fixed threshold, which
+a mid-ramp amber would have failed.
+
+**4. Bans over time: line → bars.** New `timeBars()` draws one bar per year across the
+77-year span, with a single snapping overlay for hover (bars are ~1px apart, so per-bar
+hit targets would not work). The From/To sliders now show the year each one sits on;
+the markup carries the full range as a static fallback for when the 3D module never loads.
+
+**5. Print/ink section — kept, reframed.** The old copy stated the 98% and then apologised
+for it. It now leads with what the number *limits*: the PPPA is a print statute, so film,
+broadcast and online material never entered this record, and every other chart in the
+story is therefore a chart about print. A quiet decade here may be a decade when the
+censoring moved somewhere the Act could not follow.
+
+**Two calls that were yours, not mine.** The review named "Banned by theme and reason" but
+the story has two per-decade line charts; converting the cluster one instead would have
+duplicated the item 3 grid, which is already cluster share normalised to 100%. And item 5
+was explicitly flagged for discussion. Both were confirmed before implementing.
+
+**Note on item 4.** The review mentions exponential growth. Bars now carry the *per-year*
+view, which shows waves rather than growth — the Cumulative view is the one that shows
+growth, and it remains an area chart. Say the word if the intent was to change that one.
+
+New CSS: `figcaption.fig-notes` (multi-part captions, one note per line) and
+`.rain-slider-val`. The notes grid needs `width: 100%` because the pinned stage centres
+its flex children, and needs exactly two children per note — a stray `<strong>` became a
+third grid item and broke the layout until it was wrapped.
+
 ## 5. Known-stale text in do-not-touch zones
 
 These still carry old-snapshot figures and were left alone per the constraints — worth a

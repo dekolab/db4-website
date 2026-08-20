@@ -310,16 +310,18 @@
           <p class="rain-hint"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> <span id="rain-hint-text">Locked square-on so the pile reads as the chart — switch to Perspective to move the camera. Drag the bottom-right corner to resize the box.</span></p>
           <div class="rain-sliders">
             <label class="rain-slider-label">From
+              <output class="rain-slider-val num" id="rain-from-val" for="rain-from">1950</output>
               <input type="range" id="rain-from" step="1" aria-label="Start year of the selected range">
             </label>
             <label class="rain-slider-label">To
+              <output class="rain-slider-val num" id="rain-to-val" for="rain-to">2026</output>
               <input type="range" id="rain-to" step="1" aria-label="End year of the selected range">
             </label>
           </div>
         </div>
         <div id="rain-view-year" hidden>
           <div class="chart ch-md" id="c-rain-year" role="img"
-               aria-label="Line chart of gazetted publications per year, 1950 to 2026. A sharp spike reaches 444 in 1951, then counts stay below 150, with waves around 1975, twin surges of 148 and 149 in 1992 and 1994, 108 in 1999, the mid-2000s, 69 in 2017, and 27 recorded so far in 2026."></div>
+               aria-label="Bar chart of gazetted publications per year, one bar per year, 1950 to 2026. A sharp spike reaches 444 in 1951, then counts stay below 150, with waves around 1975, twin surges of 148 and 149 in 1992 and 1994, 108 in 1999, the mid-2000s, 69 in 2017, and 27 recorded so far in 2026."></div>
         </div>
         <div id="rain-view-decade" hidden>
           <div class="chart ch-md" id="c-rain-decade" role="img"
@@ -394,9 +396,13 @@
             <div class="chart pict-chart" id="c-types" role="img"
                  aria-label="Pictograph of publication types: printed documents account for 3,147 of 3,212 records, or 98%; audio and recordings for 57; and physical goods, visual media and digital or electronic materials together for eight. One icon represents 50 records."></div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> One icon = 50 records.
-            The print focus reflects the scope of the PPPA dataset — it does not mean audiovisual
-            or digital content was otherwise unregulated.</figcaption>
+          <figcaption class="fig-notes">
+            <span><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>One icon = 50
+              records.</span></span>
+            <span><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span>The print
+              share is a fact about the statute, not about censorship. Audiovisual and online
+              material is regulated elsewhere and is out of this dataset&rsquo;s reach.</span></span>
+          </figcaption>
         </figure>
         <figure class="viz" data-viz="origin-map">
           <div class="chart-card">
@@ -416,13 +422,18 @@
       <div class="scene" id="types-origin" data-scene="types-origin">
         <div class="scene-text">
           <p class="kicker reveal"><i class="fa-solid fa-book" aria-hidden="true"></i>Part 3 · Language, type &amp; origin</p>
-          <h2 id="h-types-origin" class="reveal">Almost everything banned was ink on paper.</h2>
-          <p class="reveal">The dataset is overwhelmingly focused on print. Printed documents
-            account for 3,147 of 3,212 records, or 98%. Audio and recordings account for 57, while
-            physical goods, visual media and digital or electronic materials together account for
-            only eight.</p>
-          <p class="reveal">This reflects the print-based scope of the PPPA dataset — it does not
-            mean that audiovisual or digital content was otherwise unregulated.</p>
+          <h2 id="h-types-origin" class="reveal">The law&rsquo;s reach stops at the printed page.</h2>
+          <p class="reveal">Printed documents account for 3,147 of 3,212 records — 98%. Audio and
+            recordings account for 57. Physical goods, visual media and digital or electronic
+            materials account for eight between them.</p>
+          <p class="reveal">That near-silence is not evidence that other media went unpoliced. The
+            PPPA is a print statute: film, broadcast and online content are governed by other laws
+            and other agencies, and never entered this record in the first place.</p>
+          <p class="mini-stat reveal"><i class="fa-solid fa-book" aria-hidden="true"></i><strong>98%</strong> print — so every chart that follows is a chart about print</p>
+          <p class="reveal">It is worth fixing that in mind before the rest of the story. Everything
+            here describes one instrument of control among several. A decade that looks quiet in
+            this data may simply be a decade when the censoring moved somewhere the PPPA could not
+            follow.</p>
         </div>
       </div>
       <div class="scene" id="origin-map" data-scene="origin-map">
@@ -563,19 +574,31 @@
             <div class="chart ch-md" id="c-kdnlines" role="img"
                  aria-label="Line chart of stated KDN justifications per decade from the 1980s onward. Morality peaks at 383 in the 1990s and public order at 282; both fall thereafter, with public order leading the 2010s at 123. All five other grounds stay near zero throughout. Justifications are recorded for 1,586 of 3,212 publications, only five of them before 1984."></div>
           </div>
-          <figcaption><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Coverage
-            caveat: official justifications exist for only 1,586 of 3,212 records — about half the
-            dataset, and only five pre-date 1984. These findings apply to records with a stated
-            justification.</figcaption>
+          <figcaption class="fig-notes">
+            <span><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span>Coverage
+              caveat: official justifications exist for only 1,586 of 3,212 records, about half the
+              dataset.</span></span>
+            <span><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Only five of
+              those pre-date 1984, so this is a post-1984 picture — it cannot speak for the earlier
+              decades.</span></span>
+          </figcaption>
         </figure>
         <figure class="viz" data-viz="decade-mix">
           <div class="chart-card">
             <h3>Cluster share within each decade</h3>
             <div class="chart ch-md" id="c-decademix" role="img"
-                 aria-label="Heatmap showing each cluster's share within each decade. Subversive content is 84% of the 1950s and fades to 1% by the 1990s. Obscene or immoral publications peak at 65% of the 1980s and 58% of the 1990s. Religious doctrinal deviance grows from 13% in the 1980s to 67% of the 2010s. In the incomplete 2020s, subversive content returns at 56%."></div>
+                 aria-label="Grid showing each cluster's share within each decade, shaded green where a cluster is a small part of the decade through to red where it dominates. Subversive content is 84% of the 1950s and fades to 1% by the 1990s. Obscene or immoral publications peak at 65% of the 1980s and 58% of the 1990s. Religious doctrinal deviance grows from 13% in the 1980s to 67% of the 2010s. In the 2020s, marked with an asterisk as an unfinished decade, subversive content returns at 56%."></div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Each column sums to
-            100%. The 2020s column covers only 70 titles from an unfinished decade.</figcaption>
+          <figcaption class="fig-notes">
+            <span><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Each column sums to
+              100%. This is a cluster&rsquo;s <em>share</em> of its decade, not how many bans it
+              carried.</span></span>
+            <span><i class="fa-solid fa-palette" aria-hidden="true"></i><span>Colour runs green where
+              a cluster is a small part of its decade to red where it dominates it.</span></span>
+            <span><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span><strong>*
+              The 2020s are unfinished</strong> — 70 titles so far — so that column is a snapshot,
+              not a result, and should not be read against the full decades beside it.</span></span>
+          </figcaption>
         </figure>
       </div>
     </div>

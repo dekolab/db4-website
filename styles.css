@@ -2965,3 +2965,38 @@ body:not([data-view="story"]) .progress { display: none; }
   .doc-toc { display: none; }
   .doc-layout { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Multi-part figure captions: each note gets its own line and marker, so two
+   unrelated caveats stop reading as one run-on sentence. */
+figcaption.fig-notes {
+  display: grid;
+  gap: 0.4rem;
+  text-align: left;
+  /* the pinned stage centres its flex children, which would otherwise shrink
+     this grid to min-content and wrap the notes one word per line */
+  width: 100%;
+}
+
+figcaption.fig-notes > span {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: start;
+}
+
+figcaption.fig-notes > span > i {
+  padding-top: 0.2em;
+  margin-right: 0;   /* the grid column does the spacing */
+  color: var(--accent);
+  justify-self: center;
+}
+
+figcaption.fig-notes strong { color: var(--ink); }
+
+/* the year each range slider is sitting on, shown as a number */
+.rain-slider-val {
+  min-width: 2.9em;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
