@@ -85,13 +85,24 @@ import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js"
         else fromEl.value = t;
       }
     }
+    /* the chosen years are shown as numbers beside each slider; the markup
+       carries the full range as a fallback for when this module never loads */
+    var fromVal = document.getElementById("rain-from-val");
+    var toVal = document.getElementById("rain-to-val");
+    function syncSliderLabels() {
+      if (fromVal) fromVal.textContent = fromEl.value;
+      if (toVal) toVal.textContent = toEl.value;
+    }
+
     fromEl.min = toEl.min = Y0;
     fromEl.max = toEl.max = Y1;
     fromEl.value = Y0;
     toEl.value = Y1;
+    syncSliderLabels();
     [fromEl, toEl].forEach(function (input) {
       input.addEventListener("input", function () {
         clampPair(input);
+        syncSliderLabels();
         update();
       });
     });

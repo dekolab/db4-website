@@ -402,6 +402,79 @@ var Charts = (function () {
     });
   }
 
+  /* ---------- one bar per year across a long span ---------- */
+
+  /* A count per year is a set of discrete events, not a continuous quantity, so
+     bars carry it better than a line: the waves read as blocks of enforcement
+     rather than as one jagged trace. Bars are ~1px apart at 77 years, so the
+     hover uses a single overlay that snaps to the nearest year instead of
+     per-bar hit targets. */
+  function timeBars(root, opts) {
+    mount(root, function (node, W, H) {
+      var th = T();
+      var pts = opts.points;
+      var m = { top: 16, right: 18, bottom: 30, left: 46 };
+      var plotW = W - m.left - m.right;
+      var plotH = H - m.top - m.bottom;
+      var x0 = pts[0][0], x1 = pts[pts.length - 1][0];
+      var slot = plotW / pts.length;
+      var barW = Math.max(1.5, slot - Math.max(1, Math.min(3, slot * 0.28)));
+      var ticks = niceTicks(Math.max.apply(null, pts.map(function (d) { return d[1]; })), 4);
+      var max = ticks[ticks.length - 1];
+      var cx = function (year) { return m.left + (year - x0 + 0.5) * slot; };
+      var ys = function (v) { return m.top + plotH - (v / max) * plotH; };
+      var color = seriesColor(opts.color);
+
+      var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
+
+      ticks.forEach(function (tk) {
+        el("line", { x1: m.left, x2: W - m.right, y1: ys(tk), y2: ys(tk), stroke: tk === 0 ? th.axis : th.grid, "stroke-width": 1 }, svg);
+        text(svg, fmt(tk), { x: m.left - 7, y: ys(tk) + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
+      });
+      for (var yr = Math.ceil(x0 / 10) * 10; yr <= x1; yr += 10) {
+        text(svg, yr, { x: cx(yr), y: H - 8, fill: th.muted, "font-size": 11, "text-anchor": "middle", "class": "num" });
+      }
+
+      pts.forEach(function (p) {
+        if (!p[1]) return;
+        var h = Math.max(1.5, (p[1] / max) * plotH);
+        el("path", {
+          d: barTop(cx(p[0]) - barW / 2, ys(p[1]), barW, h, Math.min(1.5, barW / 2)),
+          fill: color
+        }, svg);
+      });
+
+      /* the record's single biggest year, called out where it stands */
+      var peak = pts.reduce(function (a, b) { return b[1] > a[1] ? b : a; });
+      text(svg, peak[0] + " · " + fmt(peak[1]), {
+        x: cx(peak[0]) + 8, y: ys(peak[1]) + 4,
+        fill: th.ink, "font-size": 11.5, "font-weight": 600, "class": "num", "text-anchor": "start"
+      });
+
+      var hi = el("rect", { fill: th.ink, opacity: 0 }, svg);
+      var overlay = el("rect", { x: m.left, y: m.top, width: plotW, height: plotH, fill: "transparent" }, svg);
+
+      overlay.addEventListener("pointermove", function (e) {
+        var rect = svg.getBoundingClientRect();
+        var scale = plotW / (rect.width - m.left - m.right);
+        var year = Math.round(x0 + (((e.clientX - rect.left) * (W / rect.width) - m.left) / slot) - 0.5);
+        year = Math.max(x0, Math.min(x1, year));
+        var p = pts[year - x0];
+        var h = Math.max(1.5, (p[1] / max) * plotH);
+        hi.setAttribute("x", cx(p[0]) - barW / 2 - 1);
+        hi.setAttribute("y", p[1] ? ys(p[1]) : m.top + plotH - 2);
+        hi.setAttribute("width", barW + 2);
+        hi.setAttribute("height", p[1] ? h : 2);
+        hi.setAttribute("opacity", 0.28);
+        tipShow([{ value: fmt(p[1]), label: (opts.tipLabel || "publications in") + " " + p[0], swatch: color }], e.clientX, e.clientY);
+      });
+      overlay.addEventListener("pointerleave", function () {
+        hi.setAttribute("opacity", 0);
+        tipHide();
+      });
+    });
+  }
+
   /* ---------- stacked columns + legend ---------- */
 
   function legend(container, names, onHover) {
@@ -428,28 +501,38 @@ var Charts = (function () {
     return box;
   }
 
+  /* opts.colorOf  — series colours for non-cluster series (KDN grounds)
+     opts.normalize — each column sums to 100%, so composition is the subject
+     opts.barMax    — widen the bars when there are few categories
+     opts.incompleteLast — asterisk the final category and footnote it */
   function stacked(root, opts) {
     var host = root.parentNode;
     var seriesGroups = [];
-    legend(host.querySelector(".legend-slot") || host, opts.series, function (idx) {
+    var onHover = function (idx) {
       seriesGroups.forEach(function (nodes, si) {
         nodes.forEach(function (nd) { nd.style.opacity = idx === -1 || idx === si ? 1 : 0.25; });
       });
-    });
+    };
+    var legendHost = host.querySelector(".legend-slot") || host;
+    if (opts.colorOf) seriesLegend(legendHost, opts.series, opts.colorOf, onHover);
+    else legend(legendHost, opts.series, onHover);
 
     mount(root, function (node, W, H) {
       var th = T();
       seriesGroups = opts.series.map(function () { return []; });
-      var m = { top: 14, right: 10, bottom: 32, left: 46 };
+      /* a normalised column always reaches the top, so the incomplete-decade
+         note goes under the axis rather than into the 100% gridline */
+      var m = { top: 14, right: 10, bottom: opts.incompleteLast ? 46 : 32, left: 46 };
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var n = opts.cats.length;
       var slot = plotW / n;
-      var barW = Math.min(24, slot * 0.5);
+      var barW = Math.min(opts.barMax || 24, slot * (opts.normalize ? 0.62 : 0.5));
       var totals = opts.matrix.map(function (row) {
         return row.reduce(function (a, b) { return a + b; }, 0);
       });
-      var ticks = niceTicks(Math.max.apply(null, totals), 4);
+      var pct = opts.normalize;
+      var ticks = pct ? [0, 25, 50, 75, 100] : niceTicks(Math.max.apply(null, totals), 4);
       var max = ticks[ticks.length - 1];
 
       var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
@@ -457,30 +540,40 @@ var Charts = (function () {
       ticks.forEach(function (tk) {
         var y = m.top + plotH - (tk / max) * plotH;
         el("line", { x1: m.left, x2: W - m.right, y1: y, y2: y, stroke: tk === 0 ? th.axis : th.grid, "stroke-width": 1 }, svg);
-        text(svg, fmt(tk), { x: m.left - 7, y: y + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
+        text(svg, pct ? tk + "%" : fmt(tk), { x: m.left - 7, y: y + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
       });
 
       opts.cats.forEach(function (cat, ci) {
         var x = m.left + ci * slot + (slot - barW) / 2;
         var yCursor = m.top + plotH;
-        text(svg, cat, { x: m.left + ci * slot + slot / 2, y: m.top + plotH + 18, fill: th.ink, "font-size": 11.5, "text-anchor": "middle", "class": "num" });
+        var partial = opts.incompleteLast && ci === n - 1;
+        text(svg, partial ? cat + "*" : cat, { x: m.left + ci * slot + slot / 2, y: m.top + plotH + 18, fill: th.ink, "font-size": 11.5, "text-anchor": "middle", "class": "num" });
+        var total = totals[ci];
         opts.matrix[ci].forEach(function (v, si) {
           if (!v) return;
-          var color = clusterColor(opts.series[si]);
-          var h = (v / max) * plotH;
+          var color = opts.colorOf ? opts.colorOf(si, th) : clusterColor(opts.series[si]);
+          var share = total ? (v / total) * 100 : 0;
+          var h = ((pct ? share : v) / max) * plotH;
           var gapped = Math.max(1, h - 2); /* 2px surface gap between segments */
           var y = yCursor - h;
           var seg = el("rect", { x: x, y: y + 1, width: barW, height: gapped, fill: color }, svg);
-          hoverable(seg, [
-            { value: fmt(v), label: opts.series[si], swatch: color },
-            { value: fmt(totals[ci]), label: "total in the " + cat }
-          ]);
-          seg.setAttribute("aria-label", cat + ", " + opts.series[si] + ": " + fmt(v));
+          var lines = [{ value: fmt(v), label: opts.series[si], swatch: color }];
+          if (pct) lines.push({ value: (Math.round(share * 10) / 10) + "%", label: "of the " + cat + " total (" + fmt(total) + ")" });
+          else lines.push({ value: fmt(total), label: "total in the " + cat });
+          hoverable(seg, lines);
+          seg.setAttribute("aria-label", cat + ", " + opts.series[si] + ": " + fmt(v) +
+            (pct ? " (" + Math.round(share) + "%)" : ""));
           seg.setAttribute("role", "img");
           seriesGroups[si].push(seg);
           yCursor -= h;
         });
       });
+
+      if (opts.incompleteLast) {
+        text(svg, "* " + opts.cats[n - 1] + " is an unfinished decade", {
+          x: W - m.right, y: H - 6, fill: th.muted, "font-size": 10.5, "text-anchor": "end"
+        });
+      }
     });
   }
 
@@ -492,12 +585,44 @@ var Charts = (function () {
     return "rgb(" + c.join(",") + ")";
   }
 
+  /* Severity ramp for the enforcement-focus grid: green where a cluster is a
+     small share of its decade, red where it dominates. Lightness falls steadily
+     from the green end to the red end, so the grid still reads as a value ramp
+     in greyscale — and for the ~8% of men with red-green colour blindness, for
+     whom hue alone would carry nothing. */
+  var SEVERITY = {
+    light: [[0, [226, 240, 222]], [0.30, [150, 198, 138]], [0.55, [243, 205, 110]],
+            [0.78, [226, 138, 63]], [1, [168, 34, 30]]],
+    dark:  [[0, [36, 52, 38]], [0.30, [74, 132, 84]], [0.55, [186, 152, 52]],
+            [0.78, [214, 112, 46]], [1, [214, 58, 48]]]
+  };
+
+  function severityRgb(t) {
+    var st = document.documentElement.dataset.theme === "dark" ? SEVERITY.dark : SEVERITY.light;
+    t = Math.max(0, Math.min(1, t));
+    for (var i = 1; i < st.length; i++) {
+      if (t <= st[i][0]) {
+        var a = st[i - 1], b = st[i], k = (t - a[0]) / (b[0] - a[0]);
+        return a[1].map(function (c, j) { return Math.round(c + (b[1][j] - c) * k); });
+      }
+    }
+    return st[st.length - 1][1].slice();
+  }
+
+  /* ink chosen from the cell's own luminance — a fixed threshold would put
+     white text on the mid-ramp ambers */
+  function inkOn(rgb) {
+    return (0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]) / 255 > 0.55
+      ? "#1b1714" : "#ffffff";
+  }
+
   function heatmap(root, opts) {
     mount(root, function (node, W, H) {
       var th = T();
       var rows = opts.rows, cols = opts.cols;
       var labelW = opts.labelWidth || Math.min(170, W * 0.3);
-      var m = { top: 24, right: 8, bottom: 8, left: labelW };
+      var m = { top: 24, right: 8, bottom: opts.incompleteCol ? 22 : 8, left: labelW };
+      var severity = opts.ramp === "severity";
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var cw = plotW / cols.length, ch = plotH / rows.length;
@@ -506,7 +631,9 @@ var Charts = (function () {
       var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
 
       cols.forEach(function (c, j) {
-        text(svg, c, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
+        /* the unfinished decade is asterisked in its own header */
+        var head = c === opts.incompleteCol ? c + "*" : c;
+        text(svg, head, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
       });
       rows.forEach(function (r, i) {
         text(svg, opts.shorten ? (CLUSTER_SHORT[r] || r) : r, {
@@ -518,16 +645,18 @@ var Charts = (function () {
         cols.forEach(function (c, j) {
           var v = opts.values[i][j];
           var t = max ? v / max : 0;
+          var rgb = severity ? severityRgb(t) : null;
           var cell = el("rect", {
             x: m.left + j * cw + 1, y: m.top + i * ch + 1,
             width: Math.max(1, cw - 2), height: Math.max(1, ch - 2),
-            rx: 3, fill: rampColor(t, th)
+            rx: 3, fill: severity ? "rgb(" + rgb.join(",") + ")" : rampColor(t, th)
           }, svg);
           var label = opts.fmt ? opts.fmt(v) : fmt(v);
           if (cw > 34 && ch > 20) {
             text(svg, label, {
               x: m.left + j * cw + cw / 2, y: m.top + i * ch + ch / 2 + 4,
-              fill: t > 0.52 ? th.cellHi : th.cellLo, "font-size": 11.5, "text-anchor": "middle", "class": "num"
+              fill: severity ? inkOn(rgb) : (t > 0.52 ? th.cellHi : th.cellLo),
+              "font-size": 11.5, "text-anchor": "middle", "class": "num"
             });
           }
           var rowName = opts.shorten ? (CLUSTER_SHORT[r] || r) : r;
@@ -539,6 +668,12 @@ var Charts = (function () {
           cell.setAttribute("role", "img");
         });
       });
+
+      if (opts.incompleteCol) {
+        text(svg, "* " + opts.incompleteCol + " is an unfinished decade", {
+          x: W - m.right, y: H - 6, fill: th.muted, "font-size": 10.5, "text-anchor": "end"
+        });
+      }
     });
   }
 
@@ -920,21 +1055,35 @@ var Charts = (function () {
       el("line", { x1: 332, y1: 115, x2: 362, y2: 168, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
       hoverable(localChip, [{ value: fmt(opts.local), label: "publications of local origin (" + opts.localPct + ")", swatch: seriesColor("green") }]);
 
-      /* Foreign — arrows entering from beyond the frame */
-      var foreignChip = chip(436, 18, 168, "Foreign", fmt(opts.foreign) + " · " + opts.foreignPct, seriesColor("blue"));
-      hoverable(foreignChip, [{ value: fmt(opts.foreign), label: "publications of foreign origin (" + opts.foreignPct + ")", swatch: seriesColor("blue") }]);
-      [[262, 2, 214, 58], [638, 126, 578, 140], [332, 276, 300, 224]].forEach(function (ar) {
-        var g = el("g", { stroke: seriesColor("blue"), "stroke-width": 1.6, fill: "none", opacity: 0.85 }, svg);
-        el("line", { x1: ar[0], y1: ar[1], x2: ar[2], y2: ar[3] }, g);
-        var ang = Math.atan2(ar[3] - ar[1], ar[2] - ar[0]);
-        var hx = ar[2], hy = ar[3];
-        el("path", {
-          d: "M" + (hx - 7 * Math.cos(ang - 0.4)) + "," + (hy - 7 * Math.sin(ang - 0.4)) +
-             "L" + hx + "," + hy +
-             "L" + (hx - 7 * Math.cos(ang + 0.4)) + "," + (hy - 7 * Math.sin(ang + 0.4))
-        }, g);
+      /* Foreign — one thick arrow entering from beyond the frame, carrying its
+         own label. Three thin arrows plus a separate chip read as clutter; a
+         single broad arrow says "from outside" on its own. */
+      var aTip = 236, aBack = 636, aMid = 48;   /* tip points inboard at Malaysia */
+      var aHalf = 23, aHeadHalf = 34, aHeadLen = 64;
+      var aShoulder = aTip + aHeadLen;
+      var arrowBlue = seriesColor("blue");
+      var foreignArrow = el("g", {}, svg);
+      el("path", {
+        d: "M" + aBack + "," + (aMid - aHalf) +
+           "L" + aShoulder + "," + (aMid - aHalf) +
+           "L" + aShoulder + "," + (aMid - aHeadHalf) +
+           "L" + aTip + "," + aMid +
+           "L" + aShoulder + "," + (aMid + aHeadHalf) +
+           "L" + aShoulder + "," + (aMid + aHalf) +
+           "L" + aBack + "," + (aMid + aHalf) + "z",
+        fill: arrowBlue
+      }, foreignArrow);
+      /* th.surface is white on the light theme and near-black on the dark one,
+         so the label keeps its contrast against the arrow either way */
+      text(foreignArrow, "Foreign · arrives from outside", {
+        x: (aShoulder + aBack) / 2, y: aMid - 5,
+        fill: th.surface, "font-size": 11, "text-anchor": "middle", opacity: 0.92
       });
-      label("arrives from outside", 428, 46, 10.5, "end");
+      text(foreignArrow, fmt(opts.foreign) + " · " + opts.foreignPct, {
+        x: (aShoulder + aBack) / 2, y: aMid + 13,
+        fill: th.surface, "font-size": 15, "font-weight": 700, "text-anchor": "middle", "class": "num"
+      });
+      hoverable(foreignArrow, [{ value: fmt(opts.foreign), label: "publications of foreign origin (" + opts.foreignPct + ")", swatch: arrowBlue }]);
 
       /* Unclear — its own box, outside the map */
       var uy = 288;
@@ -1012,7 +1161,7 @@ var Charts = (function () {
           ? [d, PPPA.decadeMix.totals[i], "incomplete"]
           : [d, PPPA.decadeMix.totals[i]];
       });
-      lineArea(document.getElementById("c-rain-year"), { points: PPPA.perYear, color: "blue" });
+      timeBars(document.getElementById("c-rain-year"), { points: PPPA.perYear, color: "blue" });
       columns(document.getElementById("c-rain-decade"), { items: decadeItems, color: "blue", labelTop: 8 });
       lineArea(document.getElementById("c-rain-cume"), { points: cume, color: "green", tipLabel: "cumulative bans by" });
     }
@@ -1078,22 +1227,23 @@ var Charts = (function () {
 
     /* --- KDN justifications over time (post-1984 record) --- */
     var kdnFirst = PPPA.kdnByDecade.decades.indexOf("1980s");
-    var kdnByJust = transpose(PPPA.kdnByDecade.values.slice(kdnFirst));
-    multiLine(document.getElementById("c-kdnlines"), {
+    /* Composition, not trajectory: as lines, five of the seven grounds sat flat
+       on zero. Normalised to 100% per decade, the mix is the point. */
+    stacked(document.getElementById("c-kdnlines"), {
       cats: PPPA.kdnByDecade.decades.slice(kdnFirst),
-      series: PPPA.kdnByDecade.justifications.map(function (name, i) {
-        return { name: name, values: kdnByJust[i] };
-      }),
+      series: PPPA.kdnByDecade.justifications,
+      matrix: PPPA.kdnByDecade.values.slice(kdnFirst),
       colorOf: function (i, th) { return i < th.slots.length ? th.slots[i] : th.muted; },
-      incompleteLast: true,
-      tipNoun: "stated KDN justifications"
+      normalize: true,
+      barMax: 54,
+      incompleteLast: true
     });
 
     /* --- decade mix heatmap --- */
     heatmap(document.getElementById("c-decademix"), {
       rows: PPPA.decadeMix.clusters, cols: PPPA.decadeMix.decades,
       values: transpose(PPPA.decadeMix.values), shorten: true, labelWidth: 165,
-      max: 100,
+      max: 100, ramp: "severity", incompleteCol: "2020s",
       fmt: function (v) { return Math.round(v) + "%"; },
       cellLabel: "of that decade's titles"
     });
