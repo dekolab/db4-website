@@ -539,6 +539,19 @@ body:not([data-view="story"]) .progress { display: none; }
   margin: 1.2rem auto 0;
 }
 
+/* the source line under the standfirst: says where the numbers come from
+   before the first chart, without competing with the headline */
+.hero-source {
+  margin: 1.4rem auto 0;
+  max-width: 38rem;
+  font-family: var(--sans);
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.hero-source a { color: var(--accent); }
+
 .scroll-cue {
   margin-top: 3.4rem;
   font-family: var(--sans);
