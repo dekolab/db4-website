@@ -2216,9 +2216,9 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .term-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1rem clamp(1.2rem, 3vw, 2.4rem);
-  max-width: 62rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.2rem clamp(1.2rem, 3vw, 2.4rem);
+  max-width: 58rem;
   margin: 2rem auto 0;
   text-align: left;
 }
