@@ -1055,6 +1055,41 @@ var Charts = (function () {
       lineArea(document.getElementById("c-rain-cume"), { points: cume, color: "green", tipLabel: "cumulative bans by" });
     }
 
+    /* --- languages over time ---
+       Derived here rather than in generate_data.py: the row tuple already
+       carries year and languages, and folding them into the same five groups
+       the languages column chart uses (top three named + Unknown + Other)
+       reproduces PPPA.languageGrouped exactly, so the two charts can never
+       disagree. Language is counted by mention — a record listing two
+       languages lands in both, so a decade's columns can out-total its bans. */
+    var LANG_GROUPS = PPPA.languageGrouped.map(function (d) { return d[0]; });
+    var LANG_NAMED = LANG_GROUPS.slice(0, 3);
+    var langDecades = PPPA.decadeClusters.decades;
+    var langMatrix = langDecades.map(function () {
+      return LANG_GROUPS.map(function () { return 0; });
+    });
+    PPPA.rows.forEach(function (r) {
+      var di = langDecades.indexOf(Math.floor(r[1] / 10) * 10 + "s");
+      if (di === -1) return;
+      var langs = r[4] ? r[4].split(", ").filter(Boolean) : [];
+      if (!langs.length) { langMatrix[di][3]++; return; }   /* Unknown */
+      langs.forEach(function (l) {
+        var i = LANG_NAMED.indexOf(l);
+        langMatrix[di][i === -1 ? 4 : i]++;                 /* Other */
+      });
+    });
+    stacked(document.getElementById("c-langtime"), {
+      cats: langDecades,
+      series: LANG_GROUPS,
+      matrix: langMatrix,
+      /* named languages take colour slots; Unknown stays muted, as it does in
+         the languages column chart, because it is missing data not a language */
+      colorOf: function (i, th) {
+        return LANG_GROUPS[i] === "Unknown" ? th.muted : th.slots[i > 3 ? 3 : i];
+      },
+      incompleteLast: true
+    });
+
     /* --- languages: top three + Unknown + Other (chart-only grouping) --- */
     columns(document.getElementById("c-languages"), {
       items: PPPA.languageGrouped,
