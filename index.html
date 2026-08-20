@@ -1317,11 +1317,20 @@
 
       <div class="doc-body">
         <h3 id="rm-collection">1. Data collection</h3>
-        <p>The research began by extracting the
-          <a href="https://epq.kdn.gov.my/e-pq/index.php?mod=public" target="_blank" rel="noopener">Senarai
-          Perintah Larangan</a> from the Ministry of Home Affairs (KDN) website. KDN&rsquo;s
-          Enforcement and Control Division also provided a separate list containing the available
-          official justification for each prohibition.</p>
+        <!-- TODO(sourcing): https://epq.kdn.gov.my/e-pq/index.php?mod=public no longer
+             resolves. Do not guess a replacement path — supply either the current KDN URL or a
+             Wayback/perma.cc capture of the list as it stood when it was extracted, then restore
+             the <a> around "Senarai Perintah Larangan" below and delete this note and the
+             .source-todo paragraph. The same link is referenced in
+             Analysis-Reference/Codebook DB4 Draft 6.2.26.md, line 8. -->
+        <p>The research began by extracting the <strong>Senarai Perintah Larangan</strong> from
+          the Ministry of Home Affairs (KDN) website. KDN&rsquo;s Enforcement and Control Division
+          also provided a separate list containing the available official justification for each
+          prohibition.</p>
+        <p class="source-todo"><i class="fa-solid fa-link-slash" aria-hidden="true"></i>
+          <strong>TODO — source link needed.</strong> The KDN URL this list was extracted from no
+          longer resolves, and this page will not link to a dead address. A working link or an
+          archived capture goes here.</p>
 
         <p>The original metadata included:</p>
 
@@ -1933,8 +1942,31 @@
     <p class="kicker">Contact</p>
     <h2 id="h-contact">Use the data, and help correct it</h2>
     <p class="lede">Everything behind this site — the 3,212 records, the scripts that build them,
-      the codebook and the site itself — is open. The classification is a work in progress, so
-      corrections, additions and challenges to it are the most useful thing you can send.</p>
+      the codebook and the site itself — is published in the open repository below. The
+      classification is a work in progress, so corrections, additions and challenges to it are the
+      most useful thing you can send.</p>
+
+    <!-- TODO(licensing): two separate decisions, both yours, neither safe to assume.
+         1. The licence for INITIATE.MY's own work — the cleaning, the taxonomies, the
+            classifications, the site. CC BY 4.0 is the usual choice for a dataset meant to be
+            cited, but that is a decision, not a default.
+         2. The copyright status of the underlying KDN gazette data, which INITIATE.MY did not
+            create. Government works are not automatically public domain in Malaysia, and this
+            needs a legal or sourcing answer rather than an inference from how the data was
+            obtained.
+         Replace the whole .licence-todo block with a licence statement once both are settled,
+         and add a LICENSE file to the repository at the same time. -->
+    <div class="licence-todo">
+      <p class="contact-label"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Licence</p>
+      <p><strong>TODO — confirm licence.</strong> &ldquo;Open&rdquo; on its own does not tell
+        anyone what they may do with this. Two answers are needed before this section can say
+        anything: a named licence for INITIATE.MY&rsquo;s own work on the dataset and the site
+        (CC&nbsp;BY&nbsp;4.0?), and the copyright status of the underlying KDN gazette records,
+        which INITIATE.MY compiled but did not create.</p>
+      <p>Until both are settled, please treat the material as all-rights-reserved and
+        <a href="mailto:programme@initiate.my?subject=PPPA%20data%20reuse">ask before
+        republishing</a>. Citation and linking are welcome regardless.</p>
+    </div>
 
     <div class="contact-card">
       <p class="contact-label"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> Repository</p>
@@ -1978,7 +2010,8 @@
           <p>Clone or fork the repository and the whole dataset comes with it. Re-run the analysis,
             check our figures against the gazette, build something else on top of it, or send a
             pull request. If you publish anything using it, please cite INITIATE.MY and link back
-            so readers can check the record for themselves.</p>
+            so readers can check the record for themselves — and see the licence note above before
+            republishing the data itself.</p>
         </div>
       </li>
     </ol>

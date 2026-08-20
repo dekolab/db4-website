@@ -2123,6 +2123,30 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .cover-shelf-note i { color: var(--accent); margin-right: 0.35rem; }
 
+/* --- unresolved-decision blocks: a dead source link, an unnamed licence ---
+   Deliberately loud. These say the site does not yet know something it needs to
+   know, and they should be uncomfortable to leave in place. --- */
+
+.source-todo,
+.licence-todo {
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin: 1.4rem 0;
+  background: var(--card);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.source-todo i,
+.licence-todo i { color: var(--accent); margin-right: 0.4rem; }
+
+.licence-todo p + p { margin-top: 0.7rem; }
+
+.licence-todo .contact-label { margin-bottom: 0.5rem; }
+
 /* --- the people, up close: one card per frequent name --- */
 
 .who-grid {

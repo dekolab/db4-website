@@ -5,7 +5,7 @@
 
 ## Importation of Data from the Ministry of Home Affairs
 
-To import the metadata from the KDN dataset. We first copy the source code from their website which contains the database ([Senarai Perintah Larangan](https://epq.kdn.gov.my/e-pq/index.php?mod=public)) and additional justification list officially inquired from Kementerian Dalam Negeri, Bahagian Penguatkuasaan & Kawalan, that contain the justifications of each prohibition. Thanks to KDN for responding to our request. The metadata include:
+To import the metadata from the KDN dataset. We first copy the source code from their website which contains the database (**Senarai Perintah Larangan** — TODO(sourcing): the URL this was taken from, https://epq.kdn.gov.my/e-pq/index.php?mod=public, no longer resolves; replace with a working link or an archived capture) and additional justification list officially inquired from Kementerian Dalam Negeri, Bahagian Penguatkuasaan & Kawalan, that contain the justifications of each prohibition. Thanks to KDN for responding to our request. The metadata include:
 
 1. Publication Title / Tajuk Penerbitan   
 2. Author / Translator / Pengarang / Penterjemah  
