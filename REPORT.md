@@ -398,3 +398,136 @@ follow-up pass once you approve wording:
   Rendering logic, chart types, colours and scales are untouched and the data shapes are
   identical, so only bar heights / line points / labels can move — but please eyeball the
   story once, including reduced-motion and both themes, before publishing.
+
+---
+
+# External review — narrative reorder, chart swaps, sourcing gaps
+
+**Date:** 21 August 2026
+**Branch:** `review/external-feedback`
+**Files changed:** `index.html`, `styles.css`, `js/charts.js`, `js/snap.js`,
+`Analysis-Reference/Codebook DB4 Draft 6.2.26.md`; `js/geo.js` deleted
+**Not touched:** `js/data.js` and `Analysis-Reference/generate_data.py` — no figure in the
+dataset changed, and the one new chart derives its series in the browser from `PPPA.rows`
+
+## 7. What the reorder did
+
+The story opened with a general description of the project and five beats of statute before
+any data. New order:
+
+| Part | Beats |
+| --- | --- |
+| — | Hero — new headline, source line, methodology link |
+| 1 · What the record shows | **#findings** (the old closing coda, lifted) |
+| 2 · Time | Bans over time |
+| 3 · Language, type & origin | Languages, **languages per decade (new)**, types, origin |
+| 4 · The people | Authors, printers, publishers + **profile cards** |
+| 5 · What was banned | Clusters over time, **two themes (merged)**, KDN grounds, decade mix, six records, crosswalk |
+| 6 · The law | The law, its origins, its powers, the balance — *was Part 1* |
+| 7 · Now, and next | Why this database, revocations, reform |
+| — | Coda — shortened, closes on the revocations |
+
+The coda's two paragraphs moved verbatim into `#findings`, so nothing new is asserted there;
+the closing was rewritten around the sentences it kept. Dot rail re-sequenced; every kicker
+renumbered; every in-page anchor re-checked (none dangling).
+
+## 8. Charts
+
+**Origin map → column chart.** The dataset records origin as local / foreign / unclear and
+nothing finer. The map had no country to place the 1,476 foreign records in and nowhere at
+all for the 1,067 unclear ones, which sat in a box beside the coastline. Now three columns
+via the existing `columns()`, unclear muted because it marks missing information.
+`columns()` gained two optional flags — `subLabel` (a second line under the category, here
+the share) and `barMax` (mirroring `stacked()`) — both defaulting to the previous behaviour.
+`mapOrigin()` and `js/geo.js` were removed with it; nothing else consumed the projected
+coastlines, and both are one `git checkout` away if a country field ever lands.
+
+**KDN grounds.** Already a 100% stacked column — PR #9 converted it from lines — but the
+heading, `aria-label` and caption were never updated and still described a line chart with
+absolute peaks (383, 282, 123) the normalised chart does not plot. A screen-reader user was
+being handed a different chart from the one on screen. All three now describe the actual
+composition, recomputed from `PPPA.kdnByDecade`.
+
+**Languages per decade (new).** Built on `stacked()`, the same primitive as "Bans per decade,
+stacked by cluster", as a second viz layer and scene in the languages chapter. Series derived
+in `charts.js` from `PPPA.rows` and folded into the same five groups the languages column
+chart uses; the derived totals reproduce `PPPA.languageGrouped` exactly (1,158 / 947 / 765 /
+262 / 150), so the two charts cannot drift apart. Counted by language *mention*, so a decade's
+column can out-total that decade's bans — stated in the caption.
+
+**Six records vs twelve covers.** The heading was right: six specimen cards, and a separate
+decorative shelf of twelve traced covers. The shelf's explanatory note simply sat *below* its
+images. Note moved above the row and reworded to say what it is; a lede now labels the grid.
+
+## 9. Where this deviates from the review
+
+- **"Replace the heatmap under 'What reasons did the Ministry itself give?'"** — that section
+  has never drawn a heatmap, on any branch. On `main` it was a line chart; here it is the
+  100% stacked column the review asked for. The nearest heatmap, "Cluster share within each
+  decade", answers a different question and is already share-normalised, so converting it
+  would duplicate the stacked chart two beats earlier. Relabelled the KDN chart instead.
+- **"Languages by year"** — bucketed by decade. The chart it is modelled on is per-decade, and
+  77 year-columns of a five-series stack is not legible at the width of a pinned stage. One
+  line change in `charts.js` if you want years on the axis.
+- **Merging the two theme sections** — merged rather than differentiated. Both stated the same
+  three figures (1,097 / 849 / 60.6%) a screen apart. The subcluster chapter took the "Two
+  themes" heading and both sets of copy; the pinned scene it borrowed the heading from keeps
+  its trajectory chart and now describes the trajectories it was already drawing.
+
+## 10. TODOs left, and why
+
+| Where | Marker | Why it is not filled in |
+| --- | --- | --- |
+| `#people` | 3 × `data-todo="profile"` cards | Biographical claims about named people on a public-interest site. Counts and the Ashaari-Muhammad duplicate-entry note are generated; only the `<p class="who-bio">` text is missing. Remove `data-todo` from the card when it lands. |
+| Research Methods | `TODO(sourcing)` + `.source-todo` block | `epq.kdn.gov.my/e-pq/index.php?mod=public` no longer resolves. No replacement path guessed. Needs a working URL or an archived capture. |
+| `Codebook DB4 Draft 6.2.26.md` line 8 | `TODO(sourcing)` | Same URL, annotated in place. |
+| Contact | `.licence-todo` block | Two separate decisions: a named licence for INITIATE.MY's own work (CC BY 4.0 offered as a candidate, not a choice), and the copyright status of the underlying KDN records. No legal conclusion asserted. Interim line asks people to check before republishing. |
+| `#revocations` | `TODO(sourcing)` comment | Whether KDN publishes revocation orders anywhere trackable. The dataset question *was* answerable from the repo and is now stated in the copy: the source has no revocation field, the five July 2026 orders were added by hand, so earlier revocations would be invisible. |
+
+The two visible TODO blocks render as dashed accent boxes, and the profile placeholders as
+dashed italic panels. They are meant to be uncomfortable to leave in place. None should reach
+production.
+
+## 11. Verification performed
+
+- `node --check` passes on all ten JS files; `index.html` tag balance verified by parser
+  (zero unclosed, zero mismatched); `styles.css` braces balanced.
+- Every in-page anchor resolves to an existing `id`; every `#/route` is known to `app.js`;
+  the 17 chart mount ids in the HTML match the 17 `getElementById` calls in `charts.js`
+  exactly.
+- **Every numeric claim added or moved was recomputed from `js/data.js` and checked against
+  the copy** — 33 assertions, all passing: the origin split and its percentages, all ten
+  language-per-decade cells quoted in the new scene, the 262 unknowns, both crosswalk worked
+  examples (title, year, ground and subcluster), the KDN coverage figures, the author counts,
+  the cover/specimen counts, and 3,212 − 158 = 3,054.
+- One claim was **caught and corrected** this way: the first draft of the headline said "the
+  reason changed three times", which only holds if you count the 2020s swing back to political
+  material — an unfinished decade of 70 records. Three named eras are two transitions. The
+  headline now carries no count; the `#findings` pull-quote keeps "3 different categories",
+  which is exactly right however the runs are counted.
+- Rendered in headless Chrome and inspected: `#findings`, languages, languages-per-decade,
+  origin, clusters, subclusters + glossary, KDN, six records, crosswalk, the law, revocations,
+  reform, closing, Contact and Research Methods — in **both themes**. One layout bug found and
+  fixed this way (the glossary was trapped inside the 46rem `.full-foot` and orphaned
+  Ahmadiyyah onto its own row).
+- **Not verified here:** real mobile Safari/Chrome, and the auto-snap fix under a real touch
+  device. The snap change is the one that most wants a hands-on pass — see §12.
+
+## 12. The auto-snap fix, and what to check by hand
+
+The review asked to remove or offset the auto-sticky behaviour because it covered section
+subtitles. The cause is reproducible: `snap.js` centred each beat in the **whole viewport**,
+but on mobile (≤900px) the pinned stage is sticky over the top 56% with an opaque background
+and `z-index: 10`. Centring a scene taller than the remaining strip slid its kicker and
+heading up *underneath* the stage, so the section arrived with its title already hidden.
+
+Anchors are now computed against the visible strip — below the topbar, and below the stage
+while it is stacked — and a beat too tall for its strip top-aligns instead of centring.
+Measured on `.scene-text` rather than the 100vh `.scene` box, so desktop composition is
+unchanged apart from a topbar-height offset. The behaviour was kept rather than removed
+because it is deliberate design work and the defect was in the arithmetic, not the idea —
+but if you would rather it went entirely, deleting the `.chapter.pinned .flow .scene` loop in
+`collect()` disables it for exactly the beats that were affected.
+
+**Please check on a real phone before publishing**, and eyeball the reordered story once
+end to end in both themes.
