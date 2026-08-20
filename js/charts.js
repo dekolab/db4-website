@@ -269,7 +269,7 @@ var Charts = (function () {
       var th = T();
       var items = opts.items;
       var n = items.length;
-      var m = { top: 14, right: 10, bottom: 40, left: 44 };
+      var m = { top: 14, right: 10, bottom: opts.subLabel ? 52 : 40, left: 44 };
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var slot = plotW / n;
@@ -304,10 +304,20 @@ var Charts = (function () {
         }
         var lx = m.left + i * slot + slot / 2;
         text(svg, partial ? d[0] + "*" : d[0], { x: lx, y: m.top + plotH + 16, fill: th.ink, "font-size": 11.5, "text-anchor": "middle" });
+        /* opts.subLabel — a second, quieter line under the category name
+           (used for shares, where the count alone hides the proportion) */
+        if (opts.subLabel) {
+          var sub = opts.subLabel(d, i);
+          if (sub) text(svg, sub, { x: lx, y: m.top + plotH + 30, fill: th.muted, "font-size": 10.5, "text-anchor": "middle", "class": "num" });
+        }
         if (i < (opts.labelTop || 3) || (partial && opts.labelIncomplete !== false)) {
           text(svg, fmt(d[1]), { x: lx, y: ys(d[1]) - 6, fill: th.muted, "font-size": 11, "text-anchor": "middle", "class": "num" });
         }
         var tipLines = [{ value: fmt(d[1]), label: d[0] + (partial ? " (incomplete decade)" : ""), swatch: color }];
+        if (opts.subLabel && opts.tipNoun) {
+          var subTip = opts.subLabel(d, i);
+          if (subTip) tipLines.push({ value: subTip, label: opts.tipNoun });
+        }
         hoverable(bar, tipLines);
         bar.setAttribute("aria-label", d[0] + ": " + fmt(d[1]) + (partial ? " (incomplete)" : ""));
         bar.setAttribute("role", "img");
@@ -981,128 +991,7 @@ var Charts = (function () {
     });
   }
 
-  /* ---------- Malaysia origin map (real coastlines, inline SVG) ---------- */
-
-  /* Geometry comes pre-projected from GEO_MY (js/geo.js) — Natural Earth
-     coastlines in this SVG's user space, so the plot box and viewBox here must
-     match the frame documented in that file.
-
-     Malaysia is highlighted; the neighbouring land behind it is context only.
-     Local sits on the land, Foreign arrives from beyond the frame, and Unclear
-     keeps its own labelled box so the unresolved third is never hidden. */
-  var mapUid = 0;
-
-  function mapOrigin(root, opts) {
-    mount(root, function (node, W, H) {
-      var th = T();
-      var svg = el("svg", { width: W, height: H, viewBox: "0 0 640 360", preserveAspectRatio: "xMidYMid meet" }, node);
-      var box = { x: 8, y: 8, w: 624, h: 260, r: 12 };
-
-      /* the coastlines run to the frame edge, so clip them to the sea panel */
-      var clipId = "mapclip-" + (++mapUid);
-      var clip = el("clipPath", { id: clipId }, el("defs", {}, svg));
-      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r }, clip);
-
-      var sea = el("g", { "clip-path": "url(#" + clipId + ")" }, svg);
-      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, fill: th.grid, opacity: 0.35 }, sea);
-
-      /* neighbouring land — southern Thailand, Sumatra, Kalimantan, the rest */
-      el("path", { d: GEO_MY.ctx, fill: th.axis, "fill-opacity": 0.75 }, sea);
-
-      /* Malaysia */
-      var land = {
-        fill: seriesColor("green"), "fill-opacity": 0.33,
-        stroke: seriesColor("green"), "stroke-width": 1.6,
-        "stroke-linejoin": "round"
-      };
-      [GEO_MY.pen, GEO_MY.bor].forEach(function (d) {
-        var p = el("path", { d: d }, sea);
-        for (var a in land) p.setAttribute(a, land[a]);
-      });
-
-      el("rect", {
-        x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r,
-        fill: "none", stroke: th.axis, "stroke-width": 1
-      }, svg);
-
-      /* place names sit over land, so give them a halo to read against it */
-      function label(str, x, y, size, anchor) {
-        return text(svg, str, {
-          x: x, y: y, fill: th.muted, "font-size": size || 11, "text-anchor": anchor || "middle",
-          stroke: th.surface, "stroke-width": 3.5, "stroke-linejoin": "round",
-          "paint-order": "stroke"
-        });
-      }
-
-      label("Peninsular Malaysia", 128, 240);
-      label("Sabah & Sarawak", 432, 204);
-
-      function chip(x, y, w, title, value, color, dashed) {
-        var g = el("g", {}, svg);
-        el("rect", {
-          x: x, y: y, width: w, height: 46, rx: 9,
-          fill: th.surface, stroke: color, "stroke-width": 1.5,
-          "stroke-dasharray": dashed ? "5 4" : "none"
-        }, g);
-        text(g, title, { x: x + w / 2, y: y + 18, fill: th.muted, "font-size": 11, "text-anchor": "middle" });
-        text(g, value, { x: x + w / 2, y: y + 36, fill: th.ink, "font-size": 13.5, "font-weight": 700, "text-anchor": "middle", "class": "num" });
-        return g;
-      }
-
-      /* Local — leaders out to both halves of the country */
-      var localChip = chip(200, 92, 132, "Local", fmt(opts.local) + " · " + opts.localPct, seriesColor("green"));
-      el("line", { x1: 200, y1: 115, x2: 186, y2: 128, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
-      el("line", { x1: 332, y1: 115, x2: 362, y2: 168, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
-      hoverable(localChip, [{ value: fmt(opts.local), label: "publications of local origin (" + opts.localPct + ")", swatch: seriesColor("green") }]);
-
-      /* Foreign — one thick arrow entering from beyond the frame, carrying its
-         own label. Three thin arrows plus a separate chip read as clutter; a
-         single broad arrow says "from outside" on its own. */
-      var aTip = 236, aBack = 636, aMid = 48;   /* tip points inboard at Malaysia */
-      var aHalf = 23, aHeadHalf = 34, aHeadLen = 64;
-      var aShoulder = aTip + aHeadLen;
-      var arrowBlue = seriesColor("blue");
-      var foreignArrow = el("g", {}, svg);
-      el("path", {
-        d: "M" + aBack + "," + (aMid - aHalf) +
-           "L" + aShoulder + "," + (aMid - aHalf) +
-           "L" + aShoulder + "," + (aMid - aHeadHalf) +
-           "L" + aTip + "," + aMid +
-           "L" + aShoulder + "," + (aMid + aHeadHalf) +
-           "L" + aShoulder + "," + (aMid + aHalf) +
-           "L" + aBack + "," + (aMid + aHalf) + "z",
-        fill: arrowBlue
-      }, foreignArrow);
-      /* th.surface is white on the light theme and near-black on the dark one,
-         so the label keeps its contrast against the arrow either way */
-      text(foreignArrow, "Foreign · arrives from outside", {
-        x: (aShoulder + aBack) / 2, y: aMid - 5,
-        fill: th.surface, "font-size": 11, "text-anchor": "middle", opacity: 0.92
-      });
-      text(foreignArrow, fmt(opts.foreign) + " · " + opts.foreignPct, {
-        x: (aShoulder + aBack) / 2, y: aMid + 13,
-        fill: th.surface, "font-size": 15, "font-weight": 700, "text-anchor": "middle", "class": "num"
-      });
-      hoverable(foreignArrow, [{ value: fmt(opts.foreign), label: "publications of foreign origin (" + opts.foreignPct + ")", swatch: arrowBlue }]);
-
-      /* Unclear — its own box, outside the map */
-      var uy = 288;
-      var unGroup = el("g", {}, svg);
-      el("rect", {
-        x: 8, y: uy, width: 624, height: 62, rx: 10,
-        fill: th.surface, stroke: seriesColor("gold"), "stroke-width": 1.5, "stroke-dasharray": "6 4"
-      }, unGroup);
-      text(unGroup, "Origin unclear — " + fmt(opts.unclear) + " · " + opts.unclearPct, {
-        x: 320, y: uy + 26, fill: th.ink, "font-size": 13.5, "font-weight": 700, "text-anchor": "middle", "class": "num"
-      });
-      text(unGroup, "one in three records has no confirmed origin — it belongs on no map", {
-        x: 320, y: uy + 46, fill: th.muted, "font-size": 11, "text-anchor": "middle"
-      });
-      hoverable(unGroup, [{ value: fmt(opts.unclear), label: "publications of unclear origin (" + opts.unclearPct + ")", swatch: seriesColor("gold") }]);
-    });
-  }
-
-  /* ---------- podium histograms (people behind the publications) ---------- */
+    /* ---------- podium histograms (people behind the publications) ---------- */
 
   /* HTML rows so the Font Awesome rank icons render; bar colours ride the
      CSS theme variables. Top three read as the podium. */
@@ -1195,12 +1084,22 @@ var Charts = (function () {
           count: totalRecs - printedCount - audioCount }
       ]
     });
+    /* Origin is a three-way split — local, foreign, unclear — and nothing
+       finer: the dataset never records a country, so a map had nowhere to put
+       a third of the records and no country to put the rest in. Ordered with
+       the two recorded categories first and the not-a-category bucket last. */
     var originOf = {};
     PPPA.originCounts.forEach(function (d) { originOf[d[0]] = d[1]; });
-    mapOrigin(document.getElementById("c-map"), {
-      local: originOf.Local, localPct: pct1(originOf.Local),
-      foreign: originOf.Foreign, foreignPct: pct1(originOf.Foreign),
-      unclear: originOf.Unclear, unclearPct: pct1(originOf.Unclear)
+    var ORIGIN_SLOT = { Foreign: "blue", Local: "green", Unclear: null };
+    columns(document.getElementById("c-origin"), {
+      items: ["Foreign", "Local", "Unclear"].map(function (k) { return [k, originOf[k]]; }),
+      labelTop: 3,
+      subLabel: function (d) { return pct1(d[1]); },
+      tipNoun: "of all 3,212 records",
+      colorOf: function (d, i, th) {
+        var slot = ORIGIN_SLOT[d[0]];
+        return slot ? th.series[slot] : th.muted;
+      }
     });
 
     /* --- the people podiums --- */

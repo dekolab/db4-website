@@ -275,14 +275,14 @@
         <figure class="viz" data-viz="origin-map">
           <div class="chart-card">
             <h3>Where did they come from?</h3>
-            <div class="chart ch-lg" id="c-map" role="img"
-                 aria-label="Map of Malaysia — Peninsular Malaysia and Sabah and Sarawak on Borneo — showing publication origin: foreign publications 1,476, or 46%, arriving from outside the region; local publications 669, or 20.8%, on the map itself; and a separate clearly-marked box for the 1,067 records, or 33.2%, whose origin remains unclear."></div>
+            <div class="chart ch-md" id="c-origin" role="img"
+                 aria-label="Column chart of publication origin, the only three values the dataset records: foreign 1,476 records or 46%, local 669 or 20.8%, and unclear 1,067 or 33.2%, drawn in a muted colour because it is an absence of information rather than a category."></div>
           </div>
-          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Coastlines from
-            Natural Earth; neighbouring land is drawn for context and carries no data. The dataset
-            records only whether a publication was local, foreign or unclear — not which country it
-            came from. Because one-third of records lack a confirmed origin, comparisons between
-            foreign and local enforcement should remain cautious.</figcaption>
+          <figcaption><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Local, foreign or
+            unclear is the whole of what the gazette records — there is no country field, so there
+            is no map to draw. &ldquo;Unclear&rdquo; is muted because it marks missing information,
+            not a third kind of publication. Because one-third of records lack a confirmed origin,
+            comparisons between foreign and local enforcement should remain cautious.</figcaption>
         </figure>
       </div>
     </div>
@@ -1893,7 +1893,6 @@
 </section>
 
 <script src="js/data.js"></script>
-<script src="js/geo.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/story.js"></script>
