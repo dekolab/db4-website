@@ -273,7 +273,9 @@ var Charts = (function () {
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var slot = plotW / n;
-      var barW = Math.min(24, slot * 0.55);
+      /* opts.barMax — widen the bars when there are few categories, as
+         stacked() does; three 24px columns in a wide card read as sparse */
+      var barW = Math.min(opts.barMax || 24, slot * 0.55);
       var ticks = niceTicks(Math.max.apply(null, items.map(function (d) { return d[1]; })), 4);
       var max = ticks[ticks.length - 1];
       var ys = function (v) { return m.top + plotH - (v / max) * plotH; };
@@ -1129,6 +1131,7 @@ var Charts = (function () {
     columns(document.getElementById("c-origin"), {
       items: ["Foreign", "Local", "Unclear"].map(function (k) { return [k, originOf[k]]; }),
       labelTop: 3,
+      barMax: 58,
       subLabel: function (d) { return pct1(d[1]); },
       tipNoun: "of all 3,212 records",
       colorOf: function (d, i, th) {
