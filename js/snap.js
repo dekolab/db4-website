@@ -6,6 +6,12 @@
  * eases the remaining distance so beats always land composed. Proximity
  * only — stop between beats and nothing moves; any input cancels the glide.
  * Disabled under prefers-reduced-motion.
+ *
+ * Every anchor is computed against the *visible* strip, not the viewport:
+ * the fixed topbar always covers the first TOPBAR pixels, and on mobile the
+ * pinned stage covers the top 56% on top of that. A beat taller than its
+ * strip cannot be centred without pushing its kicker and headline up behind
+ * one of them, so those land top-aligned instead.
  */
 var Snap = (function () {
   "use strict";
@@ -14,7 +20,9 @@ var Snap = (function () {
   if (reduced.matches) return {};
 
   var mobile = window.matchMedia("(max-width: 900px)");
-  var TOPBAR = 55;
+  var TOPBAR = 55;          /* --topbar: 3.4rem, the fixed header */
+  var STAGE_VH = 0.56;      /* mobile pinned stage height, see styles.css */
+  var HEAD_GAP = 14;        /* breathing room above a top-aligned beat */
   var IDLE_MS = 170;
   var DURATION = 520;
 
@@ -27,11 +35,22 @@ var Snap = (function () {
     return el.getBoundingClientRect().top + window.scrollY;
   }
 
-  /* centre an element inside the strip of viewport not covered by the
-     pinned mobile stage (desktop strip = the whole viewport) */
-  function centreIn(el, stripTop) {
-    var vh = window.innerHeight;
-    return docTop(el) + el.offsetHeight / 2 - (stripTop + (vh - stripTop) / 2);
+  /* the first pixel of viewport nothing is covering: below the topbar, and
+     below the pinned stage too while it is stacked above the flow on mobile */
+  function stripTop(underStage) {
+    return underStage && mobile.matches
+      ? window.innerHeight * STAGE_VH
+      : TOPBAR;
+  }
+
+  /* Centre an element in that strip — unless it is too tall to fit, in which
+     case centring would hide its opening lines under the stage or the topbar.
+     Those align to the top of the strip so the heading always reads. */
+  function centreIn(el, top) {
+    var strip = window.innerHeight - top;
+    var h = el.offsetHeight;
+    if (h + HEAD_GAP > strip) return docTop(el) - top + HEAD_GAP;
+    return docTop(el) + h / 2 - (top + strip / 2);
   }
 
   function collect() {
@@ -40,9 +59,10 @@ var Snap = (function () {
 
     anchors.push(0); /* hero */
 
+    /* the .scene box is a 100vh flex container, so measure the text block it
+       centres — that is what the stage can actually cover */
     document.querySelectorAll(".chapter.pinned .flow .scene").forEach(function (scene) {
-      var stripTop = mobile.matches ? vh * 0.56 : 0;
-      anchors.push(centreIn(scene, stripTop));
+      anchors.push(centreIn(scene.querySelector(".scene-text") || scene, stripTop(true)));
     });
 
     document.querySelectorAll(".chapter.full").forEach(function (section) {
@@ -50,7 +70,7 @@ var Snap = (function () {
     });
 
     document.querySelectorAll(".callout-card").forEach(function (card) {
-      anchors.push(centreIn(card, 0));
+      anchors.push(centreIn(card, stripTop(false)));
     });
 
     anchors.push(document.documentElement.scrollHeight - vh); /* closing */
