@@ -1652,11 +1652,13 @@ body:not([data-view="story"]) .progress { display: none; }
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.7rem 1.4rem;
-  margin-bottom: 1.6rem;
+  gap: 1rem 1.6rem;
+  margin-bottom: 1.8rem;
   font-family: var(--sans);
-  font-size: 0.88rem;
-  color: var(--ink-soft);
+  /* these four purposes are the substance of the section, not a caption */
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ink);
 }
 
 .goal-list li {
@@ -1665,7 +1667,7 @@ body:not([data-view="story"]) .progress { display: none; }
   gap: 0.55rem;
 }
 
-.goal-list i { color: var(--accent); flex: none; font-size: 0.85em; }
+.goal-list i { color: var(--accent); flex: none; font-size: 0.8em; }
 
 /* --- book rain --- */
 
@@ -2422,7 +2424,7 @@ body:not([data-view="story"]) .progress { display: none; }
 }
 
 .reform-card h3 {
-  font-size: 1.02rem;
+  font-size: 1.12rem;
   line-height: 1.3;
   margin-bottom: 0.55rem;
   padding-right: 2.4rem;
@@ -2432,8 +2434,10 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .reform-card p {
   font-family: var(--sans);
-  font-size: 0.85rem;
-  line-height: 1.6;
+  /* each card carries a whole recommendation — it has to be readable at arm's
+     length, not sized like a figure caption */
+  font-size: 0.98rem;
+  line-height: 1.62;
   color: var(--ink-soft);
 }
 
