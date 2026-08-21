@@ -405,8 +405,8 @@ follow-up pass once you approve wording:
 
 **Date:** 21 August 2026
 **Branch:** `review/external-feedback`
-**Files changed:** `index.html`, `styles.css`, `js/charts.js`, `js/snap.js`,
-`Analysis-Reference/Codebook DB4 Draft 6.2.26.md`; `js/geo.js` deleted
+**Files changed:** `index.html`, `styles.css`, `js/charts.js`, `js/story.js`,
+`Analysis-Reference/Codebook DB4 Draft 6.2.26.md`; `js/geo.js` and `js/snap.js` deleted
 **Not touched:** `js/data.js` and `Analysis-Reference/generate_data.py` — no figure in the
 dataset changed, and the one new chart derives its series in the browser from `PPPA.rows`
 
@@ -510,24 +510,31 @@ production.
   reform, closing, Contact and Research Methods — in **both themes**. One layout bug found and
   fixed this way (the glossary was trapped inside the 46rem `.full-foot` and orphaned
   Ahmadiyyah onto its own row).
-- **Not verified here:** real mobile Safari/Chrome, and the auto-snap fix under a real touch
-  device. The snap change is the one that most wants a hands-on pass — see §12.
+- **Not verified here:** real mobile Safari/Chrome. See §12 on the removed auto-snap.
 
-## 12. The auto-snap fix, and what to check by hand
+## 12. The auto-snap, removed
 
-The review asked to remove or offset the auto-sticky behaviour because it covered section
-subtitles. The cause is reproducible: `snap.js` centred each beat in the **whole viewport**,
-but on mobile (≤900px) the pinned stage is sticky over the top 56% with an opaque background
-and `z-index: 10`. Centring a scene taller than the remaining strip slid its kicker and
-heading up *underneath* the stage, so the section arrived with its title already hidden.
+The review offered two options — remove the auto-sticky behaviour, or offset it so it never
+covers a section's subtitle. This branch first did the second, then removed it outright at
+your call. `js/snap.js` is deleted, along with its `<script>` tag; two comments in
+`js/story.js` and `styles.css` that referenced it were updated.
 
-Anchors are now computed against the visible strip — below the topbar, and below the stage
-while it is stacked — and a beat too tall for its strip top-aligns instead of centring.
-Measured on `.scene-text` rather than the 100vh `.scene` box, so desktop composition is
-unchanged apart from a topbar-height offset. The behaviour was kept rather than removed
-because it is deliberate design work and the defect was in the arithmetic, not the idea —
-but if you would rather it went entirely, deleting the `.chapter.pinned .flow .scene` loop in
-`collect()` disables it for exactly the beats that were affected.
+Recording the diagnosis, since the file is gone: `snap.js` centred each beat in the **whole
+viewport**, but on mobile (≤900px) the pinned stage is sticky over the top 56% with an opaque
+background and `z-index: 10`. Centring a scene taller than the remaining strip slid its kicker
+and heading up *underneath* the stage, so the section arrived with its title already hidden.
+Commit `a8938ee` carries the offset fix if the behaviour is ever wanted back — it computed
+anchors against the visible strip and top-aligned any beat too tall to fit.
 
-**Please check on a real phone before publishing**, and eyeball the reordered story once
-end to end in both themes.
+Nothing else drove the page's scroll position. The only remaining programmatic scroll is the
+dot rail in `js/story.js`, which centres `.scene` targets — and the dot rail is desktop-only
+(`.dots { display: none }` under 900px), where the stage sits beside the text rather than over
+it. So there is no path back to the same defect.
+
+**What changes for a reader:** scrolling now comes to rest wherever it is left. Beats no
+longer glide into composition on their own, and a reader stopping between two beats stays
+between them. Worth an end-to-end scroll in both themes to confirm the section rhythm still
+reads without it — that judgement is yours, and reverting is one `git revert` away.
+
+**Still not verified here:** real mobile Safari/Chrome. Please eyeball the reordered story
+once on a phone before publishing.

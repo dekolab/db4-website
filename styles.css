@@ -605,7 +605,7 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .chapter { position: relative; }
 
-/* anchor/dot jumps and the auto-snap agree on where a beat starts */
+/* where a beat starts for anchor and dot jumps — clear of the fixed topbar */
 .chapter.full,
 .fullscene {
   scroll-margin-top: var(--topbar);
