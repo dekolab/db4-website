@@ -761,6 +761,51 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .full-foot { margin-top: 2.6rem; }
 
+/* --- prologue frames: four full-page moments before the story proper --- */
+
+.prologue {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--topbar) + 2rem) clamp(1.4rem, 6vw, 5rem) clamp(2rem, 6vw, 5rem);
+  scroll-margin-top: var(--topbar);
+}
+
+/* wider than the 46rem reading column — these carry a headline, not an argument */
+.prologue .full-head { max-width: 68rem; }
+
+.prologue .full-head h2 {
+  font-size: clamp(2.1rem, 5.4vw, 4.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  margin-bottom: 1.6rem;
+}
+
+.prologue .full-head p:not(.kicker) {
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.65;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+/* attribution under each frame — press claims carry their own citation */
+.prologue .full-head p.frame-source {
+  margin: 1.5rem auto 0;
+  max-width: 46rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+.prologue .frame-source a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
 /* --- two-up --- */
 
 .duo-row {
