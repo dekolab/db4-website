@@ -539,6 +539,19 @@ body:not([data-view="story"]) .progress { display: none; }
   margin: 1.2rem auto 0;
 }
 
+/* the source line under the standfirst: says where the numbers come from
+   before the first chart, without competing with the headline */
+.hero-source {
+  margin: 1.4rem auto 0;
+  max-width: 38rem;
+  font-family: var(--sans);
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.hero-source a { color: var(--accent); }
+
 .scroll-cue {
   margin-top: 3.4rem;
   font-family: var(--sans);
@@ -592,7 +605,7 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .chapter { position: relative; }
 
-/* anchor/dot jumps and the auto-snap agree on where a beat starts */
+/* where a beat starts for anchor and dot jumps — clear of the fixed topbar */
 .chapter.full,
 .fullscene {
   scroll-margin-top: var(--topbar);
@@ -747,6 +760,51 @@ body:not([data-view="story"]) .progress { display: none; }
 .wide-fig .chart-card { width: 100%; }
 
 .full-foot { margin-top: 2.6rem; }
+
+/* --- prologue frames: four full-page moments before the story proper --- */
+
+.prologue {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--topbar) + 2rem) clamp(1.4rem, 6vw, 5rem) clamp(2rem, 6vw, 5rem);
+  scroll-margin-top: var(--topbar);
+}
+
+/* wider than the 46rem reading column — these carry a headline, not an argument */
+.prologue .full-head { max-width: 68rem; }
+
+.prologue .full-head h2 {
+  font-size: clamp(2.1rem, 5.4vw, 4.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  margin-bottom: 1.6rem;
+}
+
+.prologue .full-head p:not(.kicker) {
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.65;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+/* attribution under each frame — press claims carry their own citation */
+.prologue .full-head p.frame-source {
+  margin: 1.5rem auto 0;
+  max-width: 46rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+.prologue .frame-source a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
 
 /* --- two-up --- */
 
@@ -1639,11 +1697,13 @@ body:not([data-view="story"]) .progress { display: none; }
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.7rem 1.4rem;
-  margin-bottom: 1.6rem;
+  gap: 1rem 1.6rem;
+  margin-bottom: 1.8rem;
   font-family: var(--sans);
-  font-size: 0.88rem;
-  color: var(--ink-soft);
+  /* these four purposes are the substance of the section, not a caption */
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ink);
 }
 
 .goal-list li {
@@ -1652,7 +1712,7 @@ body:not([data-view="story"]) .progress { display: none; }
   gap: 0.55rem;
 }
 
-.goal-list i { color: var(--accent); flex: none; font-size: 0.85em; }
+.goal-list i { color: var(--accent); flex: none; font-size: 0.8em; }
 
 /* --- book rain --- */
 
@@ -2098,7 +2158,7 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .cover-shelf-note {
   max-width: 46rem;
-  margin: 0.9rem auto 0;
+  margin: 0 auto 1.1rem;
   font-family: var(--sans);
   font-size: 0.78rem;
   line-height: 1.55;
@@ -2108,12 +2168,152 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .cover-shelf-note i { color: var(--accent); margin-right: 0.35rem; }
 
+/* --- unresolved-decision blocks: a dead source link, an unnamed licence ---
+   Deliberately loud. These say the site does not yet know something it needs to
+   know, and they should be uncomfortable to leave in place. --- */
+
+.source-todo,
+.licence-todo {
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin: 1.4rem 0;
+  background: var(--card);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.source-todo i,
+.licence-todo i { color: var(--accent); margin-right: 0.4rem; }
+
+.licence-todo p + p { margin-top: 0.7rem; }
+
+.licence-todo .contact-label { margin-bottom: 0.5rem; }
+
+/* --- the people, up close: one card per frequent name --- */
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  max-width: 62rem;
+  margin: 2.6rem auto 0;
+  text-align: left;
+}
+
+.who-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.2rem 1.3rem;
+  box-shadow: 0 10px 32px rgba(34, 30, 28, 0.07);
+}
+
+.who-count {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.who-name {
+  font-size: 1.05rem;
+  line-height: 1.25;
+  margin-bottom: 0.45rem;
+}
+
+.who-meta,
+.who-bio {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.who-meta { margin-bottom: 0.6rem; }
+
+/* an unwritten profile is visibly unwritten — it must not ship unnoticed */
+.who-card[data-todo] .who-bio {
+  border: 1px dashed var(--accent);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.who-note {
+  max-width: 46rem;
+  margin: 1.4rem auto 0;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.who-note i { color: var(--accent); margin-right: 0.35rem; }
+
+/* --- inline glossary: a term and its one-sentence definition, for names the
+   story uses before the Taxonomy Definitions page gets a chance to --- */
+
+.term-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.2rem clamp(1.2rem, 3vw, 2.4rem);
+  max-width: 58rem;
+  margin: 2rem auto 0;
+  text-align: left;
+}
+
+.term-list dt {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.term-list dd {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  border-left: 2px solid var(--rule);
+  padding-left: 0.9rem;
+}
+
+.term-note {
+  max-width: 46rem;
+  margin: 1.4rem auto 0;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* names the six cards, so twelve decorative covers above them can never be
+   mistaken for the six records the heading promises */
+.specimen-lede {
+  max-width: 62rem;
+  margin: 2.6rem auto 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
 .specimen-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(0.9rem, 2vw, 1.4rem);
   max-width: 62rem;
-  margin: 2.6rem auto 0;
+  margin: 1rem auto 0;
 }
 
 /* each card carries its cluster's key colour on --cl */
@@ -2293,7 +2493,7 @@ body:not([data-view="story"]) .progress { display: none; }
 }
 
 .reform-card h3 {
-  font-size: 1.02rem;
+  font-size: 1.12rem;
   line-height: 1.3;
   margin-bottom: 0.55rem;
   padding-right: 2.4rem;
@@ -2303,8 +2503,10 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .reform-card p {
   font-family: var(--sans);
-  font-size: 0.85rem;
-  line-height: 1.6;
+  /* each card carries a whole recommendation — it has to be readable at arm's
+     length, not sized like a figure caption */
+  font-size: 0.98rem;
+  line-height: 1.62;
   color: var(--ink-soft);
 }
 

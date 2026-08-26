@@ -111,8 +111,10 @@
       if (event.detail > 0) dot.blur();
       target.scrollIntoView({
         behavior: reducedMotion.matches ? "auto" : "smooth",
-        /* scenes read centred (matching the auto-snap anchors); chapters
-           and full scenes align to their top */
+        /* scenes read centred; chapters and full scenes align to their top.
+           The dot rail is desktop-only (.dots is display:none under 900px),
+           where the pinned stage sits beside the text rather than over it, so
+           centring cannot hide a scene's heading behind it. */
         block: target.classList.contains("scene") ? "center" : "start"
       });
     });
