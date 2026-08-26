@@ -761,44 +761,65 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .full-foot { margin-top: 2.6rem; }
 
-/* --- prologue frames: four full-page moments before the story proper --- */
+/* --- prologue frames: four full-page title cards before the story proper --- */
 
 .prologue {
+  position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  padding: calc(var(--topbar) + 2rem) clamp(1.4rem, 6vw, 5rem) clamp(2rem, 6vw, 5rem);
+  padding: calc(var(--topbar) + 2rem) clamp(1.4rem, 6vw, 5rem) clamp(2rem, 6vh, 4rem);
   scroll-margin-top: var(--topbar);
 }
 
-/* wider than the 46rem reading column — these carry a headline, not an argument */
-.prologue .full-head { max-width: 68rem; }
+/* the frame is the composition: rule at the top, headline on the optical centre,
+   attribution on the baseline — so the height is used rather than left empty */
+.prologue .full-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: min(92vw, 78rem);
+  margin: 0;
+  text-align: left;
+}
+
+.prologue .full-head::before {
+  content: "";
+  display: block;
+  width: 3.2rem;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin-bottom: clamp(1.4rem, 3vh, 2.2rem);
+}
 
 .prologue .full-head h2 {
-  font-size: clamp(2.1rem, 5.4vw, 4.2rem);
-  line-height: 1.06;
-  letter-spacing: -0.022em;
-  margin-bottom: 1.6rem;
+  font-size: clamp(2.3rem, 6.2vw, 5.2rem);
+  line-height: 1.03;
+  letter-spacing: -0.026em;
+  margin-bottom: clamp(1.2rem, 2.6vh, 2rem);
+  text-wrap: balance;
 }
 
 .prologue .full-head p:not(.kicker) {
-  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
-  line-height: 1.65;
-  max-width: 46rem;
-  margin: 0 auto;
+  font-size: clamp(1.08rem, 1.85vw, 1.5rem);
+  line-height: 1.6;
+  max-width: 48rem;
+  margin: 0;
 }
 
-/* attribution under each frame — press claims carry their own citation */
+/* attribution trails the frame, aligned to the headline's left edge. No opacity
+   here — .reveal owns opacity, and overriding it strands the line mid-animation. */
 .prologue .full-head p.frame-source {
-  margin: 1.5rem auto 0;
-  max-width: 46rem;
+  margin: clamp(1.8rem, 4vh, 3rem) 0 0;
+  max-width: 48rem;
   font-family: var(--sans);
   font-size: 0.8rem;
   line-height: 1.6;
   color: var(--ink-soft);
-  opacity: 0.85;
 }
 
 .prologue .frame-source a {
@@ -806,62 +827,9 @@ body:not([data-view="story"]) .progress { display: none; }
   text-underline-offset: 2px;
 }
 
-/* --- two-up --- */
-
-.duo-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.2rem, 2.5vw, 2.2rem);
-  align-items: start;
-  max-width: 80rem;
-  margin: 2.6rem auto 0;
-}
-
-.duo-row figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  /* let the grid track shrink below the rendered SVG's fixed width,
-     so the chart re-renders at the new size instead of overflowing */
-  min-width: 0;
-}
-
-.duo-row .chart-card { width: 100%; }
-
-/* --- callout band --- */
-
-.chapter.callout {
-  padding: clamp(5rem, 12vh, 8rem) clamp(1.2rem, 4vw, 3rem);
-  display: flex;
-  justify-content: center;
-}
-
-.callout-card {
-  max-width: 56rem;
-  background: var(--card);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--accent);
-  border-radius: 12px;
-  padding: clamp(1.6rem, 4vw, 2.8rem);
-  box-shadow: 0 14px 44px rgba(34, 30, 28, 0.09);
-}
-
-.callout-card h2 {
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  line-height: 1.18;
-  letter-spacing: -0.012em;
-  margin-bottom: 1rem;
-}
-
-.callout-card > p:not(.kicker) {
-  color: var(--ink-soft);
-  margin-bottom: 1.6rem;
-}
-
-.callout-card .chart-card {
-  box-shadow: none;
-  border-color: var(--td-rule);
+/* short viewports: stop forcing a full screen the content cannot fill */
+@media (max-height: 620px) {
+  .prologue { min-height: auto; padding-bottom: clamp(3rem, 9vh, 5rem); }
 }
 
 /* --- pull-quotes: numbers as graphic moments --- */
