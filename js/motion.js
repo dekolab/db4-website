@@ -67,10 +67,17 @@
   }
 
   var dissolves = []
-    .concat(targetsFor(".hero .hero-inner, .closing .hero-inner", { hold: 0.55, range: 0.4 }))
+    /* .closing .hero-inner is absent for the same reason as .reform-grid: the
+       source note is the last thing on the page and the reader stops there, so
+       a centre-distance dissolve would leave it permanently half-faded. */
+    .concat(targetsFor(".hero .hero-inner", { hold: 0.55, range: 0.4 }))
     .concat(targetsFor(".scene-text", { hold: 0.42, range: 0.4 }))
     .concat(targetsFor(".full-head, .full-foot, .chapter.full > .pull-quote", { hold: 0.5, range: 0.42 }))
-    .concat(targetsFor(".wide-fig, .duo-row > figure, .trio-row > figure, .callout-card, .revoke-list, .reform-grid, .specimen-grid, .cover-shelf", { hold: 0.55, range: 0.42 }))
+    /* .reform-grid is deliberately absent: it is the last block on the page,
+       so there is no scroll left below it to carry it back towards centre —
+       a dissolve there just leaves the recommendations faded where the reader
+       stops. It still gets its one-shot .reveal entrance. */
+    .concat(targetsFor(".wide-fig, .duo-row > figure, .trio-row > figure, .callout-card, .revoke-list, .specimen-grid, .cover-shelf", { hold: 0.55, range: 0.42 }))
     /* the sticky stage sits at centre while pinned; fade only at chapter
        edges, opacity-only so stickiness is never disturbed */
     .concat(targetsFor(".chapter.pinned .stage", { hold: 0.72, range: 0.32, translate: false }));
@@ -96,7 +103,13 @@
          otherwise the shift feeds back into the next measurement */
       var d = ((r.top + r.bottom) / 2 - t.y) / half - 1; /* -1 top … +1 bottom */
       var a = Math.abs(d);
-      var out = Math.max(0, Math.min(1, (a - t.hold) / t.range));
+      /* An element taller than the viewport can never sit with its centre at
+         the viewport's centre while the reader is on its far end, so measuring
+         from the centre alone would dissolve it while it is still being read.
+         Widen the hold by however much it overflows the viewport, in the same
+         half-viewport units as d — a shorter element adds nothing. */
+      var hold = t.hold + Math.max(0, (r.height - vh) / vh);
+      var out = Math.max(0, Math.min(1, (a - hold) / t.range));
       t.el.style.opacity = (1 - out).toFixed(3);
       if (t.translate) {
         t.y = (d > 0 ? 1 : -1) * out * 26;

@@ -43,7 +43,20 @@ var Charts = (function () {
     "Administrative/Unclear Ground": "Administrative / unclear rationale"
   };
 
+  /* The five names the podiums and the story lean on have no codebook row to
+     read from, so their one-line identifications live here and ride the same
+     tooltip machinery as the taxonomy terms. */
+  var PEOPLE_DEFS = {
+    "Wei Wei": "Chinese-language erotic/romance author.",
+    "Ustaz Ashaari Muhammad":
+      "Founder of Al-Arqam, which is banned by the federal security law and state fatwas.",
+    "Marcus Van Heller": "Pen name associated with British erotic novelist John Stevenson.",
+    "Yayasan Perkhabaran Injil": "Jakarta-based Christian publisher.",
+    "Sam Luen Bookshop": "Publisher of numerous communist/socialist works in the 1950s."
+  };
+
   var defs = null;
+  var people = null;
 
   function defKey(s) {
     return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -68,8 +81,18 @@ var Charts = (function () {
     return defs;
   }
 
+  function named() {
+    if (people) return people;
+    people = {};
+    Object.keys(PEOPLE_DEFS).forEach(function (label) {
+      people[defKey(label)] = { label: label, def: PEOPLE_DEFS[label] };
+    });
+    return people;
+  }
+
   function definition(name) {
-    return taxonomy()[defKey(DEF_ALIAS[name] || name)] || null;
+    var key = defKey(DEF_ALIAS[name] || name);
+    return taxonomy()[key] || named()[key] || null;
   }
 
   var THEMES = {
@@ -170,7 +193,9 @@ var Charts = (function () {
     return tip;
   }
 
-  function tipShow(lines, x, y) {
+  /* `note` is an optional sentence appended under the figures — used where a
+     row's subject also carries a definition, so one tooltip serves both. */
+  function tipShow(lines, x, y, note) {
     var t = tooltip();
     t.textContent = "";
     t.classList.remove("is-def");
@@ -190,6 +215,12 @@ var Charts = (function () {
       row.appendChild(label);
       t.appendChild(row);
     });
+    if (note) {
+      var body = document.createElement("span");
+      body.className = "tip-def tip-note";
+      body.textContent = note;
+      t.appendChild(body);
+    }
     t.style.opacity = "1";
     tipMove(x, y);
   }
@@ -266,15 +297,15 @@ var Charts = (function () {
     definable(hit, name);
   }
 
-  function hoverable(node, lines) {
+  function hoverable(node, lines, note) {
     node.setAttribute("tabindex", "0");
     node.classList.add("hit");
-    node.addEventListener("pointerenter", function (e) { tipShow(lines, e.clientX, e.clientY); });
+    node.addEventListener("pointerenter", function (e) { tipShow(lines, e.clientX, e.clientY, note); });
     node.addEventListener("pointermove", function (e) { tipMove(e.clientX, e.clientY); });
     node.addEventListener("pointerleave", tipHide);
     node.addEventListener("focus", function () {
       var r = node.getBoundingClientRect();
-      tipShow(lines, r.left + r.width / 2, r.top);
+      tipShow(lines, r.left + r.width / 2, r.top, note);
     });
     node.addEventListener("blur", tipHide);
   }
@@ -1123,8 +1154,9 @@ var Charts = (function () {
       } else {
         rank.textContent = i + 1;
       }
+      var entry = definition(d[0]);
       var name = document.createElement("span");
-      name.className = "podium-name";
+      name.className = "podium-name" + (entry ? " has-def" : "");
       name.textContent = d[0];
       var track = document.createElement("span");
       track.className = "podium-track";
@@ -1139,8 +1171,35 @@ var Charts = (function () {
       row.appendChild(name);
       row.appendChild(track);
       row.appendChild(count);
-      hoverable(row, [{ value: fmt(d[1]), label: d[0] + " — " + opts.noun }]);
+      /* One tooltip per row rather than a competing one on the name: the count
+         line, then who they are when the name is one we can identify. */
+      hoverable(row, [{ value: fmt(d[1]), label: d[0] + " — " + opts.noun }],
+                entry ? entry.def : null);
       root.appendChild(row);
+    });
+  }
+
+  /* ---------- view switches inside one chart card ---------- */
+
+  /* A `.chart-views` button group shows one `[data-view-panel]` at a time
+     within its own figure, so two readings of the same records can share a
+     card instead of costing a scroll beat. The hidden chart draws nothing
+     until it is shown — mount()'s ResizeObserver picks it up then. */
+  function chartViews() {
+    document.querySelectorAll(".chart-views").forEach(function (group) {
+      var fig = group.closest("figure") || group.parentNode;
+      var buttons = Array.prototype.slice.call(group.querySelectorAll("button"));
+      var panels = Array.prototype.slice.call(fig.querySelectorAll("[data-view-panel]"));
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          buttons.forEach(function (b) {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          panels.forEach(function (panel) {
+            panel.hidden = panel.dataset.viewPanel !== btn.dataset.view;
+          });
+        });
+      });
     });
   }
 
@@ -1148,6 +1207,8 @@ var Charts = (function () {
 
   function init() {
     if (typeof PPPA === "undefined") return;
+
+    chartViews();
 
     /* --- bans over time: Year / Decade / Cumulative (the 3D book-rain box
        itself lives in js/rain3d.js, a Three.js module) --- */

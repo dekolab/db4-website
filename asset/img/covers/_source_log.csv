@@ -41,7 +41,7 @@ row,title,author,publisher,year,language,source,file
 40,Chase Me,Tessa Bailey,Avon An Imprint Of Harpercollins Publisher,2025,"[""English""]",open_library,covers/2025_Chase_Me.jpg
 41,Ammar Zahrain: The Obsessive Husband,Nssignature,Idea Kreatif Publication,2025,"[""Malay""]",placeholder,covers/2025_Ammar_Zahrain_The_Obsessive_Husband_PLACEHOLDER.jpg
 42,Tales From Beyond The Rainbow,Pete Jordi Wood,Penguin Random House Uk,2025,"[""English""]",placeholder,covers/2025_Tales_From_Beyond_The_Rainbow_PLACEHOLDER.jpg
-43,I Am Jazz,Jessica Herthel & Jazz Jennings,Penguin Group (Usa) Llc,2025,"[""English""]",placeholder,covers/2025_I_Am_Jazz_PLACEHOLDER.jpg
+43,I Am Jazz,Jessica Herthel & Jazz Jennings,Penguin Group (Usa) Llc,2025,"[""English""]",manual,covers/2025_I_Am_Jazz.jpg
 44,A Day In The Life Of Marlon Bundo,Marlon Bundo With Jill Twiss,Chronicle Books Llc,2025,"[""English""]",open_library,covers/2025_A_Day_In_The_Life_Of_Marlon_Bundo.jpg
 45,The (Nearly) Teenage Boy's Guide To (Almost) Everything,Dr.Sharie Coombes,Autumn Publishing An Imprint Of Igloo Books Ltd.,2025,"[""English""]",placeholder,covers/2025_The_(Nearly)_Teenage_Boy's_Guide_To_(Almost)_Everything_PLACEHOLDER.jpg
 46,The (Nearly) Teenage Girl's Guide To (Almost) Everything,Dr.Sharie Coombes,Autumn Publishing An Imprint Of Igloo Books Ltd.,2025,"[""English""]",placeholder,covers/2025_The_(Nearly)_Teenage_Girl's_Guide_To_(Almost)_Everything_PLACEHOLDER.jpg
@@ -60,7 +60,7 @@ row,title,author,publisher,year,language,source,file
 59,Jacob's Room To Choose,Sarah And Ian Hoffman,Magination Press,2023,"[""English""]",placeholder,covers/2023_Jacob's_Room_To_Choose_PLACEHOLDER.jpg
 60,The Tale Of Steven,Rebecca Sugar,Abrams,2023,"[""English""]",open_library,covers/2023_The_Tale_Of_Steven.jpg
 61,"Apa-Apa Penerbitan Yang Berkaitan Dengan Lesbian, Gay, Bisexual, Transgender,Gueer And + Plus (Lgbtq+) Dalam Apa-Apa Bentuk Yang Terdapat Pada Jam Swatch Dalam Apa-Apa Koleksi Termasuk Kotak, ....",,Swatch Limited,2023,,placeholder,"covers/2023_Apa-Apa_Penerbitan_Yang_Berkaitan_Dengan_Lesbian,_Gay,_Bisexual,_Transgender,Gueer_And_+_Plus_(Lgbtq_PLACEHOLDER.jpg"
-62,When I Was A Kid 3,Cheeming Boey,Grey Pigeon Sdn. Bhd.,2023,"[""English""]",placeholder,covers/2023_When_I_Was_A_Kid_3_PLACEHOLDER.jpg
+62,When I Was A Kid 3,Cheeming Boey,Grey Pigeon Sdn. Bhd.,2023,"[""English""]",manual,covers/2023_When_I_Was_A_Kid_3.jpg
 63,Chelsia Amanda (Berdasarkan Kisah Benar),Mizs Flower,Bwb Production,2022,"[""Malay""]",placeholder,covers/2022_Chelsia_Amanda_(Berdasarkan_Kisah_Benar)_PLACEHOLDER.jpg
 64,Cekik,Ridhwan Saidi,Buku Fixi Sdn Bhd,2022,"[""Malay""]",placeholder,covers/2022_Cekik_PLACEHOLDER.jpg
 65,Heartstopper Volume 2,Alice Oseman,Hodder Children's Books,2022,"[""English""]",open_library,covers/2022_Heartstopper_Volume_2.jpg
@@ -295,7 +295,7 @@ row,title,author,publisher,year,language,source,file
 295,Visionary No. 2 - 3,Ujin,Leed Publishing Ltd. Co.,2010,"[""Chinese""]",placeholder,covers/2010_Visionary_No._2_-_3_PLACEHOLDER.jpg
 296,X President No. 6,,Da Han Publishing House,2010,"[""Chinese""]",placeholder,covers/2010_X_President_No._6_PLACEHOLDER.jpg
 297,1 Funny Malaysia,Zunar,Kinibooks,2010,"[""English""]",placeholder,covers/2010_1_Funny_Malaysia_PLACEHOLDER.jpg
-298,Perak Darul Kartun,Zunar,Sepakat Efektif Sdn. Bhd.(857921-P),2010,"[""Malay""]",placeholder,covers/2010_Perak_Darul_Kartun_PLACEHOLDER.jpg
+298,Perak Darul Kartun,Zunar,Sepakat Efektif Sdn. Bhd.(857921-P),2010,"[""Malay""]",manual,covers/2010_Perak_Darul_Kartun.jpg
 299,The March To Putrajaya-Malaysia's New Era Is At Hand,Kim Quek,"Oriengroup Sdn. Bhd,(211571-M)",2010,"[""English""]",placeholder,covers/2010_The_March_To_Putrajaya-Malaysia's_New_Era_Is_At_Hand_PLACEHOLDER.jpg
 300,Oh Fazrah,,Teras Perkasa Ent.,2009,"[""Malay""]",placeholder,covers/2009_Oh_Fazrah_PLACEHOLDER.jpg
 301,Isteri Romantik Di Kamar Yang Indah,Fahmi Marwan,Jasmine Enterprise Berinovatif Dan Berkreatif,2009,"[""Malay""]",placeholder,covers/2009_Isteri_Romantik_Di_Kamar_Yang_Indah_PLACEHOLDER.jpg
