@@ -481,8 +481,14 @@ images. Note moved above the row and reworded to say what it is; a lede now labe
 | `#people` | 3 × `data-todo="profile"` cards | Biographical claims about named people on a public-interest site. Counts and the Ashaari-Muhammad duplicate-entry note are generated; only the `<p class="who-bio">` text is missing. Remove `data-todo` from the card when it lands. |
 | Research Methods | `TODO(sourcing)` + `.source-todo` block | `epq.kdn.gov.my/e-pq/index.php?mod=public` no longer resolves. No replacement path guessed. Needs a working URL or an archived capture. |
 | `Codebook DB4 Draft 6.2.26.md` line 8 | `TODO(sourcing)` | Same URL, annotated in place. |
-| Contact | `.licence-todo` block | Two separate decisions: a named licence for INITIATE.MY's own work (CC BY 4.0 offered as a candidate, not a choice), and the copyright status of the underlying KDN records. No legal conclusion asserted. Interim line asks people to check before republishing. |
 | `#revocations` | `TODO(sourcing)` comment | Whether KDN publishes revocation orders anywhere trackable. The dataset question *was* answerable from the repo and is now stated in the copy: the source has no revocation field, the five July 2026 orders were added by hand, so earlier revocations would be invisible. |
+
+Resolved since: the Contact licence block. INITIATE.MY's own work — the compilation, the
+taxonomies, the codebook, and the source of this site — is CC BY 4.0, recorded in `LICENSE`,
+declared in `<head>` as `rel="license"`, and stated in the `.licence-card` on Contact. The
+copyright status of the underlying KDN records is deliberately *not* settled there: the card and
+`LICENSE` both say the licence does not reach them and point republishers to their own advice.
+Cover images are excluded on the same terms.
 
 The two visible TODO blocks render as dashed accent boxes, and the profile placeholders as
 dashed italic panels. They are meant to be uncomfortable to leave in place. None should reach
