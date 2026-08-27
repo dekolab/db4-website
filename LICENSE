@@ -1,0 +1,54 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+==========================================================
+
+Copyright (c) INITIATE.MY
+
+INITIATE.MY's work in this repository is licensed under the Creative Commons
+Attribution 4.0 International License.
+
+  Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+  Full legal code:        https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the licence, and
+indicate if changes were made.
+
+Suggested attribution:
+
+  Database of Prohibited Publications, INITIATE.MY, CC BY 4.0
+  https://github.com/dekolab/db4-website
+
+
+What this licence covers
+------------------------
+
+The work INITIATE.MY created:
+
+  * the compilation and cleaning of the dataset, including
+    Finalise-Codebook/final-data.csv
+  * the research taxonomies (clusters and subclusters) and the classification
+    of records against them
+  * the codebook documents under Finalise-Codebook/ and Analysis-Reference/
+  * the source of the website: index.html, styles.css, js/, and the data
+    generation script Analysis-Reference/generate_data.py
+
+
+What this licence does NOT cover
+--------------------------------
+
+The underlying Senarai Perintah Larangan prohibition records published by the
+Ministry of Home Affairs (KDN), which INITIATE.MY compiled but did not create.
+
+Government works are not automatically in the public domain in Malaysia, and
+this project is not in a position to determine or grant rights over the
+ministry's records on its behalf. The licence above applies to INITIATE.MY's
+compilation, cleaning and classification of those records — not to the records
+as originally published.
+
+If you intend to republish the raw gazette records rather than INITIATE.MY's
+work on them, seek your own advice or contact programme@initiate.my.
+
+Third-party material reproduced in the site (publication cover images under
+asset/img/covers/) is included for identification and commentary and remains
+the property of its respective rights holders. It is not covered by this
+licence.

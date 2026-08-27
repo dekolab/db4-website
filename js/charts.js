@@ -34,6 +34,44 @@ var Charts = (function () {
     "Race, Religion & Royalty (3R Issues)": "3R issues"
   };
 
+  /* Cluster and subcluster definitions are read out of the Taxonomy tab's
+     table rather than duplicated here, so a tooltip can never drift from the
+     published codebook. Three dataset keys are spelled differently there. */
+  var DEF_ALIAS = {
+    "Other": "Others",
+    "Royalty": "Insults to royalty",
+    "Administrative/Unclear Ground": "Administrative / unclear rationale"
+  };
+
+  var defs = null;
+
+  function defKey(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function taxonomy() {
+    if (defs) return defs;
+    defs = {};
+    var add = function (labelCell) {
+      var defCell = labelCell && labelCell.nextElementSibling;
+      if (!defCell) return;
+      var label = labelCell.textContent.trim().replace(/\s+/g, " ");
+      defs[defKey(label)] = {
+        label: label,
+        def: defCell.textContent.trim().replace(/\s+/g, " ")
+      };
+    };
+    document.querySelectorAll("#view-taxonomy .doc-table tbody tr").forEach(function (tr) {
+      add(tr.querySelector("td.doc-tcluster"));
+      add(tr.querySelector("td.doc-tsub"));
+    });
+    return defs;
+  }
+
+  function definition(name) {
+    return taxonomy()[defKey(DEF_ALIAS[name] || name)] || null;
+  }
+
   var THEMES = {
     light: {
       ink: "#221e1c", muted: "#79706a", grid: "#ece5da", axis: "#d9cfc2",
@@ -135,6 +173,7 @@ var Charts = (function () {
   function tipShow(lines, x, y) {
     var t = tooltip();
     t.textContent = "";
+    t.classList.remove("is-def");
     lines.forEach(function (line) {
       var row = document.createElement("div");
       if (line.swatch) {
@@ -168,6 +207,65 @@ var Charts = (function () {
     if (tip) tip.style.opacity = "0";
   }
 
+  /* Same tooltip element, prose layout: a term and its codebook definition. */
+  function tipShowDef(entry, x, y) {
+    var t = tooltip();
+    t.textContent = "";
+    t.classList.add("is-def");
+    var term = document.createElement("strong");
+    term.className = "tip-term";
+    term.textContent = entry.label;
+    t.appendChild(term);
+    var body = document.createElement("span");
+    body.className = "tip-def";
+    body.textContent = entry.def;
+    t.appendChild(body);
+    t.style.opacity = "1";
+    tipMove(x, y);
+  }
+
+  /* Attaches the taxonomy definition of `name` to a node. Returns false when
+     the name has no entry, so callers can skip drawing the affordance. */
+  function definable(node, name) {
+    var entry = definition(name);
+    if (!entry) return false;
+    node.classList.add("has-def");
+    node.setAttribute("tabindex", "0");
+    node.addEventListener("pointerenter", function (e) { tipShowDef(entry, e.clientX, e.clientY); });
+    node.addEventListener("pointermove", function (e) { tipMove(e.clientX, e.clientY); });
+    node.addEventListener("pointerleave", tipHide);
+    node.addEventListener("focus", function () {
+      var r = node.getBoundingClientRect();
+      tipShowDef(entry, r.left + r.width / 2, r.top);
+    });
+    node.addEventListener("blur", tipHide);
+    return true;
+  }
+
+  /* An SVG axis label is a thin hover target, so a definable one gets a
+     transparent rect over its whole gutter row plus a dotted rule under the
+     glyphs — the usual "there is a definition here" affordance. */
+  function defLabel(svg, node, name, box, th) {
+    if (!definition(name)) return;
+    var w = 0;
+    try { w = node.getComputedTextLength(); } catch (e) { w = 0; }
+    if (w) {
+      var x2 = Number(node.getAttribute("x"));
+      var x1 = node.getAttribute("text-anchor") === "end" ? x2 - w : x2;
+      if (node.getAttribute("text-anchor") === "middle") { x1 = x2 - w / 2; x2 = x1 + w; }
+      else if (node.getAttribute("text-anchor") !== "end") { x2 = x1 + w; }
+      el("line", {
+        x1: x1, x2: x2,
+        y1: Number(node.getAttribute("y")) + 3.5, y2: Number(node.getAttribute("y")) + 3.5,
+        stroke: th.muted, "stroke-width": 1, "stroke-dasharray": "1 2", opacity: 0.75
+      }, svg);
+    }
+    var hit = el("rect", {
+      x: box.x, y: box.y, width: box.w, height: box.h, fill: "transparent"
+    }, svg);
+    definable(hit, name);
+  }
+
   function hoverable(node, lines) {
     node.setAttribute("tabindex", "0");
     node.classList.add("hit");
@@ -186,6 +284,7 @@ var Charts = (function () {
   var drawFns = [];
 
   function mount(root, render) {
+    if (!root) return;
     var pending = false;
     function draw() {
       pending = false;
@@ -249,9 +348,10 @@ var Charts = (function () {
         var label = opts.shorten ? (CLUSTER_SHORT[d[0]] || d[0]) : d[0];
         var maxChars = Math.max(6, Math.floor((m.left - 12) / 6.4));
         if (label.length > maxChars) label = label.slice(0, maxChars - 1) + "…";
-        text(svg, label, {
+        var lt = text(svg, label, {
           x: m.left - 8, y: y + barH / 2 + 4, fill: th.ink, "font-size": 12, "text-anchor": "end"
         });
+        defLabel(svg, lt, d[0], { x: 0, y: m.top + i * rowH, w: m.left - 4, h: rowH }, th);
         text(svg, fmt(d[1]), {
           x: m.left + w + 6, y: y + barH / 2 + 4, fill: th.muted, "font-size": 11.5, "class": "num"
         });
@@ -503,6 +603,7 @@ var Charts = (function () {
       var lbl = document.createElement("span");
       lbl.textContent = CLUSTER_SHORT[name] || name;
       chip.appendChild(lbl);
+      definable(chip, name);
       if (onHover) {
         chip.addEventListener("pointerenter", function () { onHover(i); });
         chip.addEventListener("pointerleave", function () { onHover(-1); });
@@ -645,12 +746,16 @@ var Charts = (function () {
       cols.forEach(function (c, j) {
         /* the unfinished decade is asterisked in its own header */
         var head = c === opts.incompleteCol ? c + "*" : c;
-        text(svg, head, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
+        var ct = text(svg, head, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
+        defLabel(svg, ct, (opts.colTerms || cols)[j],
+          { x: m.left + j * cw, y: 0, w: cw, h: m.top }, th);
       });
       rows.forEach(function (r, i) {
-        text(svg, opts.shorten ? (CLUSTER_SHORT[r] || r) : r, {
+        var rt = text(svg, opts.shorten ? (CLUSTER_SHORT[r] || r) : r, {
           x: m.left - 8, y: m.top + i * ch + ch / 2 + 4, fill: th.ink, "font-size": 12, "text-anchor": "end"
         });
+        defLabel(svg, rt, (opts.rowTerms || rows)[i],
+          { x: 0, y: m.top + i * ch, w: m.left - 4, h: ch }, th);
       });
 
       rows.forEach(function (r, i) {
@@ -693,7 +798,9 @@ var Charts = (function () {
 
   /* Generic legend for non-cluster series; swatch colours are re-resolved on
      every theme redraw via a registered updater. */
-  function seriesLegend(container, series, colorOf, onHover) {
+  /* opts.terms — canonical names to look the definition up under, when the
+     chips show a shortened label (the cluster trajectories). */
+  function seriesLegend(container, series, colorOf, onHover, terms) {
     var box = document.createElement("div");
     box.className = "chart-legend";
     var swatches = [];
@@ -708,6 +815,7 @@ var Charts = (function () {
       var lbl = document.createElement("span");
       lbl.textContent = name;
       chip.appendChild(lbl);
+      definable(chip, terms ? terms[i] : name);
       if (onHover) {
         chip.addEventListener("pointerenter", function () { onHover(i); });
         chip.addEventListener("pointerleave", function () { onHover(-1); });
@@ -739,7 +847,8 @@ var Charts = (function () {
           seriesPaths.forEach(function (nodes, si) {
             nodes.forEach(function (nd) { nd.style.opacity = idx === -1 || idx === si ? 1 : 0.18; });
           });
-        });
+        },
+        opts.series.map(function (s) { return s.name; }));
     }
 
     mount(root, function (node, W, H) {
@@ -1101,9 +1210,6 @@ var Charts = (function () {
       }
     });
 
-    /* --- the seven grounds --- */
-    groundsMindmap(document.getElementById("c-grounds"));
-
     /* --- types pictograph + origin map ---
        counts come from the generated aggregates so they can't drift from the
        data; typeCounts/originCounts are sorted by count desc (see data.js) */
@@ -1196,9 +1302,17 @@ var Charts = (function () {
       "Religious Doctrinal Deviance": "Religious",
       "Race, Religion & Royalty (3R Issues)": "3R"
     };
+    /* Prose mentions of a codebook term carry the same tooltip as the chart
+       labels; a term whose entry has gone missing loses its underline rather
+       than advertising a definition that will not appear. */
+    document.querySelectorAll(".def-term[data-term]").forEach(function (node) {
+      if (!definable(node, node.dataset.term)) node.classList.remove("def-term");
+    });
+
     heatmap(document.getElementById("c-crosswalk"), {
       rows: PPPA.kdnVsCluster.rows,
       cols: PPPA.kdnVsCluster.cols.map(function (c) { return XWALK_COLS[c] || c; }),
+      colTerms: PPPA.kdnVsCluster.cols,
       values: PPPA.kdnVsCluster.values,
       labelWidth: 118,
       cellLabel: "publications"

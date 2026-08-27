@@ -832,6 +832,64 @@ body:not([data-view="story"]) .progress { display: none; }
   .prologue { min-height: auto; padding-bottom: clamp(3rem, 9vh, 5rem); }
 }
 
+/* --- two-up --- */
+
+.duo-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.2rem, 2.5vw, 2.2rem);
+  align-items: start;
+  max-width: 80rem;
+  margin: 2.6rem auto 0;
+}
+
+.duo-row figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  /* let the grid track shrink below the rendered SVG's fixed width,
+     so the chart re-renders at the new size instead of overflowing */
+  min-width: 0;
+}
+
+.duo-row .chart-card { width: 100%; }
+
+/* --- callout band --- */
+
+.chapter.callout {
+  padding: clamp(5rem, 12vh, 8rem) clamp(1.2rem, 4vw, 3rem);
+  display: flex;
+  justify-content: center;
+}
+
+.callout-card {
+  max-width: 56rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: clamp(1.6rem, 4vw, 2.8rem);
+  box-shadow: 0 14px 44px rgba(34, 30, 28, 0.09);
+}
+
+.callout-card h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  margin-bottom: 1rem;
+}
+
+.callout-card > p:not(.kicker) {
+  color: var(--ink-soft);
+  margin-bottom: 1.6rem;
+}
+
+.callout-card .chart-card {
+  box-shadow: none;
+  border-color: var(--td-rule);
+}
+
 /* --- pull-quotes: numbers as graphic moments --- */
 
 .pull-quote {
@@ -1001,6 +1059,54 @@ body:not([data-view="story"]) .progress { display: none; }
 }
 
 .chart-tip strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* definition variant: a codebook term and its prose, not a number and a label */
+.chart-tip.is-def {
+  max-width: 330px;
+  padding: 0.6rem 0.75rem 0.65rem;
+}
+
+.chart-tip .tip-term {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-variant-numeric: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+.chart-tip .tip-def {
+  display: block;
+  color: var(--paper);
+  opacity: 0.82;
+  font-size: 0.73rem;
+  line-height: 1.5;
+}
+
+/* a label that carries a definition: dotted rule under SVG text is drawn by
+   the chart itself, so here it is only the cursor and the legend chip */
+.has-def { cursor: help; }
+
+.legend-chip.has-def > span:last-child {
+  text-decoration: underline dotted;
+  text-underline-offset: 2.5px;
+}
+
+/* a codebook term named in the prose — quiet until you go looking for it */
+.def-term {
+  text-decoration: underline dotted;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+
+.def-term:hover,
+.def-term:focus-visible { text-decoration-color: currentColor; }
+
+/* inside a specimen tag the type is small and letterspaced, so the rule sits
+   tighter and borrows the cluster colour already carried by the tag */
+.specimen-tag .def-term {
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--cl) 55%, transparent);
+}
 
 .chart-tip .tip-key {
   display: inline-block;
@@ -2136,29 +2242,25 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .cover-shelf-note i { color: var(--accent); margin-right: 0.35rem; }
 
-/* --- unresolved-decision blocks: a dead source link, an unnamed licence ---
-   Deliberately loud. These say the site does not yet know something it needs to
-   know, and they should be uncomfortable to leave in place. --- */
-
-.source-todo,
-.licence-todo {
-  border: 1px dashed var(--accent);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  margin: 1.4rem 0;
-  background: var(--card);
+/* an aside in the codebook pages: quiet, and set off by a rule rather than a
+   box, so it reads as a footnote to the paragraph above it */
+.doc-note {
+  border-left: 2px solid var(--rule);
+  padding: 0.15rem 0 0.15rem 0.9rem;
+  margin: 1rem 0 1.4rem;
   font-family: var(--sans);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--muted);
 }
 
-.source-todo i,
-.licence-todo i { color: var(--accent); margin-right: 0.4rem; }
+.doc-note i { color: var(--accent); margin-right: 0.4rem; }
 
-.licence-todo p + p { margin-top: 0.7rem; }
+/* the licence is settled, so it reads as a normal contact card — only the
+   scope note under it stays quiet */
+.licence-card p + p { margin-top: 0.7rem; }
 
-.licence-todo .contact-label { margin-bottom: 0.5rem; }
+.licence-card .contact-hint { margin-top: 0.9rem; }
 
 /* --- the people, up close: one card per frequent name --- */
 
@@ -2381,6 +2483,14 @@ body:not([data-view="story"]) .progress { display: none; }
   line-height: 1.35;
   font-weight: 700;
   font-style: italic;
+}
+
+/* why the codebook records the ban — sits between the title and the record
+   fields, so the reason reads before the metadata */
+.specimen-why {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .specimen-fields {
