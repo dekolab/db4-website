@@ -1829,15 +1829,6 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .rain-card { width: min(100%, 62rem); }
 
-.rain-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-  margin-bottom: 0.7rem;
-}
-
 .rain-views,
 .rain-proj,
 .rain-3d-actions {
@@ -1893,20 +1884,12 @@ body:not([data-view="story"]) .progress { display: none; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.5rem 1rem;
   margin-bottom: 0.55rem;
 }
 
 .rain-3d-bar button { font-size: 0.72rem; padding: 0.32rem 0.7rem; }
-
-.rain-readout {
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  font-weight: 650;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
 
 /* Drag the bottom-right grip to resize; the scene re-fits on every change. */
 .rain-box {
@@ -1995,10 +1978,21 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .rain-hint i { margin-right: 0.3rem; }
 
+/* the selected range, sitting with the sliders that drive it — tabular so the
+   count does not shuffle the line as they move */
+.rain-readout {
+  margin-top: 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
 .rain-sliders {
   display: flex;
   gap: 1.2rem;
-  margin-top: 0.75rem;
+  margin-top: 0.4rem;
 }
 
 .rain-slider-label {
@@ -2329,70 +2323,6 @@ body:not([data-view="story"]) .progress { display: none; }
 
 .licence-card .contact-hint { margin-top: 0.9rem; }
 
-/* --- the people, up close: one card per frequent name --- */
-
-.who-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: clamp(0.9rem, 2vw, 1.4rem);
-  max-width: 62rem;
-  margin: 2.6rem auto 0;
-  text-align: left;
-}
-
-.who-card {
-  background: var(--card);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  padding: 1.2rem 1.3rem;
-  box-shadow: 0 10px 32px rgba(34, 30, 28, 0.07);
-}
-
-.who-count {
-  font-family: var(--sans);
-  font-size: 0.76rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.3rem;
-}
-
-.who-name {
-  font-size: 1.05rem;
-  line-height: 1.25;
-  margin-bottom: 0.45rem;
-}
-
-.who-meta,
-.who-bio {
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-
-.who-meta { margin-bottom: 0.6rem; }
-
-/* an unwritten profile is visibly unwritten — it must not ship unnoticed */
-.who-card[data-todo] .who-bio {
-  border: 1px dashed var(--accent);
-  border-radius: 8px;
-  padding: 0.6rem 0.75rem;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.who-note {
-  max-width: 46rem;
-  margin: 1.4rem auto 0;
-  font-family: var(--sans);
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
-.who-note i { color: var(--accent); margin-right: 0.35rem; }
-
 .term-note {
   max-width: 46rem;
   margin: 1.4rem auto 0;
@@ -2462,6 +2392,35 @@ body:not([data-view="story"]) .progress { display: none; }
 
 :root[data-theme="dark"] .specimen-plate img {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* Two specimens are groups of publications rather than single books, so there
+   is no one jacket to show. They carry a portrait of the subject instead —
+   labelled as such, because the plate otherwise reads as a cover. */
+.specimen-plate.is-portrait {
+  position: relative;
+  place-items: stretch;
+}
+
+.specimen-plate.is-portrait img {
+  object-fit: cover;
+  object-position: center 12%;   /* keep the face out of the caption strip */
+}
+
+.specimen-plate.is-portrait span {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 0.3rem 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.54rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 55%);
+  border-radius: 0 0 3px 3px;
 }
 
 /* no cover traced: an honest empty plate, not a stand-in jacket */
@@ -3283,31 +3242,6 @@ body:not([data-view="story"]) .progress { display: none; }
 
 /* Multi-part figure captions: each note gets its own line and marker, so two
    unrelated caveats stop reading as one run-on sentence. */
-figcaption.fig-notes {
-  display: grid;
-  gap: 0.4rem;
-  text-align: left;
-  /* the pinned stage centres its flex children, which would otherwise shrink
-     this grid to min-content and wrap the notes one word per line */
-  width: 100%;
-}
-
-figcaption.fig-notes > span {
-  display: grid;
-  grid-template-columns: 1.1rem minmax(0, 1fr);
-  gap: 0.45rem;
-  align-items: start;
-}
-
-figcaption.fig-notes > span > i {
-  padding-top: 0.2em;
-  margin-right: 0;   /* the grid column does the spacing */
-  color: var(--accent);
-  justify-self: center;
-}
-
-figcaption.fig-notes strong { color: var(--ink); }
-
 /* the year each range slider is sitting on, shown as a number */
 .rain-slider-val {
   min-width: 2.9em;
