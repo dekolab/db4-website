@@ -2230,9 +2230,10 @@ body:not([data-view="story"]) .progress { display: none; }
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
+/* caption under the shelf, not a heading over it */
 .cover-shelf-note {
   max-width: 46rem;
-  margin: 0 auto 1.1rem;
+  margin: 0.9rem auto 0;
   font-family: var(--sans);
   font-size: 0.78rem;
   line-height: 1.55;
@@ -2240,7 +2241,21 @@ body:not([data-view="story"]) .progress { display: none; }
   text-align: center;
 }
 
-.cover-shelf-note i { color: var(--accent); margin-right: 0.35rem; }
+/* inside a prologue frame the shelf lives in the text column, so it ranges
+   left with the type instead of centring on the frame. The note is scoped the
+   same way .frame-source is, to outrank .prologue .full-head p:not(.kicker) —
+   which would otherwise size this caption as body copy. */
+.prologue .full-head .cover-shelf { margin: 2rem 0 0; }
+
+.prologue .full-head .cover-shelf-row { justify-content: flex-start; }
+
+.prologue .full-head p.cover-shelf-note {
+  margin: 0.9rem 0 0;
+  max-width: 48rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: left;
+}
 
 /* an aside in the codebook pages: quiet, and set off by a rule rather than a
    box, so it reads as a footnote to the paragraph above it */
