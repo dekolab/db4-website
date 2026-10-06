@@ -34,6 +34,67 @@ var Charts = (function () {
     "Race, Religion & Royalty (3R Issues)": "3R issues"
   };
 
+  /* Cluster and subcluster definitions are read out of the Taxonomy tab's
+     table rather than duplicated here, so a tooltip can never drift from the
+     published codebook. Three dataset keys are spelled differently there. */
+  var DEF_ALIAS = {
+    "Other": "Others",
+    "Royalty": "Insults to royalty",
+    "Administrative/Unclear Ground": "Administrative / unclear rationale"
+  };
+
+  /* The five names the podiums and the story lean on have no codebook row to
+     read from, so their one-line identifications live here and ride the same
+     tooltip machinery as the taxonomy terms. */
+  var PEOPLE_DEFS = {
+    "Wei Wei": "Chinese-language erotic/romance author.",
+    "Ustaz Ashaari Muhammad":
+      "Founder of Al-Arqam, which is banned by the federal security law and state fatwas.",
+    "Marcus Van Heller": "Pen name associated with British erotic novelist John Stevenson.",
+    "Yayasan Perkhabaran Injil": "Jakarta-based Christian publisher.",
+    "Sam Luen Bookshop": "Publisher of numerous communist/socialist works in the 1950s."
+  };
+
+  var defs = null;
+  var people = null;
+
+  function defKey(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function taxonomy() {
+    if (defs) return defs;
+    defs = {};
+    var add = function (labelCell) {
+      var defCell = labelCell && labelCell.nextElementSibling;
+      if (!defCell) return;
+      var label = labelCell.textContent.trim().replace(/\s+/g, " ");
+      defs[defKey(label)] = {
+        label: label,
+        def: defCell.textContent.trim().replace(/\s+/g, " ")
+      };
+    };
+    document.querySelectorAll("#view-taxonomy .doc-table tbody tr").forEach(function (tr) {
+      add(tr.querySelector("td.doc-tcluster"));
+      add(tr.querySelector("td.doc-tsub"));
+    });
+    return defs;
+  }
+
+  function named() {
+    if (people) return people;
+    people = {};
+    Object.keys(PEOPLE_DEFS).forEach(function (label) {
+      people[defKey(label)] = { label: label, def: PEOPLE_DEFS[label] };
+    });
+    return people;
+  }
+
+  function definition(name) {
+    var key = defKey(DEF_ALIAS[name] || name);
+    return taxonomy()[key] || named()[key] || null;
+  }
+
   var THEMES = {
     light: {
       ink: "#221e1c", muted: "#79706a", grid: "#ece5da", axis: "#d9cfc2",
@@ -132,9 +193,12 @@ var Charts = (function () {
     return tip;
   }
 
-  function tipShow(lines, x, y) {
+  /* `note` is an optional sentence appended under the figures — used where a
+     row's subject also carries a definition, so one tooltip serves both. */
+  function tipShow(lines, x, y, note) {
     var t = tooltip();
     t.textContent = "";
+    t.classList.remove("is-def");
     lines.forEach(function (line) {
       var row = document.createElement("div");
       if (line.swatch) {
@@ -151,6 +215,12 @@ var Charts = (function () {
       row.appendChild(label);
       t.appendChild(row);
     });
+    if (note) {
+      var body = document.createElement("span");
+      body.className = "tip-def tip-note";
+      body.textContent = note;
+      t.appendChild(body);
+    }
     t.style.opacity = "1";
     tipMove(x, y);
   }
@@ -168,15 +238,74 @@ var Charts = (function () {
     if (tip) tip.style.opacity = "0";
   }
 
-  function hoverable(node, lines) {
+  /* Same tooltip element, prose layout: a term and its codebook definition. */
+  function tipShowDef(entry, x, y) {
+    var t = tooltip();
+    t.textContent = "";
+    t.classList.add("is-def");
+    var term = document.createElement("strong");
+    term.className = "tip-term";
+    term.textContent = entry.label;
+    t.appendChild(term);
+    var body = document.createElement("span");
+    body.className = "tip-def";
+    body.textContent = entry.def;
+    t.appendChild(body);
+    t.style.opacity = "1";
+    tipMove(x, y);
+  }
+
+  /* Attaches the taxonomy definition of `name` to a node. Returns false when
+     the name has no entry, so callers can skip drawing the affordance. */
+  function definable(node, name) {
+    var entry = definition(name);
+    if (!entry) return false;
+    node.classList.add("has-def");
     node.setAttribute("tabindex", "0");
-    node.classList.add("hit");
-    node.addEventListener("pointerenter", function (e) { tipShow(lines, e.clientX, e.clientY); });
+    node.addEventListener("pointerenter", function (e) { tipShowDef(entry, e.clientX, e.clientY); });
     node.addEventListener("pointermove", function (e) { tipMove(e.clientX, e.clientY); });
     node.addEventListener("pointerleave", tipHide);
     node.addEventListener("focus", function () {
       var r = node.getBoundingClientRect();
-      tipShow(lines, r.left + r.width / 2, r.top);
+      tipShowDef(entry, r.left + r.width / 2, r.top);
+    });
+    node.addEventListener("blur", tipHide);
+    return true;
+  }
+
+  /* An SVG axis label is a thin hover target, so a definable one gets a
+     transparent rect over its whole gutter row plus a dotted rule under the
+     glyphs — the usual "there is a definition here" affordance. */
+  function defLabel(svg, node, name, box, th) {
+    if (!definition(name)) return;
+    var w = 0;
+    try { w = node.getComputedTextLength(); } catch (e) { w = 0; }
+    if (w) {
+      var x2 = Number(node.getAttribute("x"));
+      var x1 = node.getAttribute("text-anchor") === "end" ? x2 - w : x2;
+      if (node.getAttribute("text-anchor") === "middle") { x1 = x2 - w / 2; x2 = x1 + w; }
+      else if (node.getAttribute("text-anchor") !== "end") { x2 = x1 + w; }
+      el("line", {
+        x1: x1, x2: x2,
+        y1: Number(node.getAttribute("y")) + 3.5, y2: Number(node.getAttribute("y")) + 3.5,
+        stroke: th.muted, "stroke-width": 1, "stroke-dasharray": "1 2", opacity: 0.75
+      }, svg);
+    }
+    var hit = el("rect", {
+      x: box.x, y: box.y, width: box.w, height: box.h, fill: "transparent"
+    }, svg);
+    definable(hit, name);
+  }
+
+  function hoverable(node, lines, note) {
+    node.setAttribute("tabindex", "0");
+    node.classList.add("hit");
+    node.addEventListener("pointerenter", function (e) { tipShow(lines, e.clientX, e.clientY, note); });
+    node.addEventListener("pointermove", function (e) { tipMove(e.clientX, e.clientY); });
+    node.addEventListener("pointerleave", tipHide);
+    node.addEventListener("focus", function () {
+      var r = node.getBoundingClientRect();
+      tipShow(lines, r.left + r.width / 2, r.top, note);
     });
     node.addEventListener("blur", tipHide);
   }
@@ -186,6 +315,7 @@ var Charts = (function () {
   var drawFns = [];
 
   function mount(root, render) {
+    if (!root) return;
     var pending = false;
     function draw() {
       pending = false;
@@ -249,9 +379,10 @@ var Charts = (function () {
         var label = opts.shorten ? (CLUSTER_SHORT[d[0]] || d[0]) : d[0];
         var maxChars = Math.max(6, Math.floor((m.left - 12) / 6.4));
         if (label.length > maxChars) label = label.slice(0, maxChars - 1) + "…";
-        text(svg, label, {
+        var lt = text(svg, label, {
           x: m.left - 8, y: y + barH / 2 + 4, fill: th.ink, "font-size": 12, "text-anchor": "end"
         });
+        defLabel(svg, lt, d[0], { x: 0, y: m.top + i * rowH, w: m.left - 4, h: rowH }, th);
         text(svg, fmt(d[1]), {
           x: m.left + w + 6, y: y + barH / 2 + 4, fill: th.muted, "font-size": 11.5, "class": "num"
         });
@@ -269,11 +400,13 @@ var Charts = (function () {
       var th = T();
       var items = opts.items;
       var n = items.length;
-      var m = { top: 14, right: 10, bottom: 40, left: 44 };
+      var m = { top: 14, right: 10, bottom: opts.subLabel ? 52 : 40, left: 44 };
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var slot = plotW / n;
-      var barW = Math.min(24, slot * 0.55);
+      /* opts.barMax — widen the bars when there are few categories, as
+         stacked() does; three 24px columns in a wide card read as sparse */
+      var barW = Math.min(opts.barMax || 24, slot * 0.55);
       var ticks = niceTicks(Math.max.apply(null, items.map(function (d) { return d[1]; })), 4);
       var max = ticks[ticks.length - 1];
       var ys = function (v) { return m.top + plotH - (v / max) * plotH; };
@@ -304,10 +437,20 @@ var Charts = (function () {
         }
         var lx = m.left + i * slot + slot / 2;
         text(svg, partial ? d[0] + "*" : d[0], { x: lx, y: m.top + plotH + 16, fill: th.ink, "font-size": 11.5, "text-anchor": "middle" });
+        /* opts.subLabel — a second, quieter line under the category name
+           (used for shares, where the count alone hides the proportion) */
+        if (opts.subLabel) {
+          var sub = opts.subLabel(d, i);
+          if (sub) text(svg, sub, { x: lx, y: m.top + plotH + 30, fill: th.muted, "font-size": 10.5, "text-anchor": "middle", "class": "num" });
+        }
         if (i < (opts.labelTop || 3) || (partial && opts.labelIncomplete !== false)) {
           text(svg, fmt(d[1]), { x: lx, y: ys(d[1]) - 6, fill: th.muted, "font-size": 11, "text-anchor": "middle", "class": "num" });
         }
         var tipLines = [{ value: fmt(d[1]), label: d[0] + (partial ? " (incomplete decade)" : ""), swatch: color }];
+        if (opts.subLabel && opts.tipNoun) {
+          var subTip = opts.subLabel(d, i);
+          if (subTip) tipLines.push({ value: subTip, label: opts.tipNoun });
+        }
         hoverable(bar, tipLines);
         bar.setAttribute("aria-label", d[0] + ": " + fmt(d[1]) + (partial ? " (incomplete)" : ""));
         bar.setAttribute("role", "img");
@@ -402,6 +545,79 @@ var Charts = (function () {
     });
   }
 
+  /* ---------- one bar per year across a long span ---------- */
+
+  /* A count per year is a set of discrete events, not a continuous quantity, so
+     bars carry it better than a line: the waves read as blocks of enforcement
+     rather than as one jagged trace. Bars are ~1px apart at 77 years, so the
+     hover uses a single overlay that snaps to the nearest year instead of
+     per-bar hit targets. */
+  function timeBars(root, opts) {
+    mount(root, function (node, W, H) {
+      var th = T();
+      var pts = opts.points;
+      var m = { top: 16, right: 18, bottom: 30, left: 46 };
+      var plotW = W - m.left - m.right;
+      var plotH = H - m.top - m.bottom;
+      var x0 = pts[0][0], x1 = pts[pts.length - 1][0];
+      var slot = plotW / pts.length;
+      var barW = Math.max(1.5, slot - Math.max(1, Math.min(3, slot * 0.28)));
+      var ticks = niceTicks(Math.max.apply(null, pts.map(function (d) { return d[1]; })), 4);
+      var max = ticks[ticks.length - 1];
+      var cx = function (year) { return m.left + (year - x0 + 0.5) * slot; };
+      var ys = function (v) { return m.top + plotH - (v / max) * plotH; };
+      var color = seriesColor(opts.color);
+
+      var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
+
+      ticks.forEach(function (tk) {
+        el("line", { x1: m.left, x2: W - m.right, y1: ys(tk), y2: ys(tk), stroke: tk === 0 ? th.axis : th.grid, "stroke-width": 1 }, svg);
+        text(svg, fmt(tk), { x: m.left - 7, y: ys(tk) + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
+      });
+      for (var yr = Math.ceil(x0 / 10) * 10; yr <= x1; yr += 10) {
+        text(svg, yr, { x: cx(yr), y: H - 8, fill: th.muted, "font-size": 11, "text-anchor": "middle", "class": "num" });
+      }
+
+      pts.forEach(function (p) {
+        if (!p[1]) return;
+        var h = Math.max(1.5, (p[1] / max) * plotH);
+        el("path", {
+          d: barTop(cx(p[0]) - barW / 2, ys(p[1]), barW, h, Math.min(1.5, barW / 2)),
+          fill: color
+        }, svg);
+      });
+
+      /* the record's single biggest year, called out where it stands */
+      var peak = pts.reduce(function (a, b) { return b[1] > a[1] ? b : a; });
+      text(svg, peak[0] + " · " + fmt(peak[1]), {
+        x: cx(peak[0]) + 8, y: ys(peak[1]) + 4,
+        fill: th.ink, "font-size": 11.5, "font-weight": 600, "class": "num", "text-anchor": "start"
+      });
+
+      var hi = el("rect", { fill: th.ink, opacity: 0 }, svg);
+      var overlay = el("rect", { x: m.left, y: m.top, width: plotW, height: plotH, fill: "transparent" }, svg);
+
+      overlay.addEventListener("pointermove", function (e) {
+        var rect = svg.getBoundingClientRect();
+        var scale = plotW / (rect.width - m.left - m.right);
+        var year = Math.round(x0 + (((e.clientX - rect.left) * (W / rect.width) - m.left) / slot) - 0.5);
+        year = Math.max(x0, Math.min(x1, year));
+        var p = pts[year - x0];
+        var h = Math.max(1.5, (p[1] / max) * plotH);
+        hi.setAttribute("x", cx(p[0]) - barW / 2 - 1);
+        hi.setAttribute("y", p[1] ? ys(p[1]) : m.top + plotH - 2);
+        hi.setAttribute("width", barW + 2);
+        hi.setAttribute("height", p[1] ? h : 2);
+        hi.setAttribute("opacity", 0.28);
+        tipShow([{ value: fmt(p[1]), label: (opts.tipLabel || "publications in") + " " + p[0], swatch: color }], e.clientX, e.clientY);
+      });
+      overlay.addEventListener("pointerleave", function () {
+        hi.setAttribute("opacity", 0);
+        tipHide();
+      });
+    });
+  }
+
   /* ---------- stacked columns + legend ---------- */
 
   function legend(container, names, onHover) {
@@ -418,6 +634,7 @@ var Charts = (function () {
       var lbl = document.createElement("span");
       lbl.textContent = CLUSTER_SHORT[name] || name;
       chip.appendChild(lbl);
+      definable(chip, name);
       if (onHover) {
         chip.addEventListener("pointerenter", function () { onHover(i); });
         chip.addEventListener("pointerleave", function () { onHover(-1); });
@@ -428,28 +645,38 @@ var Charts = (function () {
     return box;
   }
 
+  /* opts.colorOf  — series colours for non-cluster series (KDN grounds)
+     opts.normalize — each column sums to 100%, so composition is the subject
+     opts.barMax    — widen the bars when there are few categories
+     opts.incompleteLast — asterisk the final category and footnote it */
   function stacked(root, opts) {
     var host = root.parentNode;
     var seriesGroups = [];
-    legend(host.querySelector(".legend-slot") || host, opts.series, function (idx) {
+    var onHover = function (idx) {
       seriesGroups.forEach(function (nodes, si) {
         nodes.forEach(function (nd) { nd.style.opacity = idx === -1 || idx === si ? 1 : 0.25; });
       });
-    });
+    };
+    var legendHost = host.querySelector(".legend-slot") || host;
+    if (opts.colorOf) seriesLegend(legendHost, opts.series, opts.colorOf, onHover);
+    else legend(legendHost, opts.series, onHover);
 
     mount(root, function (node, W, H) {
       var th = T();
       seriesGroups = opts.series.map(function () { return []; });
-      var m = { top: 14, right: 10, bottom: 32, left: 46 };
+      /* a normalised column always reaches the top, so the incomplete-decade
+         note goes under the axis rather than into the 100% gridline */
+      var m = { top: 14, right: 10, bottom: opts.incompleteLast ? 46 : 32, left: 46 };
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var n = opts.cats.length;
       var slot = plotW / n;
-      var barW = Math.min(24, slot * 0.5);
+      var barW = Math.min(opts.barMax || 24, slot * (opts.normalize ? 0.62 : 0.5));
       var totals = opts.matrix.map(function (row) {
         return row.reduce(function (a, b) { return a + b; }, 0);
       });
-      var ticks = niceTicks(Math.max.apply(null, totals), 4);
+      var pct = opts.normalize;
+      var ticks = pct ? [0, 25, 50, 75, 100] : niceTicks(Math.max.apply(null, totals), 4);
       var max = ticks[ticks.length - 1];
 
       var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
@@ -457,30 +684,40 @@ var Charts = (function () {
       ticks.forEach(function (tk) {
         var y = m.top + plotH - (tk / max) * plotH;
         el("line", { x1: m.left, x2: W - m.right, y1: y, y2: y, stroke: tk === 0 ? th.axis : th.grid, "stroke-width": 1 }, svg);
-        text(svg, fmt(tk), { x: m.left - 7, y: y + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
+        text(svg, pct ? tk + "%" : fmt(tk), { x: m.left - 7, y: y + 4, fill: th.muted, "font-size": 11, "text-anchor": "end", "class": "num" });
       });
 
       opts.cats.forEach(function (cat, ci) {
         var x = m.left + ci * slot + (slot - barW) / 2;
         var yCursor = m.top + plotH;
-        text(svg, cat, { x: m.left + ci * slot + slot / 2, y: m.top + plotH + 18, fill: th.ink, "font-size": 11.5, "text-anchor": "middle", "class": "num" });
+        var partial = opts.incompleteLast && ci === n - 1;
+        text(svg, partial ? cat + "*" : cat, { x: m.left + ci * slot + slot / 2, y: m.top + plotH + 18, fill: th.ink, "font-size": 11.5, "text-anchor": "middle", "class": "num" });
+        var total = totals[ci];
         opts.matrix[ci].forEach(function (v, si) {
           if (!v) return;
-          var color = clusterColor(opts.series[si]);
-          var h = (v / max) * plotH;
+          var color = opts.colorOf ? opts.colorOf(si, th) : clusterColor(opts.series[si]);
+          var share = total ? (v / total) * 100 : 0;
+          var h = ((pct ? share : v) / max) * plotH;
           var gapped = Math.max(1, h - 2); /* 2px surface gap between segments */
           var y = yCursor - h;
           var seg = el("rect", { x: x, y: y + 1, width: barW, height: gapped, fill: color }, svg);
-          hoverable(seg, [
-            { value: fmt(v), label: opts.series[si], swatch: color },
-            { value: fmt(totals[ci]), label: "total in the " + cat }
-          ]);
-          seg.setAttribute("aria-label", cat + ", " + opts.series[si] + ": " + fmt(v));
+          var lines = [{ value: fmt(v), label: opts.series[si], swatch: color }];
+          if (pct) lines.push({ value: (Math.round(share * 10) / 10) + "%", label: "of the " + cat + " total (" + fmt(total) + ")" });
+          else lines.push({ value: fmt(total), label: "total in the " + cat });
+          hoverable(seg, lines);
+          seg.setAttribute("aria-label", cat + ", " + opts.series[si] + ": " + fmt(v) +
+            (pct ? " (" + Math.round(share) + "%)" : ""));
           seg.setAttribute("role", "img");
           seriesGroups[si].push(seg);
           yCursor -= h;
         });
       });
+
+      if (opts.incompleteLast) {
+        text(svg, "* " + opts.cats[n - 1] + " is an unfinished decade", {
+          x: W - m.right, y: H - 6, fill: th.muted, "font-size": 10.5, "text-anchor": "end"
+        });
+      }
     });
   }
 
@@ -492,12 +729,44 @@ var Charts = (function () {
     return "rgb(" + c.join(",") + ")";
   }
 
+  /* Severity ramp for the enforcement-focus grid: green where a cluster is a
+     small share of its decade, red where it dominates. Lightness falls steadily
+     from the green end to the red end, so the grid still reads as a value ramp
+     in greyscale — and for the ~8% of men with red-green colour blindness, for
+     whom hue alone would carry nothing. */
+  var SEVERITY = {
+    light: [[0, [226, 240, 222]], [0.30, [150, 198, 138]], [0.55, [243, 205, 110]],
+            [0.78, [226, 138, 63]], [1, [168, 34, 30]]],
+    dark:  [[0, [36, 52, 38]], [0.30, [74, 132, 84]], [0.55, [186, 152, 52]],
+            [0.78, [214, 112, 46]], [1, [214, 58, 48]]]
+  };
+
+  function severityRgb(t) {
+    var st = document.documentElement.dataset.theme === "dark" ? SEVERITY.dark : SEVERITY.light;
+    t = Math.max(0, Math.min(1, t));
+    for (var i = 1; i < st.length; i++) {
+      if (t <= st[i][0]) {
+        var a = st[i - 1], b = st[i], k = (t - a[0]) / (b[0] - a[0]);
+        return a[1].map(function (c, j) { return Math.round(c + (b[1][j] - c) * k); });
+      }
+    }
+    return st[st.length - 1][1].slice();
+  }
+
+  /* ink chosen from the cell's own luminance — a fixed threshold would put
+     white text on the mid-ramp ambers */
+  function inkOn(rgb) {
+    return (0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]) / 255 > 0.55
+      ? "#1b1714" : "#ffffff";
+  }
+
   function heatmap(root, opts) {
     mount(root, function (node, W, H) {
       var th = T();
       var rows = opts.rows, cols = opts.cols;
       var labelW = opts.labelWidth || Math.min(170, W * 0.3);
-      var m = { top: 24, right: 8, bottom: 8, left: labelW };
+      var m = { top: 24, right: 8, bottom: opts.incompleteCol ? 22 : 8, left: labelW };
+      var severity = opts.ramp === "severity";
       var plotW = W - m.left - m.right;
       var plotH = H - m.top - m.bottom;
       var cw = plotW / cols.length, ch = plotH / rows.length;
@@ -506,28 +775,36 @@ var Charts = (function () {
       var svg = el("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + H }, node);
 
       cols.forEach(function (c, j) {
-        text(svg, c, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
+        /* the unfinished decade is asterisked in its own header */
+        var head = c === opts.incompleteCol ? c + "*" : c;
+        var ct = text(svg, head, { x: m.left + j * cw + cw / 2, y: 15, fill: th.muted, "font-size": 11.5, "text-anchor": "middle" });
+        defLabel(svg, ct, (opts.colTerms || cols)[j],
+          { x: m.left + j * cw, y: 0, w: cw, h: m.top }, th);
       });
       rows.forEach(function (r, i) {
-        text(svg, opts.shorten ? (CLUSTER_SHORT[r] || r) : r, {
+        var rt = text(svg, opts.shorten ? (CLUSTER_SHORT[r] || r) : r, {
           x: m.left - 8, y: m.top + i * ch + ch / 2 + 4, fill: th.ink, "font-size": 12, "text-anchor": "end"
         });
+        defLabel(svg, rt, (opts.rowTerms || rows)[i],
+          { x: 0, y: m.top + i * ch, w: m.left - 4, h: ch }, th);
       });
 
       rows.forEach(function (r, i) {
         cols.forEach(function (c, j) {
           var v = opts.values[i][j];
           var t = max ? v / max : 0;
+          var rgb = severity ? severityRgb(t) : null;
           var cell = el("rect", {
             x: m.left + j * cw + 1, y: m.top + i * ch + 1,
             width: Math.max(1, cw - 2), height: Math.max(1, ch - 2),
-            rx: 3, fill: rampColor(t, th)
+            rx: 3, fill: severity ? "rgb(" + rgb.join(",") + ")" : rampColor(t, th)
           }, svg);
           var label = opts.fmt ? opts.fmt(v) : fmt(v);
           if (cw > 34 && ch > 20) {
             text(svg, label, {
               x: m.left + j * cw + cw / 2, y: m.top + i * ch + ch / 2 + 4,
-              fill: t > 0.52 ? th.cellHi : th.cellLo, "font-size": 11.5, "text-anchor": "middle", "class": "num"
+              fill: severity ? inkOn(rgb) : (t > 0.52 ? th.cellHi : th.cellLo),
+              "font-size": 11.5, "text-anchor": "middle", "class": "num"
             });
           }
           var rowName = opts.shorten ? (CLUSTER_SHORT[r] || r) : r;
@@ -539,6 +816,12 @@ var Charts = (function () {
           cell.setAttribute("role", "img");
         });
       });
+
+      if (opts.incompleteCol) {
+        text(svg, "* " + opts.incompleteCol + " is an unfinished decade", {
+          x: W - m.right, y: H - 6, fill: th.muted, "font-size": 10.5, "text-anchor": "end"
+        });
+      }
     });
   }
 
@@ -546,7 +829,9 @@ var Charts = (function () {
 
   /* Generic legend for non-cluster series; swatch colours are re-resolved on
      every theme redraw via a registered updater. */
-  function seriesLegend(container, series, colorOf, onHover) {
+  /* opts.terms — canonical names to look the definition up under, when the
+     chips show a shortened label (the cluster trajectories). */
+  function seriesLegend(container, series, colorOf, onHover, terms) {
     var box = document.createElement("div");
     box.className = "chart-legend";
     var swatches = [];
@@ -561,6 +846,7 @@ var Charts = (function () {
       var lbl = document.createElement("span");
       lbl.textContent = name;
       chip.appendChild(lbl);
+      definable(chip, terms ? terms[i] : name);
       if (onHover) {
         chip.addEventListener("pointerenter", function () { onHover(i); });
         chip.addEventListener("pointerleave", function () { onHover(-1); });
@@ -592,7 +878,8 @@ var Charts = (function () {
           seriesPaths.forEach(function (nodes, si) {
             nodes.forEach(function (nd) { nd.style.opacity = idx === -1 || idx === si ? 1 : 0.18; });
           });
-        });
+        },
+        opts.series.map(function (s) { return s.name; }));
     }
 
     mount(root, function (node, W, H) {
@@ -846,114 +1133,7 @@ var Charts = (function () {
     });
   }
 
-  /* ---------- Malaysia origin map (real coastlines, inline SVG) ---------- */
-
-  /* Geometry comes pre-projected from GEO_MY (js/geo.js) — Natural Earth
-     coastlines in this SVG's user space, so the plot box and viewBox here must
-     match the frame documented in that file.
-
-     Malaysia is highlighted; the neighbouring land behind it is context only.
-     Local sits on the land, Foreign arrives from beyond the frame, and Unclear
-     keeps its own labelled box so the unresolved third is never hidden. */
-  var mapUid = 0;
-
-  function mapOrigin(root, opts) {
-    mount(root, function (node, W, H) {
-      var th = T();
-      var svg = el("svg", { width: W, height: H, viewBox: "0 0 640 360", preserveAspectRatio: "xMidYMid meet" }, node);
-      var box = { x: 8, y: 8, w: 624, h: 260, r: 12 };
-
-      /* the coastlines run to the frame edge, so clip them to the sea panel */
-      var clipId = "mapclip-" + (++mapUid);
-      var clip = el("clipPath", { id: clipId }, el("defs", {}, svg));
-      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r }, clip);
-
-      var sea = el("g", { "clip-path": "url(#" + clipId + ")" }, svg);
-      el("rect", { x: box.x, y: box.y, width: box.w, height: box.h, fill: th.grid, opacity: 0.35 }, sea);
-
-      /* neighbouring land — southern Thailand, Sumatra, Kalimantan, the rest */
-      el("path", { d: GEO_MY.ctx, fill: th.axis, "fill-opacity": 0.75 }, sea);
-
-      /* Malaysia */
-      var land = {
-        fill: seriesColor("green"), "fill-opacity": 0.33,
-        stroke: seriesColor("green"), "stroke-width": 1.6,
-        "stroke-linejoin": "round"
-      };
-      [GEO_MY.pen, GEO_MY.bor].forEach(function (d) {
-        var p = el("path", { d: d }, sea);
-        for (var a in land) p.setAttribute(a, land[a]);
-      });
-
-      el("rect", {
-        x: box.x, y: box.y, width: box.w, height: box.h, rx: box.r,
-        fill: "none", stroke: th.axis, "stroke-width": 1
-      }, svg);
-
-      /* place names sit over land, so give them a halo to read against it */
-      function label(str, x, y, size, anchor) {
-        return text(svg, str, {
-          x: x, y: y, fill: th.muted, "font-size": size || 11, "text-anchor": anchor || "middle",
-          stroke: th.surface, "stroke-width": 3.5, "stroke-linejoin": "round",
-          "paint-order": "stroke"
-        });
-      }
-
-      label("Peninsular Malaysia", 128, 240);
-      label("Sabah & Sarawak", 432, 204);
-
-      function chip(x, y, w, title, value, color, dashed) {
-        var g = el("g", {}, svg);
-        el("rect", {
-          x: x, y: y, width: w, height: 46, rx: 9,
-          fill: th.surface, stroke: color, "stroke-width": 1.5,
-          "stroke-dasharray": dashed ? "5 4" : "none"
-        }, g);
-        text(g, title, { x: x + w / 2, y: y + 18, fill: th.muted, "font-size": 11, "text-anchor": "middle" });
-        text(g, value, { x: x + w / 2, y: y + 36, fill: th.ink, "font-size": 13.5, "font-weight": 700, "text-anchor": "middle", "class": "num" });
-        return g;
-      }
-
-      /* Local — leaders out to both halves of the country */
-      var localChip = chip(200, 92, 132, "Local", fmt(opts.local) + " · " + opts.localPct, seriesColor("green"));
-      el("line", { x1: 200, y1: 115, x2: 186, y2: 128, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
-      el("line", { x1: 332, y1: 115, x2: 362, y2: 168, stroke: seriesColor("green"), "stroke-width": 1.4 }, svg);
-      hoverable(localChip, [{ value: fmt(opts.local), label: "publications of local origin (" + opts.localPct + ")", swatch: seriesColor("green") }]);
-
-      /* Foreign — arrows entering from beyond the frame */
-      var foreignChip = chip(436, 18, 168, "Foreign", fmt(opts.foreign) + " · " + opts.foreignPct, seriesColor("blue"));
-      hoverable(foreignChip, [{ value: fmt(opts.foreign), label: "publications of foreign origin (" + opts.foreignPct + ")", swatch: seriesColor("blue") }]);
-      [[262, 2, 214, 58], [638, 126, 578, 140], [332, 276, 300, 224]].forEach(function (ar) {
-        var g = el("g", { stroke: seriesColor("blue"), "stroke-width": 1.6, fill: "none", opacity: 0.85 }, svg);
-        el("line", { x1: ar[0], y1: ar[1], x2: ar[2], y2: ar[3] }, g);
-        var ang = Math.atan2(ar[3] - ar[1], ar[2] - ar[0]);
-        var hx = ar[2], hy = ar[3];
-        el("path", {
-          d: "M" + (hx - 7 * Math.cos(ang - 0.4)) + "," + (hy - 7 * Math.sin(ang - 0.4)) +
-             "L" + hx + "," + hy +
-             "L" + (hx - 7 * Math.cos(ang + 0.4)) + "," + (hy - 7 * Math.sin(ang + 0.4))
-        }, g);
-      });
-      label("arrives from outside", 428, 46, 10.5, "end");
-
-      /* Unclear — its own box, outside the map */
-      var uy = 288;
-      var unGroup = el("g", {}, svg);
-      el("rect", {
-        x: 8, y: uy, width: 624, height: 62, rx: 10,
-        fill: th.surface, stroke: seriesColor("gold"), "stroke-width": 1.5, "stroke-dasharray": "6 4"
-      }, unGroup);
-      text(unGroup, "Origin unclear — " + fmt(opts.unclear) + " · " + opts.unclearPct, {
-        x: 320, y: uy + 26, fill: th.ink, "font-size": 13.5, "font-weight": 700, "text-anchor": "middle", "class": "num"
-      });
-      text(unGroup, "one in three records has no confirmed origin — it belongs on no map", {
-        x: 320, y: uy + 46, fill: th.muted, "font-size": 11, "text-anchor": "middle"
-      });
-      hoverable(unGroup, [{ value: fmt(opts.unclear), label: "publications of unclear origin (" + opts.unclearPct + ")", swatch: seriesColor("gold") }]);
-    });
-  }
-
-  /* ---------- podium histograms (people behind the publications) ---------- */
+    /* ---------- podium histograms (people behind the publications) ---------- */
 
   /* HTML rows so the Font Awesome rank icons render; bar colours ride the
      CSS theme variables. Top three read as the podium. */
@@ -974,8 +1154,9 @@ var Charts = (function () {
       } else {
         rank.textContent = i + 1;
       }
+      var entry = definition(d[0]);
       var name = document.createElement("span");
-      name.className = "podium-name";
+      name.className = "podium-name" + (entry ? " has-def" : "");
       name.textContent = d[0];
       var track = document.createElement("span");
       track.className = "podium-track";
@@ -990,8 +1171,35 @@ var Charts = (function () {
       row.appendChild(name);
       row.appendChild(track);
       row.appendChild(count);
-      hoverable(row, [{ value: fmt(d[1]), label: d[0] + " — " + opts.noun }]);
+      /* One tooltip per row rather than a competing one on the name: the count
+         line, then who they are when the name is one we can identify. */
+      hoverable(row, [{ value: fmt(d[1]), label: d[0] + " — " + opts.noun }],
+                entry ? entry.def : null);
       root.appendChild(row);
+    });
+  }
+
+  /* ---------- view switches inside one chart card ---------- */
+
+  /* A `.chart-views` button group shows one `[data-view-panel]` at a time
+     within its own figure, so two readings of the same records can share a
+     card instead of costing a scroll beat. The hidden chart draws nothing
+     until it is shown — mount()'s ResizeObserver picks it up then. */
+  function chartViews() {
+    document.querySelectorAll(".chart-views").forEach(function (group) {
+      var fig = group.closest("figure") || group.parentNode;
+      var buttons = Array.prototype.slice.call(group.querySelectorAll("button"));
+      var panels = Array.prototype.slice.call(fig.querySelectorAll("[data-view-panel]"));
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          buttons.forEach(function (b) {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          panels.forEach(function (panel) {
+            panel.hidden = panel.dataset.viewPanel !== btn.dataset.view;
+          });
+        });
+      });
     });
   }
 
@@ -999,6 +1207,8 @@ var Charts = (function () {
 
   function init() {
     if (typeof PPPA === "undefined") return;
+
+    chartViews();
 
     /* --- bans over time: Year / Decade / Cumulative (the 3D book-rain box
        itself lives in js/rain3d.js, a Three.js module) --- */
@@ -1012,10 +1222,45 @@ var Charts = (function () {
           ? [d, PPPA.decadeMix.totals[i], "incomplete"]
           : [d, PPPA.decadeMix.totals[i]];
       });
-      lineArea(document.getElementById("c-rain-year"), { points: PPPA.perYear, color: "blue" });
+      timeBars(document.getElementById("c-rain-year"), { points: PPPA.perYear, color: "blue" });
       columns(document.getElementById("c-rain-decade"), { items: decadeItems, color: "blue", labelTop: 8 });
       lineArea(document.getElementById("c-rain-cume"), { points: cume, color: "green", tipLabel: "cumulative bans by" });
     }
+
+    /* --- languages over time ---
+       Derived here rather than in generate_data.py: the row tuple already
+       carries year and languages, and folding them into the same five groups
+       the languages column chart uses (top three named + Unknown + Other)
+       reproduces PPPA.languageGrouped exactly, so the two charts can never
+       disagree. Language is counted by mention — a record listing two
+       languages lands in both, so a decade's columns can out-total its bans. */
+    var LANG_GROUPS = PPPA.languageGrouped.map(function (d) { return d[0]; });
+    var LANG_NAMED = LANG_GROUPS.slice(0, 3);
+    var langDecades = PPPA.decadeClusters.decades;
+    var langMatrix = langDecades.map(function () {
+      return LANG_GROUPS.map(function () { return 0; });
+    });
+    PPPA.rows.forEach(function (r) {
+      var di = langDecades.indexOf(Math.floor(r[1] / 10) * 10 + "s");
+      if (di === -1) return;
+      var langs = r[4] ? r[4].split(", ").filter(Boolean) : [];
+      if (!langs.length) { langMatrix[di][3]++; return; }   /* Unknown */
+      langs.forEach(function (l) {
+        var i = LANG_NAMED.indexOf(l);
+        langMatrix[di][i === -1 ? 4 : i]++;                 /* Other */
+      });
+    });
+    stacked(document.getElementById("c-langtime"), {
+      cats: langDecades,
+      series: LANG_GROUPS,
+      matrix: langMatrix,
+      /* named languages take colour slots; Unknown stays muted, as it does in
+         the languages column chart, because it is missing data not a language */
+      colorOf: function (i, th) {
+        return LANG_GROUPS[i] === "Unknown" ? th.muted : th.slots[i > 3 ? 3 : i];
+      },
+      incompleteLast: true
+    });
 
     /* --- languages: top three + Unknown + Other (chart-only grouping) --- */
     columns(document.getElementById("c-languages"), {
@@ -1025,9 +1270,6 @@ var Charts = (function () {
         return d[0] === "Unknown" || d[0] === "Other" ? th.muted : th.series.blue;
       }
     });
-
-    /* --- the seven grounds --- */
-    groundsMindmap(document.getElementById("c-grounds"));
 
     /* --- types pictograph + origin map ---
        counts come from the generated aggregates so they can't drift from the
@@ -1046,12 +1288,23 @@ var Charts = (function () {
           count: totalRecs - printedCount - audioCount }
       ]
     });
+    /* Origin is a three-way split — local, foreign, unclear — and nothing
+       finer: the dataset never records a country, so a map had nowhere to put
+       a third of the records and no country to put the rest in. Ordered with
+       the two recorded categories first and the not-a-category bucket last. */
     var originOf = {};
     PPPA.originCounts.forEach(function (d) { originOf[d[0]] = d[1]; });
-    mapOrigin(document.getElementById("c-map"), {
-      local: originOf.Local, localPct: pct1(originOf.Local),
-      foreign: originOf.Foreign, foreignPct: pct1(originOf.Foreign),
-      unclear: originOf.Unclear, unclearPct: pct1(originOf.Unclear)
+    var ORIGIN_SLOT = { Foreign: "blue", Local: "green", Unclear: null };
+    columns(document.getElementById("c-origin"), {
+      items: ["Foreign", "Local", "Unclear"].map(function (k) { return [k, originOf[k]]; }),
+      labelTop: 3,
+      barMax: 58,
+      subLabel: function (d) { return pct1(d[1]); },
+      tipNoun: "of all 3,212 records",
+      colorOf: function (d, i, th) {
+        var slot = ORIGIN_SLOT[d[0]];
+        return slot ? th.series[slot] : th.muted;
+      }
     });
 
     /* --- the people podiums --- */
@@ -1078,22 +1331,23 @@ var Charts = (function () {
 
     /* --- KDN justifications over time (post-1984 record) --- */
     var kdnFirst = PPPA.kdnByDecade.decades.indexOf("1980s");
-    var kdnByJust = transpose(PPPA.kdnByDecade.values.slice(kdnFirst));
-    multiLine(document.getElementById("c-kdnlines"), {
+    /* Composition, not trajectory: as lines, five of the seven grounds sat flat
+       on zero. Normalised to 100% per decade, the mix is the point. */
+    stacked(document.getElementById("c-kdnlines"), {
       cats: PPPA.kdnByDecade.decades.slice(kdnFirst),
-      series: PPPA.kdnByDecade.justifications.map(function (name, i) {
-        return { name: name, values: kdnByJust[i] };
-      }),
+      series: PPPA.kdnByDecade.justifications,
+      matrix: PPPA.kdnByDecade.values.slice(kdnFirst),
       colorOf: function (i, th) { return i < th.slots.length ? th.slots[i] : th.muted; },
-      incompleteLast: true,
-      tipNoun: "stated KDN justifications"
+      normalize: true,
+      barMax: 54,
+      incompleteLast: true
     });
 
     /* --- decade mix heatmap --- */
     heatmap(document.getElementById("c-decademix"), {
       rows: PPPA.decadeMix.clusters, cols: PPPA.decadeMix.decades,
       values: transpose(PPPA.decadeMix.values), shorten: true, labelWidth: 165,
-      max: 100,
+      max: 100, ramp: "severity", incompleteCol: "2020s",
       fmt: function (v) { return Math.round(v) + "%"; },
       cellLabel: "of that decade's titles"
     });
@@ -1109,9 +1363,17 @@ var Charts = (function () {
       "Religious Doctrinal Deviance": "Religious",
       "Race, Religion & Royalty (3R Issues)": "3R"
     };
+    /* Prose mentions of a codebook term carry the same tooltip as the chart
+       labels; a term whose entry has gone missing loses its underline rather
+       than advertising a definition that will not appear. */
+    document.querySelectorAll(".def-term[data-term]").forEach(function (node) {
+      if (!definable(node, node.dataset.term)) node.classList.remove("def-term");
+    });
+
     heatmap(document.getElementById("c-crosswalk"), {
       rows: PPPA.kdnVsCluster.rows,
       cols: PPPA.kdnVsCluster.cols.map(function (c) { return XWALK_COLS[c] || c; }),
+      colTerms: PPPA.kdnVsCluster.cols,
       values: PPPA.kdnVsCluster.values,
       labelWidth: 118,
       cellLabel: "publications"

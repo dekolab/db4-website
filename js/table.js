@@ -6,9 +6,13 @@
 var DataTable = (function () {
   "use strict";
 
+  /* Revoked sits next to Year, not at the far end: as the last column it slid
+     under the pinned Select column and its badge was clipped, which made the
+     status look absent. Status belongs beside the date it modifies anyway. */
   var COLS = [
     { name: "Title", idx: 0 },
     { name: "Year", idx: 1, num: true },
+    { name: "Revoked", idx: 11, badge: true },
     { name: "Type", idx: 2 },
     { name: "Origin", idx: 3 },
     { name: "Language", idx: 4 },
@@ -17,9 +21,20 @@ var DataTable = (function () {
     { name: "Publisher", idx: 7 },
     { name: "Author/Translator", idx: 8 },
     { name: "KDN justification", idx: 9 },
-    { name: "Printer", idx: 10 },
-    { name: "Revoked", idx: 11, badge: true }
+    { name: "Printer", idx: 10 }
   ];
+
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  /* "2026-07" -> "Revoked Jul 2026". Read off the value rather than hardcoded,
+     so a later revocation on another date does not render as July 2026. */
+  function revokedLabel(v) {
+    var m = /^(\d{4})-(\d{2})$/.exec(String(v));
+    if (!m) return "Revoked";
+    var mon = MONTHS[Number(m[2]) - 1];
+    return mon ? "Revoked " + mon + " " + m[1] : "Revoked " + m[1];
+  }
   var PAGE = 25;
 
   var state = { q: "", cluster: "", origin: "", revoked: false, sort: 1, dir: 1, page: 0 };
@@ -154,7 +169,7 @@ var DataTable = (function () {
           /* revokedDate "2026-07" renders as a small badge */
           var badge = document.createElement("span");
           badge.className = "td-revoked";
-          badge.textContent = "Revoked Jul 2026";
+          badge.textContent = revokedLabel(v);
           td.appendChild(badge);
         } else {
           td.textContent = v == null || v === "" ? "—" : v;

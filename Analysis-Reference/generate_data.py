@@ -8,6 +8,7 @@
 import ast
 import csv
 import json
+import re
 from collections import Counter, OrderedDict
 
 with open("../Finalise-Codebook/final-data.csv", newline="", encoding="utf-8") as f:
@@ -61,7 +62,22 @@ def parse_langs(raw):
         v = ast.literal_eval(raw)
         return [str(x) for x in v] if isinstance(v, list) else [str(v)]
     except (ValueError, SyntaxError):
-        return [raw]
+        pass
+    # A cell holding several list literals back to back ('["a"] ["b"]') is not
+    # valid Python. Falling through to [raw] made it a phantom language that
+    # inflated Other by one and lost the real mentions, so parse each literal.
+    parts = re.findall(r"\[[^\[\]]*\]", raw)
+    if parts:
+        out = []
+        for p in parts:
+            try:
+                v = ast.literal_eval(p)
+            except (ValueError, SyntaxError):
+                continue
+            out.extend(str(x) for x in (v if isinstance(v, list) else [v]))
+        if out:
+            return out
+    return [raw]
 
 
 def split_sub(raw):
